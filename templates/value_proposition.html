@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% from "components/tool_links.html" import tool_links
+with context %} {% from "components/share_buttons.html" import share_buttons
 with context %} {% block title %}Value Proposition Generator - Free Product
 Management Tool{% endblock %} {% block meta_description %}Create compelling
 value propositions for your product with our free Value Proposition Generator.
@@ -142,6 +143,8 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
       <p class="text-red-600 text-center"></p>
     </div>
   </div>
+
+  {{ share_buttons() }}
 
   <!-- FAQ Section -->
   <section class="mb-12">

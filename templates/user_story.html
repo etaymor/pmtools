@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% from "components/tool_links.html" import tool_links
+with context %} {% from "components/share_buttons.html" import share_buttons
 with context %} {% block title %}User Story Generator - Free Product Management
 Tool{% endblock %} {% block meta_description %}Create clear, actionable user
 stories with our free User Story Generator. Perfect for product managers and
@@ -159,6 +160,8 @@ content %}
       <p class="text-red-600 text-center"></p>
     </div>
   </div>
+
+  {{ share_buttons() }}
 
   <!-- FAQ Section -->
   <section class="mb-12">

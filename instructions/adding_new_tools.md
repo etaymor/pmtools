@@ -395,6 +395,37 @@ Remember to follow the existing patterns and maintain consistency with other too
 7. Related tools section
 8. SEO meta tags
 9. Responsive design elements
+10. Social sharing buttons
+
+## Social Sharing Integration
+
+Each tool should include social sharing buttons. To add them to your tool:
+
+1. Import the share buttons component at the top of your template:
+
+```jinja2
+{% from "components/share_buttons.html" import share_buttons with context %}
+```
+
+2. Add the share buttons after your main form card and before the FAQ section:
+
+```jinja2
+{{ share_buttons() }}
+```
+
+The share buttons will:
+
+- Desktop: Display as a vertical floating bar on the left side
+- Mobile: Transform into a horizontal bar fixed at the bottom of the screen
+- Include sharing options for:
+  - General share (AddToAny)
+  - X (Twitter)
+  - Email
+  - LinkedIn
+  - Facebook
+  - Bluesky
+
+The share buttons are automatically styled and positioned, with responsive behavior built-in. The AddToAny script is loaded in the base template, so there's no need to include it in your tool's template.
 
 ## Helpful Tips
 

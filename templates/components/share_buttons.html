@@ -1,0 +1,45 @@
+{% macro share_buttons() %}
+<!-- AddToAny Share Buttons -->
+<style>
+  .share-buttons-container {
+    position: fixed;
+    z-index: 100;
+  }
+  @media (min-width: 769px) {
+    .share-buttons-container {
+      left: 0;
+      top: 150px;
+    }
+  }
+  @media (max-width: 768px) {
+    .share-buttons-container {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      background: white;
+      padding: 8px 0;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .share-buttons-container .a2a_kit {
+      display: flex !important;
+      justify-content: center !important;
+      position: static !important;
+    }
+    .share-buttons-container .a2a_vertical_style a {
+      float: none !important;
+      margin: 0 12px !important;
+    }
+  }
+</style>
+<div class="share-buttons-container">
+  <div class="a2a_kit a2a_kit_size_32 a2a_floating_style a2a_vertical_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+    <a class="a2a_button_x"></a>
+    <a class="a2a_button_email"></a>
+    <a class="a2a_button_linkedin"></a>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_bluesky"></a>
+  </div>
+</div>
+{% endmacro %}

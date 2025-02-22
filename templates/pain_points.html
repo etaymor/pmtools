@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% from "components/tool_links.html" import tool_links
+with context %} {% from "components/share_buttons.html" import share_buttons
 with context %} {% block title %}Customer Pain Point Identifier - Free Product
 Management Tool{% endblock %} {% block meta_description %}Identify key customer
 pain points for your target market segment using AI-powered analysis.{% endblock
@@ -124,6 +125,8 @@ content %}
       <p class="text-red-600 text-center"></p>
     </div>
   </div>
+
+  {{ share_buttons() }}
 
   <!-- FAQ Section -->
   <section class="mb-12">
