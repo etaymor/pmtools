@@ -1,0 +1,32 @@
+{% macro tool_links(current_tool=None) %}
+<section class="mt-16 mb-12 bg-white rounded-2xl shadow-sm p-8">
+  <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">
+    More Product Management Tools
+  </h2>
+
+  {% with tools_by_category = get_tools_by_category(current_tool) %} {% for
+  category, tools in tools_by_category.items() %}
+  <div class="mb-8 last:mb-0">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4 px-4">
+      {{ category }}
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {% for tool in tools %}
+      <a
+        href="{{ tool.url }}"
+        class="group p-4 rounded-xl border border-gray-100 hover:border-green-100 hover:shadow-md transition-all duration-200"
+      >
+        <h4
+          class="text-lg font-semibold text-gray-800 group-hover:text-green-600 mb-2"
+        >
+          {{ tool.name }}
+        </h4>
+        <p class="text-sm text-gray-600">{{ tool.description }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %} {% endwith %}
+</section>
+{% endmacro %}

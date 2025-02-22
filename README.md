@@ -26,7 +26,7 @@ A collection of free SEO tools built with Flask and Tailwind CSS.
    ```bash
    python app.py
    ```
-6. Visit `http://localhost:5000` in your browser
+6. Visit `http://localhost:5001` in your browser
 
 ## Usage
 
@@ -41,4 +41,4 @@ A collection of free SEO tools built with Flask and Tailwind CSS.
 
 - Backend: Flask
 - Frontend: HTML, JavaScript, Tailwind CSS
-- AI: OpenAI GPT-3.5
+- AI: OpenAI

@@ -3,7 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}SEO Tools{% endblock %}</title>
+    <title>{% block title %}Free Product Management Tools{% endblock %}</title>
+    <meta
+      name="description"
+      content="{% block meta_description %}Free tools for product managers to improve their workflow and decision making{% endblock %}"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ request.url }}" />
+    <meta
+      property="og:title"
+      content="{% block og_title %}{{ self.title() }}{% endblock %}"
+    />
+    <meta
+      property="og:description"
+      content="{% block og_description %}{{ self.meta_description() }}{% endblock %}"
+    />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="{% block twitter_title %}{{ self.title() }}{% endblock %}"
+    />
+    <meta
+      name="twitter:description"
+      content="{% block twitter_description %}{{ self.meta_description() }}{% endblock %}"
+    />
+
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-100 min-h-screen">
@@ -14,7 +42,7 @@
             <div>
               <a href="/" class="flex items-center py-4">
                 <span class="font-semibold text-gray-500 text-lg"
-                  >SEO Tools</span
+                  >Free Product Management Tools</span
                 >
               </a>
             </div>
@@ -28,6 +56,11 @@
                 href="/value-proposition"
                 class="py-4 px-2 text-gray-500 hover:text-green-500 transition duration-300"
                 >Value Proposition</a
+              >
+              <a
+                href="/user-story"
+                class="py-4 px-2 text-gray-500 hover:text-green-500 transition duration-300"
+                >User Story</a
               >
             </div>
           </div>
