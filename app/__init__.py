@@ -26,10 +26,12 @@ def create_app():
     from app.routes.main import main_bp
     from app.routes.tools.value_proposition import value_prop_bp
     from app.routes.tools.user_story import user_story_bp
+    from app.routes.tools.pain_points import pain_points_bp
     
     app.register_blueprint(main_bp)
     app.register_blueprint(value_prop_bp)
     app.register_blueprint(user_story_bp)
+    app.register_blueprint(pain_points_bp)
     
     # Debug template loading
     app.config['EXPLAIN_TEMPLATE_LOADING'] = True

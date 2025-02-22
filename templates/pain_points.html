@@ -1,0 +1,264 @@
+{% extends "base.html" %} {% from "components/tool_links.html" import tool_links
+with context %} {% block title %}Customer Pain Point Identifier - Free Product
+Management Tool{% endblock %} {% block meta_description %}Identify key customer
+pain points for your target market segment using AI-powered analysis.{% endblock
+%} {% block og_title %}Customer Pain Point Identifier - Free Tool for Product
+Teams{% endblock %} {% block og_description %}{{ self.meta_description() }}{%
+endblock %} {% block twitter_title %}{{ self.og_title() }}{% endblock %} {%
+block twitter_description %}{{ self.meta_description() }}{% endblock %} {% block
+content %}
+<div class="max-w-4xl mx-auto">
+  <!-- Hero Section -->
+  <div class="text-center py-4 px-6 mb-8 rounded-2xl">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+      Customer Pain Point Identifier
+    </h1>
+    <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
+      <p class="text-base md:text-lg leading-relaxed">
+        Uncover the most significant pain points your target customers are
+        experiencing. Simply describe your target segment and product space to
+        receive AI-generated insights into customer challenges.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Form Card -->
+  <div
+    class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
+  >
+    <form id="painPointsForm" class="space-y-8">
+      <div class="space-y-6">
+        <div class="relative">
+          <label
+            for="targetSegment"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Target Customer Segment
+          </label>
+          <textarea
+            id="targetSegment"
+            name="targetSegment"
+            required
+            rows="3"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+            placeholder="Describe your target customer segment (e.g., 'Small business owners in the retail industry' or 'Urban millennials interested in fitness')"
+          ></textarea>
+        </div>
+
+        <div class="relative">
+          <label
+            for="productInfo"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Product/Space Information
+          </label>
+          <textarea
+            id="productInfo"
+            name="productInfo"
+            required
+            rows="3"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+            placeholder="Describe your product or business space (e.g., 'Mobile app for inventory management' or 'Online fitness coaching platform')"
+          ></textarea>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+      >
+        Generate Pain Points
+      </button>
+    </form>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="hidden mt-8 text-center">
+      <div
+        class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent"
+      ></div>
+      <p class="mt-2 text-gray-600">Analyzing customer segment...</p>
+    </div>
+
+    <!-- Result Section -->
+    <div id="result" class="hidden mt-8 transform transition-all duration-300">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">
+        Identified Pain Points:
+      </h2>
+      <div
+        id="resultContent"
+        class="p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg text-gray-700 text-lg leading-relaxed border border-green-100 shadow-sm"
+        contenteditable="false"
+      ></div>
+      <div class="mt-4 flex space-x-2">
+        <button
+          onclick="copyToClipboard()"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          Copy to Clipboard
+        </button>
+        <button
+          onclick="toggleEdit()"
+          id="editButton"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mr-1"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+            />
+          </svg>
+          Edit
+        </button>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div
+      id="error"
+      class="hidden mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
+    >
+      <p class="text-red-600 text-center"></p>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+      Frequently Asked Questions
+    </h2>
+    <div class="space-y-4">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="font-semibold text-lg text-gray-800 mb-2">
+          How specific should I be about my target segment?
+        </h3>
+        <p class="text-gray-600">
+          The more specific you are about your target segment, the more focused
+          and actionable the pain points will be. Include details about
+          industry, size, location, or any other relevant characteristics.
+        </p>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="font-semibold text-lg text-gray-800 mb-2">
+          What kind of product information should I provide?
+        </h3>
+        <p class="text-gray-600">
+          Include a brief description of your product or service, its main
+          purpose, and the general space you're operating in. This helps in
+          identifying more relevant pain points.
+        </p>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="font-semibold text-lg text-gray-800 mb-2">
+          How can I use these pain points?
+        </h3>
+        <p class="text-gray-600">
+          Use these pain points to inform product development, marketing
+          messaging, sales strategies, and customer research. They can help
+          prioritize features and identify opportunities for improvement.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Tools Section -->
+  {{ tool_links('pain_points') }}
+</div>
+
+<script>
+  document
+    .getElementById("painPointsForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const submitButton = form.querySelector('button[type="submit"]');
+      const loadingDiv = document.getElementById("loading");
+      const resultDiv = document.getElementById("result");
+      const errorDiv = document.getElementById("error");
+      const resultContentDiv = document.getElementById("resultContent");
+
+      // Show loading state
+      submitButton.disabled = true;
+      loadingDiv.classList.remove("hidden");
+      resultDiv.classList.add("hidden");
+      errorDiv.classList.add("hidden");
+
+      try {
+        const response = await fetch("/api/pain-points", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            targetSegment: form.targetSegment.value,
+            productInfo: form.productInfo.value,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          resultContentDiv.innerHTML = data.painPoints.replace(/\n/g, "<br>");
+          resultDiv.classList.remove("hidden");
+          resultDiv.classList.add("animate-fade-in");
+        } else {
+          throw new Error(data.error || "Failed to generate pain points");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        errorDiv.querySelector("p").textContent = error.message;
+        errorDiv.classList.remove("hidden");
+      } finally {
+        submitButton.disabled = false;
+        loadingDiv.classList.add("hidden");
+      }
+    });
+
+  function copyToClipboard() {
+    const content = document.getElementById("resultContent").innerText;
+    navigator.clipboard.writeText(content).then(() => {
+      const button = document.querySelector(
+        'button[onclick="copyToClipboard()"]'
+      );
+      const originalText = button.textContent;
+      button.textContent = "Copied!";
+      setTimeout(() => {
+        button.textContent = originalText;
+      }, 2000);
+    });
+  }
+
+  function toggleEdit() {
+    const resultContentDiv = document.getElementById("resultContent");
+    const editButton = document.getElementById("editButton");
+    const isEditing = resultContentDiv.contentEditable === "true";
+
+    if (isEditing) {
+      // Save mode
+      resultContentDiv.contentEditable = "false";
+      resultContentDiv.classList.remove("ring-2", "ring-green-500");
+      editButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+        </svg>
+        Edit
+      `;
+    } else {
+      // Edit mode
+      resultContentDiv.contentEditable = "true";
+      resultContentDiv.classList.add("ring-2", "ring-green-500");
+      editButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        Save
+      `;
+      resultContentDiv.focus();
+    }
+  }
+</script>
+{% endblock %}

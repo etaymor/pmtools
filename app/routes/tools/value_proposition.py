@@ -24,14 +24,17 @@ def generate_value_prop():
             logger.error('Missing required fields')
             return jsonify({"success": False, "error": "Missing required fields"}), 400
         
-        prompt = f"""Create a compelling value proposition for:
-        Product: {product_name}
-        Target Audience: {target_audience}
-        Main Value: {main_value}
-        
-        Format: Create a concise, powerful value proposition that highlights the unique benefits."""
+        prompt = f"""1.	Craft a single-sentence value proposition that clearly communicates the product’s name, target customer segment, and primary benefits.
+	2.	Avoid jargon and keep the language straightforward and compelling.
+	3.	Provide no additional explanation—only the single-sentence value proposition as your output.
 
-        system_prompt = "You are a marketing expert specialized in creating compelling value propositions."
+    Product Details
+	Product Name: {product_name}
+	Target Customer Segment: {target_audience}
+	Main Benefits: {main_value}
+    """
+
+        system_prompt = "You are an experienced marketing strategist and copywriter specializing in concise, impactful value propositions."
         
         value_prop, success = openai_service.generate_completion(system_prompt, prompt)
         

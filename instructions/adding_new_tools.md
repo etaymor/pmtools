@@ -33,7 +33,7 @@ TOOLS = [
         'id': 'your_tool_id',
         'name': 'Your Tool Name',
         'description': 'Brief description of what your tool does',
-        'url': '/your-tool-url',
+        'url': '/your-tool-url',  # IMPORTANT: This must match your main route path
         'category': 'Generators'  # or another appropriate category
     }
 ]
@@ -41,15 +41,23 @@ TOOLS = [
 
 ### 2. Create Route Handler
 
-Create a new file in `app/routes/tools/your_tool.py`:
+Create a new file in `app/routes/tools/your_tool.py`. You MUST include both the main route for the HTML page AND the API endpoint:
 
 ```python
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from app.utils.logging_config import logger
 from app.services.openai_service import openai_service
+from config.tools import get_tools_by_category  # Required for tool_links component
 
 your_tool_bp = Blueprint('your_tool', __name__)
 
+# IMPORTANT: Main route to serve the HTML page
+@your_tool_bp.route('/your-tool-url')  # Must match the 'url' in tools.py
+def your_tool():
+    """Render the tool's main page."""
+    return render_template('your_tool.html', get_tools_by_category=get_tools_by_category)
+
+# API endpoint for tool functionality
 @your_tool_bp.route('/api/your-tool-endpoint', methods=['POST', 'OPTIONS'])
 def your_tool_handler():
     """Handle your tool's requests."""
@@ -71,15 +79,14 @@ def your_tool_handler():
             return jsonify({"success": False, "error": "Required fields missing"}), 400
 
         # Construct the prompt for OpenAI
-        prompt = f"""Your prompt template here:
+        system_prompt = "System prompt defining AI's role"
+        user_prompt = f"""Your prompt template here:
         Field1: {field1}
         Field2: {field2}
 
         Format your response as needed."""
 
-        system_prompt = "System prompt defining AI's role"
-
-        content, success = openai_service.generate_completion(system_prompt, prompt)
+        content, success = openai_service.generate_completion(system_prompt, user_prompt)
 
         if success:
             result = {
@@ -104,7 +111,7 @@ def your_tool_handler():
 
 ### 3. Create HTML Template
 
-Create a new file in `templates/your_tool.html`:
+Create a new file in `templates/your_tool.html`. The template MUST extend base.html and include the tool_links component:
 
 ```html
 {% extends "base.html" %} {% from "components/tool_links.html" import tool_links
@@ -122,7 +129,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
     </h1>
     <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
       <p class="text-base md:text-lg leading-relaxed">
-        Your tool's description and value proposition.
+        Your tool's description here.
       </p>
     </div>
   </div>
@@ -133,25 +140,6 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
   >
     <form id="yourToolForm" class="space-y-8">
       <!-- Your form fields here -->
-      <div class="space-y-6">
-        <div class="relative">
-          <label
-            for="field1"
-            class="block text-sm font-semibold text-gray-700 mb-2"
-          >
-            Field 1
-          </label>
-          <input
-            type="text"
-            id="field1"
-            name="field1"
-            required
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
-            placeholder="Field 1 placeholder"
-          />
-        </div>
-      </div>
-
       <button
         type="submit"
         class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
@@ -165,7 +153,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
       <div
         class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent"
       ></div>
-      <p class="mt-2 text-gray-600">Processing...</p>
+      <p class="mt-2 text-gray-600">Processing your request...</p>
     </div>
 
     <!-- Result Section -->
@@ -174,15 +162,36 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
       <div
         id="resultContent"
         class="p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg text-gray-700 text-lg leading-relaxed border border-green-100 shadow-sm"
+        contenteditable="false"
       ></div>
-      <button
-        onclick="copyToClipboard()"
-        class="mt-4 inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-      >
-        Copy to Clipboard
-      </button>
+      <div class="mt-4 flex space-x-2">
+        <button
+          onclick="copyToClipboard()"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          Copy to Clipboard
+        </button>
+        <button
+          onclick="toggleEdit()"
+          id="editButton"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mr-1"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+            />
+          </svg>
+          Edit
+        </button>
+      </div>
     </div>
 
+    <!-- Error Message -->
     <div
       id="error"
       class="hidden mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
@@ -196,12 +205,10 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
     <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
       Frequently Asked Questions
     </h2>
-    <div class="space-y-4">
-      <!-- Add your FAQs here following the existing pattern -->
-    </div>
+    <!-- Add your FAQ items here -->
   </section>
 
-  <!-- Related Tools Section -->
+  <!-- IMPORTANT: Include the tool_links component with your tool's ID -->
   {{ tool_links('your_tool_id') }}
 </div>
 
@@ -231,15 +238,14 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            field1: form.field1.value,
-            // Add other fields as needed
+            // Your form data here
           }),
         });
 
         const data = await response.json();
 
         if (data.success) {
-          resultContentDiv.innerHTML = data.your_result;
+          resultContentDiv.innerHTML = data.result;
           resultDiv.classList.remove("hidden");
           resultDiv.classList.add("animate-fade-in");
         } else {
@@ -266,6 +272,35 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         alert("Failed to copy to clipboard");
       });
   }
+
+  function toggleEdit() {
+    const resultContentDiv = document.getElementById("resultContent");
+    const editButton = document.getElementById("editButton");
+    const isEditing = resultContentDiv.contentEditable === "true";
+
+    if (isEditing) {
+      // Save mode
+      resultContentDiv.contentEditable = "false";
+      resultContentDiv.classList.remove("ring-2", "ring-green-500");
+      editButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+        </svg>
+        Edit
+      `;
+    } else {
+      // Edit mode
+      resultContentDiv.contentEditable = "true";
+      resultContentDiv.classList.add("ring-2", "ring-green-500");
+      editButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        Save
+      `;
+      resultContentDiv.focus();
+    }
+  }
 </script>
 
 <style>
@@ -287,54 +322,56 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 {% endblock %}
 ```
 
-### 4. Add Route to Main App
+### 4. Register the Blueprint
 
-In `app/__init__.py`, import and register your new blueprint:
+In `app/__init__.py`, import and register your blueprint:
 
 ```python
-from app.routes.tools.your_tool import your_tool_bp
-
-def create_app():
-    # ... existing setup ...
-
-    app.register_blueprint(your_tool_bp)
-
-    # ... rest of setup ...
+# Register blueprints
+from app.routes.tools.your_tool import your_tool_bp  # Import your blueprint
+app.register_blueprint(your_tool_bp)  # Register it
 ```
 
-### 5. Add Navigation Link
+## Common Errors and Solutions
 
-In `templates/base.html`, add your tool to the navigation menu:
+### 404 Not Found Error
 
-```html
-<div class="hidden md:flex items-center space-x-1">
-  <!-- ... existing links ... -->
-  <a
-    href="/your-tool-url"
-    class="py-4 px-2 text-gray-500 hover:text-green-500 transition duration-300"
-  >
-    Your Tool
-  </a>
-</div>
-```
+If you get a 404 error when accessing your tool's page:
 
-### 6. Add to Home Page
+1. Verify that the `url` in your tool configuration matches exactly with your main route path
+2. Ensure you have created the main route handler (not just the API endpoint)
+3. Check that your blueprint is properly registered in `app/__init__.py`
 
-In `templates/index.html`, add your tool to the grid:
+### Template Context Errors
 
-```html
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-  <!-- ... existing tools ... -->
-  <a href="/your-tool-url" class="block">
-    <div
-      class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-    >
-      <h2 class="text-xl font-semibold text-gray-800 mb-2">Your Tool Name</h2>
-      <p class="text-gray-600">Brief description of your tool.</p>
-    </div>
-  </a>
-</div>
-```
+If you get a "jinja2.exceptions.UndefinedError" about missing functions:
+
+1. Make sure to import `get_tools_by_category` from `config.tools`
+2. Pass it to the template context in your main route handler:
+   ```python
+   return render_template('your_tool.html', get_tools_by_category=get_tools_by_category)
+   ```
+
+### Blueprint Registration
+
+Common blueprint issues:
+
+1. Import the blueprint in `app/__init__.py`
+2. Register it with `app.register_blueprint()`
+3. Ensure the blueprint name matches your file name
+4. Check for any import errors in the console
+
+## Testing Your New Tool
+
+Before committing your changes:
+
+1. Test the main page loads without errors
+2. Test the API endpoint with valid and invalid inputs
+3. Verify all components (forms, buttons, results) work as expected
+4. Check that related tools are displayed correctly
+5. Test error handling and loading states
+
+Remember to follow the existing patterns and maintain consistency with other tools in the application.
 
 ## Best Practices
 
@@ -344,17 +381,20 @@ In `templates/index.html`, add your tool to the grid:
 4. **Documentation**: Add clear comments and update this documentation if needed
 5. **Testing**: Test your tool thoroughly before deployment
 6. **Logging**: Use the logger for important events and errors
+7. **User Interaction**: Include edit and copy functionality for generated content
+8. **Accessibility**: Ensure all interactive elements are keyboard-accessible
 
 ## Common Features to Include
 
 1. Loading states
 2. Error handling
 3. Copy to clipboard functionality
-4. Markdown rendering if needed
-5. FAQ section
-6. Related tools section
-7. SEO meta tags
-8. Responsive design elements
+4. Edit functionality with pencil/save icons
+5. Markdown rendering if needed
+6. FAQ section
+7. Related tools section
+8. SEO meta tags
+9. Responsive design elements
 
 ## Helpful Tips
 
@@ -363,3 +403,6 @@ In `templates/index.html`, add your tool to the grid:
 3. Maintain consistent UI/UX across tools
 4. Use the existing logging configuration
 5. Keep the code modular and maintainable
+6. Include edit functionality for all generated content
+7. Provide clear visual feedback for user actions
+8. Use consistent button styling and layout

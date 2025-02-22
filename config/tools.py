@@ -29,6 +29,13 @@ TOOLS = [
         'description': 'Prioritize features based on impact and effort',
         'url': '/feature-prioritization',
         'category': 'Analysis'
+    },
+    {
+        'id': 'pain_points',
+        'name': 'Customer Pain Point Identifier',
+        'description': 'Identify key pain points for your target customer segment',
+        'url': '/pain-points',
+        'category': 'Analysis'
     }
 ]
 
