@@ -1,0 +1,123 @@
+{% extends "base.html" %} {% block title %}Value Proposition Generator{%
+endblock %} {% block content %}
+<div class="max-w-2xl mx-auto">
+  <h1 class="text-3xl font-bold text-gray-800 mb-8">
+    Value Proposition Generator
+  </h1>
+
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <form id="valuePropositionForm" class="space-y-6">
+      <div>
+        <label for="productName" class="block text-sm font-medium text-gray-700"
+          >Product Name</label
+        >
+        <input
+          type="text"
+          id="productName"
+          name="productName"
+          required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+        />
+      </div>
+
+      <div>
+        <label
+          for="targetAudience"
+          class="block text-sm font-medium text-gray-700"
+          >Target Audience</label
+        >
+        <input
+          type="text"
+          id="targetAudience"
+          name="targetAudience"
+          required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+        />
+      </div>
+
+      <div>
+        <label for="mainValue" class="block text-sm font-medium text-gray-700"
+          >Main Value</label
+        >
+        <textarea
+          id="mainValue"
+          name="mainValue"
+          rows="3"
+          required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+      >
+        Generate Value Proposition
+      </button>
+    </form>
+
+    <div id="result" class="mt-8 hidden">
+      <h2 class="text-lg font-semibold text-gray-800 mb-2">
+        Generated Value Proposition:
+      </h2>
+      <div
+        id="valueProposition"
+        class="p-4 bg-gray-50 rounded-md text-gray-700"
+      ></div>
+    </div>
+
+    <div id="error" class="mt-4 hidden">
+      <p class="text-red-500"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document
+    .getElementById("valuePropositionForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const submitButton = form.querySelector('button[type="submit"]');
+      const resultDiv = document.getElementById("result");
+      const errorDiv = document.getElementById("error");
+      const valuePropositionDiv = document.getElementById("valueProposition");
+
+      // Disable button and show loading state
+      submitButton.disabled = true;
+      submitButton.innerHTML = "Generating...";
+      resultDiv.classList.add("hidden");
+      errorDiv.classList.add("hidden");
+
+      try {
+        const response = await fetch("/api/generate-value-prop", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            productName: form.productName.value,
+            targetAudience: form.targetAudience.value,
+            mainValue: form.mainValue.value,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          valuePropositionDiv.textContent = data.value_proposition;
+          resultDiv.classList.remove("hidden");
+        } else {
+          throw new Error(data.error || "Failed to generate value proposition");
+        }
+      } catch (error) {
+        errorDiv.querySelector("p").textContent = error.message;
+        errorDiv.classList.remove("hidden");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = "Generate Value Proposition";
+      }
+    });
+</script>
+{% endblock %}

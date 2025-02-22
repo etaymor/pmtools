@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block title %}SEO Tools - Home{% endblock %} {%
+block content %}
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-3xl font-bold text-gray-800 mb-8">Free SEO Tools</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <a href="/value-proposition" class="block">
+      <div
+        class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+      >
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">
+          Value Proposition Generator
+        </h2>
+        <p class="text-gray-600">
+          Create compelling value propositions for your products and services
+          using AI.
+        </p>
+      </div>
+    </a>
+    <!-- More tools can be added here in the future -->
+  </div>
+</div>
+{% endblock %}
