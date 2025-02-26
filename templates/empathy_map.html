@@ -1,0 +1,466 @@
+{% extends "base.html" %} {% from "components/tool_links.html" import tool_links
+with context %} {% from "components/share_buttons.html" import share_buttons
+with context %} {% block title %}User Empathy Map Generator - Free Product
+Management Tool{% endblock %} {% block meta_description %}Create detailed user
+empathy maps with our free generator. Perfect for UX researchers, product
+managers, and design teams looking to better understand their users' needs,
+thoughts, and feelings.{% endblock %} {% block og_title %}User Empathy Map
+Generator - Free Tool for Product Teams{% endblock %} {% block og_description
+%}{{ self.meta_description() }}{% endblock %} {% block twitter_title %}{{
+self.og_title() }}{% endblock %} {% block twitter_description %}{{
+self.meta_description() }}{% endblock %} {% block content %}
+<div class="max-w-4xl mx-auto">
+  <!-- Hero Section -->
+  <div class="text-center py-4 px-6 mb-8 rounded-2xl">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+      User Empathy Map Generator
+    </h1>
+    <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
+      <p class="text-base md:text-lg leading-relaxed">
+        Create comprehensive empathy maps to better understand your users'
+        needs, thoughts, feelings, and behaviors. This free tool helps product
+        teams develop deeper user empathy and design more user-centered
+        products.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Form Card -->
+  <div
+    class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
+  >
+    <form id="empathyMapForm" class="space-y-8">
+      <div class="space-y-6">
+        <div class="relative">
+          <label
+            for="userPersona"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            User Persona <span class="text-red-500">*</span>
+          </label>
+          <textarea
+            id="userPersona"
+            name="userPersona"
+            rows="3"
+            required
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+            placeholder="Describe your user persona (e.g., 'A 35-year-old marketing manager at a mid-sized tech company who struggles with time management')"
+          ></textarea>
+        </div>
+
+        <div class="relative">
+          <label
+            for="context"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Context/Scenario (Optional)
+          </label>
+          <textarea
+            id="context"
+            name="context"
+            rows="2"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+            placeholder="Describe the specific context or scenario (e.g., 'Using our project management tool to organize marketing campaigns')"
+          ></textarea>
+        </div>
+
+        <div class="relative">
+          <label
+            for="goals"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            User Goals (Optional)
+          </label>
+          <textarea
+            id="goals"
+            name="goals"
+            rows="2"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+            placeholder="What is the user trying to achieve? (e.g., 'Complete marketing tasks efficiently while maintaining visibility across the team')"
+          ></textarea>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+      >
+        Generate Empathy Map
+      </button>
+    </form>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="hidden mt-8 text-center">
+      <div
+        class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent"
+      ></div>
+      <p class="mt-2 text-gray-600">Creating your empathy map...</p>
+    </div>
+
+    <!-- Result Section -->
+    <div id="result" class="hidden mt-8 transform transition-all duration-300">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">
+        Your User Empathy Map:
+      </h2>
+      <div
+        id="empathyMapContent"
+        class="p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg text-gray-700 text-lg leading-relaxed border border-green-100 shadow-sm prose prose-lg max-w-none"
+        contenteditable="false"
+      ></div>
+      <div class="mt-4 flex space-x-2">
+        <button
+          onclick="copyToClipboard()"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          Copy to Clipboard
+        </button>
+        <button
+          onclick="toggleEdit()"
+          id="editButton"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mr-1"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+            />
+          </svg>
+          Edit
+        </button>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div
+      id="error"
+      class="hidden mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
+    >
+      <p class="text-red-600 text-center"></p>
+    </div>
+  </div>
+
+  {{ share_buttons() }}
+
+  <!-- FAQ Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+      Frequently Asked Questions
+    </h2>
+    <div class="space-y-4">
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          What is an empathy map?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>
+            An empathy map is a collaborative visualization tool that helps
+            teams better understand their users. It captures what a user says,
+            thinks, does, and feels, along with their pain points and gains.
+            Empathy maps help teams develop a deeper understanding of user needs
+            and motivations, leading to more user-centered product decisions.
+          </p>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          When should I use an empathy map?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>Empathy maps are particularly useful:</p>
+          <ul class="list-disc ml-6 mt-2 space-y-2">
+            <li>
+              Early in the product development process to understand user needs
+            </li>
+            <li>
+              When onboarding new team members to help them understand users
+            </li>
+            <li>
+              Before designing new features to ensure they address real user
+              needs
+            </li>
+            <li>
+              When making product decisions to keep the user perspective central
+            </li>
+            <li>During user research synthesis to organize findings</li>
+            <li>When creating personas to add depth and emotional context</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          How do I use the empathy map in my product development process?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>Here's how to effectively use empathy maps in your process:</p>
+          <ol class="list-decimal ml-6 mt-2 space-y-2">
+            <li>Generate the empathy map for your key user personas</li>
+            <li>
+              Share it with your team and stakeholders to align understanding
+            </li>
+            <li>Reference it when making design and feature decisions</li>
+            <li>Use it to identify opportunities to solve user pain points</li>
+            <li>Revisit and update it as you learn more about your users</li>
+            <li>Combine with other UX research methods for deeper insights</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          What makes a good empathy map?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>A good empathy map should:</p>
+          <ul class="list-disc ml-6 mt-2 space-y-2">
+            <li>Be specific to a particular user persona or segment</li>
+            <li>Include realistic, not idealized, user perspectives</li>
+            <li>
+              Capture both positive and negative aspects of the user experience
+            </li>
+            <li>Be based on real user research when possible</li>
+            <li>
+              Include specific quotes and behaviors, not just generalizations
+            </li>
+            <li>
+              Highlight contradictions between what users say and what they do
+            </li>
+            <li>Be actionable for the product team</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- IMPORTANT: Include the tool_links component with your tool's ID -->
+  {{ tool_links('empathy_map') }}
+</div>
+
+<script>
+  function renderMarkdown(text) {
+    // Handle headers (h1-h4)
+    text = text.replace(
+      /^# (.*?)$/gm,
+      "<h1 class='text-2xl font-bold mb-4 mt-6'>$1</h1>"
+    );
+    text = text.replace(
+      /^## (.*?)$/gm,
+      "<h2 class='text-xl font-bold mb-3 mt-5'>$1</h2>"
+    );
+    text = text.replace(
+      /^### (.*?)$/gm,
+      "<h3 class='text-lg font-bold mb-2 mt-4'>$1</h3>"
+    );
+    text = text.replace(
+      /^#### (.*?)$/gm,
+      "<h4 class='text-base font-bold mb-2 mt-3'>$1</h4>"
+    );
+
+    // Handle bold text with double asterisks
+    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+    // Handle italic text with single asterisks
+    text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
+
+    // Handle bullet points
+    text = text.replace(/^- (.*?)$/gm, "<li class='ml-4'>$1</li>");
+
+    // Handle numbered lists
+    text = text.replace(/^\d+\. (.*?)$/gm, "<li class='ml-4'>$1</li>");
+
+    // Handle line breaks
+    text = text.replace(/\n/g, "<br>");
+
+    return text;
+  }
+
+  document
+    .getElementById("empathyMapForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const submitButton = form.querySelector('button[type="submit"]');
+      const loadingDiv = document.getElementById("loading");
+      const resultDiv = document.getElementById("result");
+      const errorDiv = document.getElementById("error");
+      const resultContentDiv = document.getElementById("empathyMapContent");
+
+      // Show loading state
+      submitButton.disabled = true;
+      loadingDiv.classList.remove("hidden");
+      resultDiv.classList.add("hidden");
+      errorDiv.classList.add("hidden");
+
+      try {
+        const response = await fetch("/api/generate-empathy-map", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userPersona: document.getElementById("userPersona").value,
+            context: document.getElementById("context").value,
+            goals: document.getElementById("goals").value,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          resultContentDiv.innerHTML = renderMarkdown(data.empathy_map);
+          resultDiv.classList.remove("hidden");
+          resultDiv.classList.add("animate-fade-in");
+        } else {
+          throw new Error(data.error || "Failed to process request");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        errorDiv.querySelector("p").textContent = error.message;
+        errorDiv.classList.remove("hidden");
+      } finally {
+        submitButton.disabled = false;
+        loadingDiv.classList.add("hidden");
+      }
+    });
+
+  function copyToClipboard() {
+    const content = document.getElementById("empathyMapContent").innerText;
+    navigator.clipboard
+      .writeText(content)
+      .then(() => {
+        alert("Copied to clipboard!");
+      })
+      .catch(() => {
+        alert("Failed to copy to clipboard");
+      });
+  }
+
+  function toggleEdit() {
+    const resultContentDiv = document.getElementById("empathyMapContent");
+    const editButton = document.getElementById("editButton");
+    const isEditing = resultContentDiv.contentEditable === "true";
+
+    if (isEditing) {
+      // Save mode
+      resultContentDiv.contentEditable = "false";
+      resultContentDiv.classList.remove("ring-2", "ring-green-500");
+      editButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+        </svg>
+        Edit
+      `;
+    } else {
+      // Edit mode
+      resultContentDiv.contentEditable = "true";
+      resultContentDiv.classList.add("ring-2", "ring-green-500");
+      editButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        Save
+      `;
+      resultContentDiv.focus();
+    }
+  }
+</script>
+
+<style>
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out forwards;
+  }
+</style>
+{% endblock %}

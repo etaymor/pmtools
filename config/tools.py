@@ -78,6 +78,20 @@ TOOLS = [
         'description': 'Generate scrappy, budget-friendly growth hacking ideas tailored to your product and target audience',
         'url': '/growth-hacking',
         'category': 'Generators'
+    },
+    {
+        'id': 'empathy_map',
+        'name': 'User Empathy Map Generator',
+        'description': 'Create detailed empathy maps to better understand your users\' needs, thoughts, feelings, and behaviors',
+        'url': '/empathy-map',
+        'category': 'Research'
+    },
+    {
+        'id': 'stakeholder_interview',
+        'name': 'Stakeholder Interview Guide Generator',
+        'description': 'Create comprehensive interview guides for stakeholder interviews with focus on product discovery',
+        'url': '/stakeholder-interview',
+        'category': 'Research'
     }
 ]
 

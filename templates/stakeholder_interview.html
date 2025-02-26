@@ -1,0 +1,519 @@
+{% extends "base.html" %} {% from "components/tool_links.html" import tool_links
+with context %} {% from "components/share_buttons.html" import share_buttons
+with context %} {% block title %}Stakeholder Interview Guide Generator - Free
+Product Management Tool{% endblock %} {% block meta_description %}Create
+effective stakeholder interview guides with our free Stakeholder Interview Guide
+Generator. Perfect for product managers conducting product discovery interviews
+with key stakeholders.{% endblock %} {% block og_title %}Stakeholder Interview
+Guide Generator - Free Tool for Product Teams{% endblock %} {% block
+og_description %}{{ self.meta_description() }}{% endblock %} {% block
+twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
+%}{{ self.meta_description() }}{% endblock %} {% block content %}
+<div class="max-w-4xl mx-auto">
+  <!-- Hero Section -->
+  <div class="text-center py-4 px-6 mb-8 rounded-2xl">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+      Stakeholder Interview Guide Generator
+    </h1>
+    <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
+      <p class="text-base md:text-lg leading-relaxed">
+        Create comprehensive interview guides for stakeholder interviews with a
+        focus on product discovery. This free tool helps product managers
+        prepare effective questions that uncover valuable insights and align on
+        north star goals with key stakeholders.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Form Card -->
+  <div
+    class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
+  >
+    <form id="stakeholderInterviewForm" class="space-y-8">
+      <div class="space-y-6">
+        <div class="relative">
+          <label
+            for="stakeholderRole"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Stakeholder Type/Role
+          </label>
+          <input
+            type="text"
+            id="stakeholderRole"
+            name="stakeholderRole"
+            required
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+            placeholder="e.g., Engineering Lead, Marketing Director, Executive Sponsor, Sales Manager"
+          />
+        </div>
+
+        <div class="relative">
+          <label
+            for="interviewObjectives"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Interview Objectives
+          </label>
+          <textarea
+            id="interviewObjectives"
+            name="interviewObjectives"
+            rows="3"
+            required
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+            placeholder="What do you want to learn from this stakeholder interview? e.g., understand technical constraints, align on product vision, identify success metrics"
+          ></textarea>
+        </div>
+
+        <div class="relative">
+          <label
+            for="focusAreas"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Specific Areas of Focus (Optional)
+          </label>
+          <textarea
+            id="focusAreas"
+            name="focusAreas"
+            rows="2"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+            placeholder="Any specific topics or areas you want to focus on? e.g., timeline constraints, resource allocation, integration requirements"
+          ></textarea>
+        </div>
+
+        <div class="relative">
+          <label
+            for="interviewDuration"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Interview Duration
+          </label>
+          <select
+            id="interviewDuration"
+            name="interviewDuration"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+          >
+            <option value="short">Short (15-20 min)</option>
+            <option value="medium" selected>Medium (30-45 min)</option>
+            <option value="long">Long (60+ min)</option>
+          </select>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+      >
+        Generate Interview Guide
+      </button>
+    </form>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="hidden mt-8 text-center">
+      <div
+        class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent"
+      ></div>
+      <p class="mt-2 text-gray-600">
+        Creating your stakeholder interview guide...
+      </p>
+    </div>
+
+    <!-- Result Section -->
+    <div id="result" class="hidden mt-8 transform transition-all duration-300">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">
+        Your Stakeholder Interview Guide:
+      </h2>
+      <div
+        id="resultContent"
+        class="p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg text-gray-700 text-lg leading-relaxed border border-green-100 shadow-sm markdown-content"
+        contenteditable="false"
+      ></div>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <button
+          onclick="copyToClipboard()"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mr-1"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+            <path
+              d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
+            />
+          </svg>
+          Copy to Clipboard
+        </button>
+        <button
+          onclick="toggleEdit()"
+          id="editButton"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mr-1"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+            />
+          </svg>
+          Edit
+        </button>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div
+      id="error"
+      class="hidden mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
+    >
+      <p class="text-red-600 text-center"></p>
+    </div>
+  </div>
+
+  <!-- Share Buttons -->
+  {{ share_buttons() }}
+
+  <!-- FAQ Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+      Frequently Asked Questions
+    </h2>
+    <div class="space-y-4">
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          What makes a good stakeholder interview?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>
+            A good stakeholder interview is structured yet conversational, with
+            clear objectives and open-ended questions. It should create a safe
+            space for honest feedback, focus on understanding the stakeholder's
+            perspective, and include questions about their goals, challenges,
+            and success metrics. The interview should also explore alignment on
+            the product's north star and vision.
+          </p>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          How should I prepare for a stakeholder interview?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>
+            Before the interview, research the stakeholder's role and
+            responsibilities. Define clear objectives for what you want to
+            learn. Prepare your questions in advance using this tool, but be
+            ready to adapt during the conversation. Schedule enough time and
+            choose a comfortable setting. Send a brief agenda beforehand so they
+            know what to expect, and consider sharing key questions in advance
+            if they require thoughtful consideration.
+          </p>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          What types of questions should I include about north star goals?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>
+            For north star goal questions, ask about their vision for success in
+            1-3 years, what metrics would indicate success, how they would
+            measure progress, what they believe should be the product's primary
+            focus, and how they see the product contributing to broader
+            organizational goals. Also explore what they believe users or
+            customers would consider the most valuable outcome from using the
+            product.
+          </p>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          How do I handle difficult stakeholders during an interview?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>
+            When dealing with difficult stakeholders, stay calm and
+            professional. Listen actively without interrupting, even if you
+            disagree. Acknowledge their concerns and perspective. Ask clarifying
+            questions to better understand their position. Find common ground by
+            focusing on shared goals. If the conversation becomes tense,
+            consider taking a short break or redirecting to a less contentious
+            topic before returning to challenging areas.
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- IMPORTANT: Include the tool_links component with your tool's ID -->
+  {{ tool_links('stakeholder_interview') }}
+</div>
+
+<script>
+  document
+    .getElementById("stakeholderInterviewForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const submitButton = form.querySelector('button[type="submit"]');
+      const loadingDiv = document.getElementById("loading");
+      const resultDiv = document.getElementById("result");
+      const errorDiv = document.getElementById("error");
+      const resultContentDiv = document.getElementById("resultContent");
+
+      // Show loading state
+      submitButton.disabled = true;
+      loadingDiv.classList.remove("hidden");
+      resultDiv.classList.add("hidden");
+      errorDiv.classList.add("hidden");
+
+      try {
+        const formData = {
+          stakeholderRole: document.getElementById("stakeholderRole").value,
+          interviewObjectives: document.getElementById("interviewObjectives")
+            .value,
+          interviewDuration: document.getElementById("interviewDuration").value,
+          focusAreas: document.getElementById("focusAreas").value,
+        };
+
+        const response = await fetch("/api/generate-stakeholder-interview", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Convert markdown to HTML
+          resultContentDiv.innerHTML = marked.parse(data.interview_guide);
+          resultDiv.classList.remove("hidden");
+          resultDiv.classList.add("animate-fade-in");
+          // Scroll to results
+          resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } else {
+          throw new Error(data.error || "Failed to process request");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        errorDiv.querySelector("p").textContent = error.message;
+        errorDiv.classList.remove("hidden");
+      } finally {
+        submitButton.disabled = false;
+        loadingDiv.classList.add("hidden");
+      }
+    });
+
+  function copyToClipboard() {
+    const content = document.getElementById("resultContent").textContent;
+    navigator.clipboard
+      .writeText(content)
+      .then(() => {
+        alert("Copied to clipboard!");
+      })
+      .catch(() => {
+        alert("Failed to copy to clipboard");
+      });
+  }
+
+  function toggleEdit() {
+    const resultContentDiv = document.getElementById("resultContent");
+    const editButton = document.getElementById("editButton");
+    const isEditing = resultContentDiv.contentEditable === "true";
+
+    if (isEditing) {
+      // Save mode
+      resultContentDiv.contentEditable = "false";
+      resultContentDiv.classList.remove("ring-2", "ring-green-500");
+      editButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+        </svg>
+        Edit
+      `;
+    } else {
+      // Edit mode
+      resultContentDiv.contentEditable = "true";
+      resultContentDiv.classList.add("ring-2", "ring-green-500");
+      editButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        Save
+      `;
+      resultContentDiv.focus();
+    }
+  }
+</script>
+
+<!-- Add Marked.js for Markdown parsing -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<style>
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out forwards;
+  }
+
+  /* Markdown styling */
+  .markdown-content h1 {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  .markdown-content h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  .markdown-content h3 {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  .markdown-content p {
+    margin-bottom: 1em;
+  }
+
+  .markdown-content ul,
+  .markdown-content ol {
+    margin-left: 1.5em;
+    margin-bottom: 1em;
+  }
+
+  .markdown-content li {
+    margin-bottom: 0.5em;
+  }
+
+  .markdown-content blockquote {
+    border-left: 4px solid #e2e8f0;
+    padding-left: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-style: italic;
+  }
+
+  .markdown-content code {
+    background-color: #f1f5f9;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
+  }
+
+  .markdown-content pre {
+    background-color: #f1f5f9;
+    padding: 1em;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin-bottom: 1em;
+  }
+
+  .markdown-content pre code {
+    background-color: transparent;
+    padding: 0;
+  }
+</style>
+{% endblock %}

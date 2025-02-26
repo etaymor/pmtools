@@ -17,12 +17,9 @@
         href="{{ tool.url }}"
         class="group p-4 rounded-xl border border-gray-100 hover:border-green-100 hover:shadow-md transition-all duration-200"
       >
-        <h4
-          class="text-lg font-semibold text-gray-800 group-hover:text-green-600 mb-2"
-        >
+        <p class="text-md text-gray-800 group-hover:text-green-600">
           {{ tool.name }}
-        </h4>
-        <p class="text-sm text-gray-600">{{ tool.description }}</p>
+        </p>
       </a>
       {% endfor %}
     </div>
