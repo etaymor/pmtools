@@ -27,11 +27,23 @@ def create_app():
     from app.routes.tools.value_proposition import value_prop_bp
     from app.routes.tools.user_story import user_story_bp
     from app.routes.tools.pain_points import pain_points_bp
+    from app.routes.tools.oblique_strategies import oblique_strategies_bp
+    from app.routes.tools.ai_ideation import ai_ideation_bp
+    from app.routes.tools.market_gap import market_gap_bp
+    from app.routes.tools.interview_script import interview_script_bp
+    from app.routes.tools.release_notes import release_notes_bp
+    from app.routes.tools.growth_hacking import growth_hacking_bp
     
     app.register_blueprint(main_bp)
     app.register_blueprint(value_prop_bp)
     app.register_blueprint(user_story_bp)
     app.register_blueprint(pain_points_bp)
+    app.register_blueprint(oblique_strategies_bp)
+    app.register_blueprint(ai_ideation_bp)
+    app.register_blueprint(market_gap_bp)
+    app.register_blueprint(interview_script_bp)
+    app.register_blueprint(release_notes_bp)
+    app.register_blueprint(growth_hacking_bp)
     
     # Debug template loading
     app.config['EXPLAIN_TEMPLATE_LOADING'] = True

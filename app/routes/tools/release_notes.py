@@ -1,0 +1,88 @@
+from flask import Blueprint, request, jsonify, render_template
+from app.utils.logging_config import logger
+from app.services.openai_service import openai_service
+from config.tools import get_tools_by_category
+
+release_notes_bp = Blueprint('release_notes', __name__)
+
+@release_notes_bp.route('/release-notes')
+def release_notes():
+    """Render the release notes generator page."""
+    return render_template('release_notes.html', get_tools_by_category=get_tools_by_category)
+
+@release_notes_bp.route('/api/generate-release-notes', methods=['POST', 'OPTIONS'])
+def generate_release_notes():
+    """Handle release notes generation requests."""
+    if request.method == 'OPTIONS':
+        return '', 204
+        
+    try:
+        data = request.get_json()
+        if not data:
+            logger.error('No JSON data received')
+            return jsonify({"success": False, "error": "No data provided"}), 400
+            
+        changes_list = data.get('changesList')
+        style = data.get('style', 'professional')
+        version_number = data.get('versionNumber', '')
+        release_date = data.get('releaseDate', '')
+        
+        if not changes_list:
+            logger.error('Missing required fields')
+            return jsonify({"success": False, "error": "List of changes is required"}), 400
+        
+        # Construct the system prompt based on the selected style
+        system_prompts = {
+            'professional': "You are a technical writer specializing in clear, concise, and professional release notes. Your writing is formal, precise, and focuses on communicating value to stakeholders. Format your response using proper Markdown syntax.",
+            'casual': "You are a friendly product manager writing release notes in a conversational, approachable tone. Your writing is clear but casual, as if explaining changes to a colleague over coffee. Format your response using proper Markdown syntax.",
+            'spicy': "You are a witty, slightly sarcastic product manager writing release notes with personality and flair. Your writing is engaging, memorable, and includes tasteful humor without being unprofessional. Format your response using proper Markdown syntax.",
+            'enthusiastic': "You are an extremely enthusiastic product manager who LOVES new features! Your writing is energetic, uses plenty of emojis, and conveys genuine excitement about even the smallest improvements. Format your response using proper Markdown syntax."
+        }
+        
+        system_prompt = system_prompts.get(style, system_prompts['professional'])
+        
+        # Construct the user prompt
+        version_info = f"Version: {version_number}\n" if version_number else ""
+        date_info = f"Release Date: {release_date}\n" if release_date else ""
+        
+        user_prompt = f"""Transform the following list of changes into well-structured release notes:
+
+{changes_list}
+
+{version_info}{date_info}
+Format the release notes with:
+1. A catchy headline/title for this release{'' if version_number else ' (include the version number if you can infer it from the changes)'}
+2. A brief introduction summarizing the key themes of this release
+3. Organized sections with bullet points for different types of changes (features, improvements, bug fixes)
+4. A brief conclusion thanking users or highlighting what's coming next
+
+Make sure to:
+- Group similar items together
+- Highlight the value of each change to the user
+- Use consistent formatting and tense
+- Keep the tone {style}
+- Include the version number and release date in the header if provided
+- Format your response using Markdown with proper headers (# for title, ## for sections), bullet points, and emphasis where appropriate
+"""
+
+        notes_content, success = openai_service.generate_completion(system_prompt, user_prompt)
+        
+        if success:
+            result = {
+                "success": True,
+                "release_notes": notes_content
+            }
+            logger.debug('Success response: %s', result)
+            return jsonify(result)
+        else:
+            return jsonify({
+                "success": False,
+                "error": notes_content  # Error message is returned when success is False
+            }), 500
+            
+    except Exception as e:
+        logger.exception('Error in generate_release_notes: %s', str(e))
+        return jsonify({
+            "success": False,
+            "error": "An unexpected error occurred. Please try again."
+        }), 500 

@@ -1,0 +1,278 @@
+{% extends "base.html" %} {% from "components/tool_links.html" import tool_links
+with context %} {% from "components/share_buttons.html" import share_buttons
+with context %} {% block title %}Oblique Strategies - Random Creative Prompts{%
+endblock %} {% block meta_description %}Get inspired with Brian Eno's Oblique
+Strategies - a set of provocative prompts designed to break creative blocks and
+encourage lateral thinking.{% endblock %} {% block og_title %}Oblique Strategies
+- Random Creative Prompts{% endblock %} {% block og_description %}{{
+self.meta_description() }}{% endblock %} {% block twitter_title %}{{
+self.og_title() }}{% endblock %} {% block twitter_description %}{{
+self.meta_description() }}{% endblock %} {% block content %}
+<div class="max-w-4xl mx-auto">
+  <!-- Hero Section -->
+  <div class="text-center py-4 px-6 mb-8 rounded-2xl">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+      Oblique Strategies
+    </h1>
+    <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
+      <p class="text-base md:text-lg leading-relaxed">
+        Break through creative blocks with Brian Eno's Oblique Strategies - a
+        collection of provocative prompts designed to help you think laterally
+        and find new creative directions.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Card -->
+  <div
+    class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
+  >
+    <!-- Strategy Display -->
+    <div
+      id="strategyDisplay"
+      class="mb-8 min-h-[100px] flex items-center justify-center"
+    >
+      <p
+        class="text-2xl md:text-3xl text-center font-medium text-gray-800 italic"
+      >
+        Click the button below to get a random strategy
+      </p>
+    </div>
+
+    <!-- Get Another Button -->
+    <button
+      id="getStrategyBtn"
+      class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+    >
+      Get Another Strategy
+    </button>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="hidden mt-8 text-center">
+      <div
+        class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent"
+      ></div>
+    </div>
+
+    <!-- Error Message -->
+    <div
+      id="error"
+      class="hidden mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
+    >
+      <p class="text-red-600 text-center"></p>
+    </div>
+  </div>
+
+  <!-- Share Buttons -->
+  {{ share_buttons() }}
+
+  <!-- FAQ Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+      Frequently Asked Questions
+    </h2>
+    <div class="space-y-4">
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          What are Oblique Strategies?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>
+            Oblique Strategies is a deck of cards created by Brian Eno and Peter
+            Schmidt in 1975. Each card contains a challenging constraint or
+            suggestion designed to help artists break creative blocks by
+            encouraging lateral thinking. The cards are intentionally abstract
+            and open to interpretation, making them useful for any creative
+            endeavor.
+          </p>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          How do I use this tool effectively?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>When you're stuck on a creative problem or decision:</p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Click "Get Another Strategy" to receive a random prompt</li>
+            <li>
+              Take a moment to reflect on how the prompt might relate to your
+              current situation
+            </li>
+            <li>Consider multiple interpretations of the prompt</li>
+            <li>
+              Apply the suggestion literally or metaphorically to your work
+            </li>
+            <li>
+              Use it as a starting point for breaking out of conventional
+              thinking
+            </li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          When should I use Oblique Strategies?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>Use this tool when:</p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>You're feeling creatively blocked</li>
+            <li>You need a fresh perspective on a problem</li>
+            <li>You're stuck in conventional thinking patterns</li>
+            <li>You want to explore alternative approaches</li>
+            <li>You need to break out of your comfort zone</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          What makes Oblique Strategies effective?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>
+            The effectiveness of Oblique Strategies comes from their ability to:
+          </p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Force lateral thinking through unexpected suggestions</li>
+            <li>Break established patterns of thought</li>
+            <li>Provide constraints that spark creativity</li>
+            <li>Encourage looking at problems from new angles</li>
+            <li>Create cognitive distance from immediate concerns</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Related Tools -->
+  {{ tool_links('oblique_strategies') }}
+</div>
+
+<script>
+  const strategyDisplay = document.getElementById("strategyDisplay");
+  const getStrategyBtn = document.getElementById("getStrategyBtn");
+  const loadingDiv = document.getElementById("loading");
+  const errorDiv = document.getElementById("error");
+
+  async function getRandomStrategy() {
+    // Show loading state
+    getStrategyBtn.disabled = true;
+    loadingDiv.classList.remove("hidden");
+    errorDiv.classList.add("hidden");
+
+    try {
+      const response = await fetch("/api/oblique-strategies/random");
+      const data = await response.json();
+
+      if (data.success) {
+        // Update display with fade effect
+        strategyDisplay.style.opacity = "0";
+        setTimeout(() => {
+          strategyDisplay.innerHTML = `<p class="text-2xl md:text-3xl text-center font-medium text-gray-800 italic">${data.strategy}</p>`;
+          strategyDisplay.style.opacity = "1";
+        }, 200);
+      } else {
+        throw new Error(data.error || "Failed to get strategy");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      errorDiv.querySelector("p").textContent = error.message;
+      errorDiv.classList.remove("hidden");
+    } finally {
+      getStrategyBtn.disabled = false;
+      loadingDiv.classList.add("hidden");
+    }
+  }
+
+  getStrategyBtn.addEventListener("click", getRandomStrategy);
+
+  // Get initial strategy on page load
+  getRandomStrategy();
+</script>
+
+<style>
+  #strategyDisplay {
+    transition: opacity 0.2s ease-in-out;
+  }
+</style>
+{% endblock %}

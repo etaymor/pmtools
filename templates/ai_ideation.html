@@ -1,0 +1,269 @@
+{% extends "base.html" %} {% from "components/tool_links.html" import tool_links
+with context %} {% from "components/share_buttons.html" import share_buttons
+with context %} {% block title %}AI Ideation Prompts - Random Creative AI
+Prompts{% endblock %} {% block meta_description %}Spark innovative AI-driven
+solutions with our random ideation prompts. Perfect for brainstorming sessions,
+design sprints, and creative workshops.{% endblock %} {% block og_title %}AI
+Ideation Prompts - Random Creative AI Prompts{% endblock %} {% block
+og_description %}{{ self.meta_description() }}{% endblock %} {% block
+twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
+%}{{ self.meta_description() }}{% endblock %} {% block content %}
+<div class="max-w-4xl mx-auto">
+  <!-- Hero Section -->
+  <div class="text-center py-4 px-6 mb-8 rounded-2xl">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+      AI Ideation Prompts
+    </h1>
+    <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
+      <p class="text-base md:text-lg leading-relaxed">
+        Generate innovative AI-driven solutions with thought-provoking prompts.
+        Perfect for team brainstorming sessions, design sprints, and creative
+        workshops focused on AI integration.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Card -->
+  <div
+    class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
+  >
+    <!-- Prompt Display -->
+    <div
+      id="promptDisplay"
+      class="mb-8 min-h-[100px] flex items-center justify-center"
+    >
+      <p
+        class="text-2xl md:text-3xl text-center font-medium text-gray-800 italic"
+      >
+        Click the button below to get a random AI ideation prompt
+      </p>
+    </div>
+
+    <!-- Get Another Button -->
+    <button
+      id="getPromptBtn"
+      class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+    >
+      Get Another Prompt
+    </button>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="hidden mt-8 text-center">
+      <div
+        class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent"
+      ></div>
+    </div>
+
+    <!-- Error Message -->
+    <div
+      id="error"
+      class="hidden mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
+    >
+      <p class="text-red-600 text-center"></p>
+    </div>
+  </div>
+
+  <!-- Share Buttons -->
+  {{ share_buttons() }}
+
+  <!-- FAQ Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+      Frequently Asked Questions
+    </h2>
+    <div class="space-y-4">
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          What are AI Ideation Prompts?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>
+            AI Ideation Prompts are thought-provoking questions designed to
+            spark innovative thinking about AI integration in your projects.
+            They help teams explore different angles of how AI could enhance,
+            transform, or reimagine solutions to problems.
+          </p>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          When should I use these prompts?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>Use these prompts during:</p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Design thinking workshops</li>
+            <li>Product brainstorming sessions</li>
+            <li>Team ideation exercises like Crazy Eights</li>
+            <li>Feature planning meetings</li>
+            <li>Innovation sprints</li>
+            <li>AI integration discussions</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          How do I use these prompts effectively?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>For best results:</p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Share the prompt with your team</li>
+            <li>Set a time limit for ideation (e.g., 5-8 minutes)</li>
+            <li>Encourage wild ideas - no judgment during ideation</li>
+            <li>Build on others' ideas</li>
+            <li>Focus on quantity over quality initially</li>
+            <li>Use sketches or diagrams to visualize ideas</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          How do I facilitate a session using these prompts?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>Follow these steps for a productive session:</p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Start with a clear problem statement</li>
+            <li>Generate a new prompt for each round</li>
+            <li>Give everyone time to sketch or write ideas individually</li>
+            <li>Share and discuss ideas as a group</li>
+            <li>Combine and build upon promising concepts</li>
+            <li>Document all ideas for future reference</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Related Tools -->
+  {{ tool_links('ai_ideation') }}
+</div>
+
+<script>
+  const promptDisplay = document.getElementById("promptDisplay");
+  const getPromptBtn = document.getElementById("getPromptBtn");
+  const loadingDiv = document.getElementById("loading");
+  const errorDiv = document.getElementById("error");
+
+  async function getRandomPrompt() {
+    // Show loading state
+    getPromptBtn.disabled = true;
+    loadingDiv.classList.remove("hidden");
+    errorDiv.classList.add("hidden");
+
+    try {
+      const response = await fetch("/api/ai-ideation/random");
+      const data = await response.json();
+
+      if (data.success) {
+        // Update display with fade effect
+        promptDisplay.style.opacity = "0";
+        setTimeout(() => {
+          promptDisplay.innerHTML = `<p class="text-2xl md:text-3xl text-center font-medium text-gray-800 italic">${data.prompt}</p>`;
+          promptDisplay.style.opacity = "1";
+        }, 200);
+      } else {
+        throw new Error(data.error || "Failed to get prompt");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      errorDiv.querySelector("p").textContent = error.message;
+      errorDiv.classList.remove("hidden");
+    } finally {
+      getPromptBtn.disabled = false;
+      loadingDiv.classList.add("hidden");
+    }
+  }
+
+  getPromptBtn.addEventListener("click", getRandomPrompt);
+
+  // Get initial prompt on page load
+  getRandomPrompt();
+</script>
+
+<style>
+  #promptDisplay {
+    transition: opacity 0.2s ease-in-out;
+  }
+</style>
+{% endblock %}

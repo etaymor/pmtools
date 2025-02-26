@@ -205,7 +205,35 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
     <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
       Frequently Asked Questions
     </h2>
-    <!-- Add your FAQ items here -->
+    <div class="space-y-4">
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          Your Question Here
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>Your answer here.</p>
+        </div>
+      </details>
+    </div>
   </section>
 
   <!-- IMPORTANT: Include the tool_links component with your tool's ID -->
@@ -391,11 +419,61 @@ Remember to follow the existing patterns and maintain consistency with other too
 3. Copy to clipboard functionality
 4. Edit functionality with pencil/save icons
 5. Markdown rendering if needed
-6. FAQ section
+6. FAQ section with expandable details
 7. Related tools section
 8. SEO meta tags
 9. Responsive design elements
 10. Social sharing buttons
+
+## FAQ Section Example
+
+Each tool should include an FAQ section with expandable details. Here's the standard pattern:
+
+```html
+<!-- FAQ Section -->
+<section class="mb-12">
+  <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+    Frequently Asked Questions
+  </h2>
+  <div class="space-y-4">
+    <details class="group bg-white rounded-xl shadow-sm">
+      <summary
+        class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+      >
+        Your Question Here
+        <span
+          class="transform group-open:rotate-180 transition-transform duration-200"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            ></path>
+          </svg>
+        </span>
+      </summary>
+      <div class="px-6 pb-6 text-gray-600">
+        <p>Your answer here.</p>
+      </div>
+    </details>
+  </div>
+</section>
+```
+
+Key features of the FAQ section:
+
+- Uses HTML5 `<details>` and `<summary>` elements for native expand/collapse
+- Includes animated chevron that rotates on expansion
+- Consistent styling with hover effects
+- Accessible keyboard navigation
+- Smooth transitions
 
 ## Social Sharing Integration
 

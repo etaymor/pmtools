@@ -36,6 +36,48 @@ TOOLS = [
         'description': 'Identify key pain points for your target customer segment',
         'url': '/pain-points',
         'category': 'Analysis'
+    },
+    {
+        'id': 'oblique_strategies',
+        'name': 'Oblique Strategies',
+        'description': 'Get inspired with Brian Eno\'s Oblique Strategies - random prompts for breaking creative blocks',
+        'url': '/oblique-strategies',
+        'category': 'Random Prompts'
+    },
+    {
+        'id': 'ai_ideation',
+        'name': 'AI Ideation Prompts',
+        'description': 'Generate innovative AI-driven solutions with thought-provoking prompts for team brainstorming',
+        'url': '/ai-ideation',
+        'category': 'Random Prompts'
+    },
+    {
+        'id': 'market_gap',
+        'name': 'Market Gap Identifier',
+        'description': 'Identify potential market gaps and opportunities based on industry analysis',
+        'url': '/market-gap',
+        'category': 'Analysis'
+    },
+    {
+        'id': 'interview_script',
+        'name': 'User Interview Script Generator',
+        'description': 'Create structured interview scripts for user research and product validation',
+        'url': '/interview-script',
+        'category': 'Research'
+    },
+    {
+        'id': 'release_notes',
+        'name': 'Release Notes Generator',
+        'description': 'Transform your list of fixes and features into polished release notes with various style options',
+        'url': '/release-notes',
+        'category': 'Generators'
+    },
+    {
+        'id': 'growth_hacking',
+        'name': 'Growth Hacking Idea Generator',
+        'description': 'Generate scrappy, budget-friendly growth hacking ideas tailored to your product and target audience',
+        'url': '/growth-hacking',
+        'category': 'Generators'
     }
 ]
 

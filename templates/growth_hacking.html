@@ -1,9 +1,11 @@
 {% extends "base.html" %} {% from "components/tool_links.html" import tool_links
 with context %} {% from "components/share_buttons.html" import share_buttons
-with context %} {% block title %}Customer Pain Point Identifier - Free Product
-Management Tool{% endblock %} {% block meta_description %}Identify key customer
-pain points for your target market segment using AI-powered analysis.{% endblock
-%} {% block og_title %}Customer Pain Point Identifier - Free Tool for Product
+with context %} {% block title %}Growth Hacking Idea Generator - Free Product
+Management Tool{% endblock %} {% block meta_description %}Generate creative,
+scrappy, and budget-friendly growth hacking ideas for your product with our free
+Growth Hacking Idea Generator. Perfect for startups, product managers, and
+marketers looking to grow their user base with minimal resources.{% endblock %}
+{% block og_title %}Growth Hacking Idea Generator - Free Tool for Product
 Teams{% endblock %} {% block og_description %}{{ self.meta_description() }}{%
 endblock %} {% block twitter_title %}{{ self.og_title() }}{% endblock %} {%
 block twitter_description %}{{ self.meta_description() }}{% endblock %} {% block
@@ -12,13 +14,14 @@ content %}
   <!-- Hero Section -->
   <div class="text-center py-4 px-6 mb-8 rounded-2xl">
     <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
-      Customer Pain Point Identifier
+      Growth Hacking Idea Generator
     </h1>
     <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
       <p class="text-base md:text-lg leading-relaxed">
-        Uncover the most significant pain points your target customers are
-        experiencing. Simply describe your target segment and product space to
-        receive AI-generated insights into customer challenges.
+        Generate creative, scrappy, and budget-friendly growth hacking ideas
+        tailored to your product and target audience. This tool helps startups
+        and product teams find innovative ways to grow their user base with
+        minimal resources.
       </p>
     </div>
   </div>
@@ -27,40 +30,111 @@ content %}
   <div
     class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
   >
-    <form id="painPointsForm" class="space-y-8">
+    <form id="growthHackingForm" class="space-y-8">
       <div class="space-y-6">
         <div class="relative">
           <label
-            for="targetSegment"
+            for="productDescription"
             class="block text-sm font-semibold text-gray-700 mb-2"
           >
-            Target Customer Segment
+            Product Description
           </label>
           <textarea
-            id="targetSegment"
-            name="targetSegment"
-            required
+            id="productDescription"
+            name="productDescription"
             rows="3"
+            required
             class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
-            placeholder="Describe your target customer segment (e.g., 'Small business owners in the retail industry' or 'Urban millennials interested in fitness')"
+            placeholder="Briefly describe what your product does and its key features"
           ></textarea>
         </div>
 
         <div class="relative">
           <label
-            for="productInfo"
+            for="targetAudience"
             class="block text-sm font-semibold text-gray-700 mb-2"
           >
-            Product/Space Information
+            Target Audience
           </label>
           <textarea
-            id="productInfo"
-            name="productInfo"
+            id="targetAudience"
+            name="targetAudience"
+            rows="2"
             required
-            rows="3"
             class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
-            placeholder="Describe your product or business space (e.g., 'Mobile app for inventory management' or 'Online fitness coaching platform')"
+            placeholder="Describe your ideal users (demographics, behaviors, needs, etc.)"
           ></textarea>
+        </div>
+
+        <div class="relative">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">
+            Growth Stage Focus (Select at least one)
+          </label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                id="acquisition"
+                name="growthStages"
+                value="Acquisition"
+                class="h-5 w-5 text-green-500 rounded border-gray-300 focus:ring-green-500"
+              />
+              <label for="acquisition" class="ml-2 text-gray-700">
+                Acquisition (Getting new users)
+              </label>
+            </div>
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                id="activation"
+                name="growthStages"
+                value="Activation"
+                class="h-5 w-5 text-green-500 rounded border-gray-300 focus:ring-green-500"
+              />
+              <label for="activation" class="ml-2 text-gray-700">
+                Activation (First meaningful experience)
+              </label>
+            </div>
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                id="retention"
+                name="growthStages"
+                value="Retention"
+                class="h-5 w-5 text-green-500 rounded border-gray-300 focus:ring-green-500"
+              />
+              <label for="retention" class="ml-2 text-gray-700">
+                Retention (Keeping users engaged)
+              </label>
+            </div>
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                id="referral"
+                name="growthStages"
+                value="Referral"
+                class="h-5 w-5 text-green-500 rounded border-gray-300 focus:ring-green-500"
+              />
+              <label for="referral" class="ml-2 text-gray-700">
+                Referral (Users inviting others)
+              </label>
+            </div>
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                id="revenue"
+                name="growthStages"
+                value="Revenue"
+                class="h-5 w-5 text-green-500 rounded border-gray-300 focus:ring-green-500"
+              />
+              <label for="revenue" class="ml-2 text-gray-700">
+                Revenue (Monetization strategies)
+              </label>
+            </div>
+          </div>
+          <div id="growthStageError" class="text-red-500 text-sm mt-1 hidden">
+            Please select at least one growth stage.
+          </div>
         </div>
       </div>
 
@@ -68,7 +142,7 @@ content %}
         type="submit"
         class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
       >
-        Generate Pain Points
+        Generate Growth Hacking Ideas
       </button>
     </form>
 
@@ -77,17 +151,17 @@ content %}
       <div
         class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent"
       ></div>
-      <p class="mt-2 text-gray-600">Analyzing customer segment...</p>
+      <p class="mt-2 text-gray-600">Generating your growth hacking ideas...</p>
     </div>
 
     <!-- Result Section -->
     <div id="result" class="hidden mt-8 transform transition-all duration-300">
       <h2 class="text-xl font-bold text-gray-800 mb-4">
-        Identified Pain Points:
+        Your Growth Hacking Ideas:
       </h2>
       <div
-        id="resultContent"
-        class="p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg text-gray-700 text-lg leading-relaxed border border-green-100 shadow-sm"
+        id="growthHackingIdeas"
+        class="p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg text-gray-700 text-lg leading-relaxed border border-green-100 shadow-sm whitespace-pre-line"
         contenteditable="false"
       ></div>
       <div class="mt-4 flex space-x-2">
@@ -117,7 +191,6 @@ content %}
       </div>
     </div>
 
-    <!-- Error Message -->
     <div
       id="error"
       class="hidden mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
@@ -133,12 +206,13 @@ content %}
     <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
       Frequently Asked Questions
     </h2>
+
     <div class="space-y-4">
       <details class="group bg-white rounded-xl shadow-sm">
         <summary
           class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
         >
-          How specific should I be about my target segment?
+          What is growth hacking?
           <span
             class="transform group-open:rotate-180 transition-transform duration-200"
           >
@@ -159,10 +233,12 @@ content %}
         </summary>
         <div class="px-6 pb-6 text-gray-600">
           <p>
-            The more specific you are about your target segment, the more
-            focused and actionable the pain points will be. Include details
-            about industry, size, location, or any other relevant
-            characteristics.
+            Growth hacking is a process of rapid experimentation across
+            marketing channels and product development to identify the most
+            effective ways to grow a business. It focuses on low-cost,
+            innovative alternatives to traditional marketing, often leveraging
+            social media, viral marketing, and analytics to achieve rapid user
+            acquisition and retention.
           </p>
         </div>
       </details>
@@ -171,7 +247,7 @@ content %}
         <summary
           class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
         >
-          What kind of product information should I provide?
+          What are the AARRR metrics in growth hacking?
           <span
             class="transform group-open:rotate-180 transition-transform duration-200"
           >
@@ -192,10 +268,27 @@ content %}
         </summary>
         <div class="px-6 pb-6 text-gray-600">
           <p>
-            Include a brief description of your product or service, its main
-            purpose, and the general space you're operating in. This helps in
-            identifying more relevant pain points.
+            The AARRR framework (also known as Pirate Metrics) represents the
+            five key stages of the customer lifecycle:
           </p>
+          <ul class="list-disc ml-6 mt-2 space-y-2">
+            <li>
+              <strong>Acquisition</strong>: How users discover your product
+            </li>
+            <li>
+              <strong>Activation</strong>: Users' first positive experience
+            </li>
+            <li>
+              <strong>Retention</strong>: Keeping users engaged and coming back
+            </li>
+            <li>
+              <strong>Referral</strong>: Users recommending your product to
+              others
+            </li>
+            <li>
+              <strong>Revenue</strong>: Converting users into paying customers
+            </li>
+          </ul>
         </div>
       </details>
 
@@ -203,7 +296,7 @@ content %}
         <summary
           class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
         >
-          How can I use these pain points?
+          How do I implement growth hacking ideas effectively?
           <span
             class="transform group-open:rotate-180 transition-transform duration-200"
           >
@@ -223,32 +316,61 @@ content %}
           </span>
         </summary>
         <div class="px-6 pb-6 text-gray-600">
-          <p>
-            Use these pain points to inform product development, marketing
-            messaging, sales strategies, and customer research. They can help
-            prioritize features and identify opportunities for improvement.
-          </p>
+          <p>To implement growth hacking ideas effectively:</p>
+          <ul class="list-disc ml-6 mt-2 space-y-2">
+            <li>
+              <strong>Start small</strong>: Test ideas with minimal resources
+              before scaling
+            </li>
+            <li>
+              <strong>Measure everything</strong>: Set up proper analytics to
+              track results
+            </li>
+            <li>
+              <strong>Iterate quickly</strong>: Fail fast, learn, and improve
+            </li>
+            <li>
+              <strong>Focus on one metric</strong>: Choose a North Star metric
+              for each experiment
+            </li>
+            <li>
+              <strong>Document learnings</strong>: Keep track of what works and
+              what doesn't
+            </li>
+          </ul>
         </div>
       </details>
     </div>
   </section>
 
-  <!-- Related Tools Section -->
-  {{ tool_links('pain_points') }}
+  <!-- IMPORTANT: Include the tool_links component with your tool's ID -->
+  {{ tool_links('growth_hacking') }}
 </div>
 
 <script>
   document
-    .getElementById("painPointsForm")
+    .getElementById("growthHackingForm")
     .addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      // Validate that at least one growth stage is selected
+      const growthStages = Array.from(
+        document.querySelectorAll('input[name="growthStages"]:checked')
+      ).map((checkbox) => checkbox.value);
+
+      if (growthStages.length === 0) {
+        document.getElementById("growthStageError").classList.remove("hidden");
+        return;
+      } else {
+        document.getElementById("growthStageError").classList.add("hidden");
+      }
 
       const form = e.target;
       const submitButton = form.querySelector('button[type="submit"]');
       const loadingDiv = document.getElementById("loading");
       const resultDiv = document.getElementById("result");
       const errorDiv = document.getElementById("error");
-      const resultContentDiv = document.getElementById("resultContent");
+      const resultContentDiv = document.getElementById("growthHackingIdeas");
 
       // Show loading state
       submitButton.disabled = true;
@@ -257,25 +379,38 @@ content %}
       errorDiv.classList.add("hidden");
 
       try {
-        const response = await fetch("/api/pain-points", {
+        const formData = {
+          productName: "Product", // Default placeholder name
+          productDescription:
+            document.getElementById("productDescription").value,
+          targetAudience: document.getElementById("targetAudience").value,
+          growthStage: growthStages.join(", "), // Join selected stages with comma
+        };
+
+        const response = await fetch("/api/generate-growth-hacking", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            targetSegment: form.targetSegment.value,
-            productInfo: form.productInfo.value,
-          }),
+          body: JSON.stringify(formData),
         });
 
         const data = await response.json();
 
         if (data.success) {
-          resultContentDiv.innerHTML = data.painPoints.replace(/\n/g, "<br>");
+          // Convert line breaks to <br> tags for better formatting
+          const formattedContent = data.growth_hacking_ideas
+            .replace(/\n/g, "<br>")
+            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"); // Convert markdown bold to HTML
+
+          resultContentDiv.innerHTML = formattedContent;
           resultDiv.classList.remove("hidden");
           resultDiv.classList.add("animate-fade-in");
+
+          // Scroll to results
+          resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
         } else {
-          throw new Error(data.error || "Failed to generate pain points");
+          throw new Error(data.error || "Failed to process request");
         }
       } catch (error) {
         console.error("Error:", error);
@@ -288,21 +423,19 @@ content %}
     });
 
   function copyToClipboard() {
-    const content = document.getElementById("resultContent").innerText;
-    navigator.clipboard.writeText(content).then(() => {
-      const button = document.querySelector(
-        'button[onclick="copyToClipboard()"]'
-      );
-      const originalText = button.textContent;
-      button.textContent = "Copied!";
-      setTimeout(() => {
-        button.textContent = originalText;
-      }, 2000);
-    });
+    const content = document.getElementById("growthHackingIdeas").innerText;
+    navigator.clipboard
+      .writeText(content)
+      .then(() => {
+        alert("Copied to clipboard!");
+      })
+      .catch(() => {
+        alert("Failed to copy to clipboard");
+      });
   }
 
   function toggleEdit() {
-    const resultContentDiv = document.getElementById("resultContent");
+    const resultContentDiv = document.getElementById("growthHackingIdeas");
     const editButton = document.getElementById("editButton");
     const isEditing = resultContentDiv.contentEditable === "true";
 
@@ -330,4 +463,21 @@ content %}
     }
   }
 </script>
+
+<style>
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out forwards;
+  }
+</style>
 {% endblock %}
