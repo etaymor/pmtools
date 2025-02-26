@@ -1,0 +1,581 @@
+{% extends "base.html" %} {% from "components/tool_links.html" import tool_links
+with context %} {% from "components/share_buttons.html" import share_buttons
+with context %} {% block title %}Brainstorming Session Timer - Free Product
+Management Tool{% endblock %} {% block meta_description %}Set a countdown timer
+for your brainstorming sessions with pause and restart functionality to keep
+your team focused and productive.{% endblock %} {% block og_title
+%}Brainstorming Session Timer - Free Tool for Teams{% endblock %} {% block
+og_description %}{{ self.meta_description() }}{% endblock %} {% block
+twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
+%}{{ self.meta_description() }}{% endblock %} {% block content %}
+<div class="max-w-4xl mx-auto">
+  <!-- Hero Section -->
+  <div class="text-center py-4 px-6 mb-8 rounded-2xl">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+      Brainstorming Session Timer
+    </h1>
+    <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
+      <p class="text-base md:text-lg leading-relaxed">
+        Keep your brainstorming sessions focused and productive with this
+        customizable timer. Set your desired duration, and use the pause and
+        restart functions to manage your session effectively.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Card -->
+  <div
+    class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
+  >
+    <!-- Timer Setup Form -->
+    <div id="timerSetup" class="mb-8">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Set Timer Duration</h2>
+
+      <!-- Preset Time Buttons -->
+      <div class="mb-6">
+        <p class="text-sm font-medium text-gray-700 mb-2">Quick Select:</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <button
+            class="preset-time-btn bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2 px-4 rounded-md border border-green-200 transition-colors duration-200"
+            data-minutes="1"
+            data-seconds="0"
+          >
+            1 Minute
+          </button>
+          <button
+            class="preset-time-btn bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2 px-4 rounded-md border border-green-200 transition-colors duration-200"
+            data-minutes="3"
+            data-seconds="0"
+          >
+            3 Minutes
+          </button>
+          <button
+            class="preset-time-btn bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2 px-4 rounded-md border border-green-200 transition-colors duration-200"
+            data-minutes="5"
+            data-seconds="0"
+          >
+            5 Minutes
+          </button>
+          <button
+            class="preset-time-btn bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2 px-4 rounded-md border border-green-200 transition-colors duration-200"
+            data-minutes="10"
+            data-seconds="0"
+          >
+            10 Minutes
+          </button>
+        </div>
+      </div>
+
+      <!-- Custom Time Input -->
+      <p class="text-sm font-medium text-gray-700 mb-2">Custom Duration:</p>
+      <div class="flex flex-col md:flex-row gap-4 mb-6">
+        <div class="flex-1">
+          <label
+            for="minutes"
+            class="block text-sm font-medium text-gray-700 mb-1"
+            >Minutes</label
+          >
+          <input
+            type="number"
+            id="minutes"
+            min="0"
+            max="60"
+            value="5"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+          />
+        </div>
+        <div class="flex-1">
+          <label
+            for="seconds"
+            class="block text-sm font-medium text-gray-700 mb-1"
+            >Seconds</label
+          >
+          <input
+            type="number"
+            id="seconds"
+            min="0"
+            max="59"
+            value="0"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+          />
+        </div>
+      </div>
+      <button
+        id="startTimerBtn"
+        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+      >
+        Start Timer
+      </button>
+    </div>
+
+    <!-- Timer Display -->
+    <div id="timerDisplay" class="hidden">
+      <div class="text-center mb-8">
+        <div
+          class="text-6xl md:text-8xl font-bold text-gray-800 mb-4 font-mono"
+          id="timeRemaining"
+        >
+          05:00
+        </div>
+        <div class="text-sm text-gray-500" id="timerStatus">
+          Timer running...
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <button
+          id="pauseResumeBtn"
+          class="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-yellow-600 hover:to-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+        >
+          Pause
+        </button>
+        <button
+          id="resetTimerBtn"
+          class="flex-1 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+        >
+          Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Timer Complete Message -->
+    <div id="timerComplete" class="hidden text-center">
+      <div class="mb-8">
+        <svg
+          class="w-24 h-24 mx-auto text-green-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <h2 class="text-2xl font-bold text-gray-800 mt-4">Time's Up!</h2>
+        <p class="text-gray-600 mt-2">
+          Your brainstorming session is complete.
+        </p>
+      </div>
+      <button
+        id="newTimerBtn"
+        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+      >
+        Set New Timer
+      </button>
+    </div>
+  </div>
+
+  <!-- Share Buttons -->
+  {{ share_buttons() }}
+
+  <!-- FAQ Section -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+      Frequently Asked Questions
+    </h2>
+    <div class="space-y-4">
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          Why use a timer for brainstorming sessions?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>Using a timer for brainstorming sessions helps in several ways:</p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Creates a sense of urgency that can boost creativity</li>
+            <li>Keeps the session focused and prevents it from dragging on</li>
+            <li>Helps manage time effectively during meetings</li>
+            <li>
+              Encourages participants to share ideas quickly without
+              overthinking
+            </li>
+            <li>Creates a structured environment for idea generation</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          What's the ideal duration for a brainstorming session?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>
+            The ideal duration depends on your specific goals, but research
+            suggests:
+          </p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>
+              <strong>Short bursts (5-10 minutes):</strong> Great for quick idea
+              generation on specific topics
+            </li>
+            <li>
+              <strong>Medium sessions (15-30 minutes):</strong> Ideal for most
+              brainstorming activities
+            </li>
+            <li>
+              <strong>Longer sessions (45-60 minutes):</strong> Better for
+              complex problems, but should include breaks
+            </li>
+          </ul>
+          <p class="mt-2">
+            It's often more effective to have multiple shorter sessions than one
+            long marathon session, as creativity tends to diminish over time.
+          </p>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-xl shadow-sm">
+        <summary
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+        >
+          How can I make the most of timed brainstorming?
+          <span
+            class="transform group-open:rotate-180 transition-transform duration-200"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-6 pb-6 text-gray-600">
+          <p>To maximize the effectiveness of timed brainstorming:</p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>
+              Clearly define the problem or question before starting the timer
+            </li>
+            <li>Encourage quantity over quality during the initial phase</li>
+            <li>Establish a "no criticism" rule during idea generation</li>
+            <li>
+              Use the pause feature when you need to capture a complex idea
+            </li>
+            <li>
+              Consider using multiple timers for different phases (divergent
+              thinking, convergent thinking, etc.)
+            </li>
+            <li>
+              Take short breaks between timed sessions to refresh thinking
+            </li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Related Tools -->
+  {{ tool_links('brainstorming_timer') }}
+</div>
+
+<script>
+  // DOM Elements
+  const timerSetup = document.getElementById("timerSetup");
+  const timerDisplay = document.getElementById("timerDisplay");
+  const timerComplete = document.getElementById("timerComplete");
+  const timeRemaining = document.getElementById("timeRemaining");
+  const timerStatus = document.getElementById("timerStatus");
+  const minutesInput = document.getElementById("minutes");
+  const secondsInput = document.getElementById("seconds");
+  const startTimerBtn = document.getElementById("startTimerBtn");
+  const pauseResumeBtn = document.getElementById("pauseResumeBtn");
+  const resetTimerBtn = document.getElementById("resetTimerBtn");
+  const newTimerBtn = document.getElementById("newTimerBtn");
+  const presetButtons = document.querySelectorAll(".preset-time-btn");
+
+  // Timer variables
+  let totalSeconds = 0;
+  let remainingSeconds = 0;
+  let timerInterval = null;
+  let isPaused = false;
+
+  // Audio for timer completion
+  const timerSound = new Audio(
+    "https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3"
+  );
+
+  // Format time as MM:SS
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
+  }
+
+  // Update timer display
+  function updateTimerDisplay() {
+    timeRemaining.textContent = formatTime(remainingSeconds);
+
+    // Update document title to show remaining time
+    document.title = `${formatTime(remainingSeconds)} - Brainstorming Timer`;
+  }
+
+  // Set timer from preset button
+  function setPresetTime(minutes, seconds) {
+    minutesInput.value = minutes;
+    secondsInput.value = seconds;
+
+    // Add visual feedback for selected preset
+    presetButtons.forEach((btn) => {
+      if (
+        parseInt(btn.dataset.minutes) === minutes &&
+        parseInt(btn.dataset.seconds || 0) === seconds
+      ) {
+        btn.classList.add("bg-green-200", "border-green-400");
+        btn.classList.remove("bg-green-50", "border-green-200");
+      } else {
+        btn.classList.remove("bg-green-200", "border-green-400");
+        btn.classList.add("bg-green-50", "border-green-200");
+      }
+    });
+  }
+
+  // Start the timer
+  function startTimer() {
+    // Get minutes and seconds from inputs
+    const minutes = parseInt(minutesInput.value) || 0;
+    const seconds = parseInt(secondsInput.value) || 0;
+
+    // Validate inputs
+    if (minutes === 0 && seconds === 0) {
+      alert("Please set a timer duration greater than zero.");
+      return;
+    }
+
+    if (minutes > 60) {
+      alert("Maximum timer duration is 60 minutes.");
+      minutesInput.value = 60;
+      return;
+    }
+
+    // Calculate total seconds
+    totalSeconds = minutes * 60 + seconds;
+    remainingSeconds = totalSeconds;
+
+    // Update display
+    updateTimerDisplay();
+
+    // Show timer display, hide setup
+    timerSetup.classList.add("hidden");
+    timerDisplay.classList.remove("hidden");
+    timerComplete.classList.add("hidden");
+
+    // Start interval
+    isPaused = false;
+    timerStatus.textContent = "Timer running...";
+    pauseResumeBtn.textContent = "Pause";
+
+    timerInterval = setInterval(() => {
+      if (remainingSeconds > 0) {
+        remainingSeconds--;
+        updateTimerDisplay();
+      } else {
+        // Timer complete
+        clearInterval(timerInterval);
+        timerSound.play();
+        timerDisplay.classList.add("hidden");
+        timerComplete.classList.remove("hidden");
+        document.title = "Time's Up! - Brainstorming Timer";
+      }
+    }, 1000);
+  }
+
+  // Pause or resume the timer
+  function togglePauseResume() {
+    if (isPaused) {
+      // Resume timer
+      isPaused = false;
+      timerStatus.textContent = "Timer running...";
+      pauseResumeBtn.textContent = "Pause";
+
+      timerInterval = setInterval(() => {
+        if (remainingSeconds > 0) {
+          remainingSeconds--;
+          updateTimerDisplay();
+        } else {
+          // Timer complete
+          clearInterval(timerInterval);
+          timerSound.play();
+          timerDisplay.classList.add("hidden");
+          timerComplete.classList.remove("hidden");
+          document.title = "Time's Up! - Brainstorming Timer";
+        }
+      }, 1000);
+    } else {
+      // Pause timer
+      isPaused = true;
+      timerStatus.textContent = "Timer paused";
+      pauseResumeBtn.textContent = "Resume";
+      clearInterval(timerInterval);
+    }
+  }
+
+  // Reset the timer
+  function resetTimer() {
+    clearInterval(timerInterval);
+    remainingSeconds = totalSeconds;
+    updateTimerDisplay();
+    isPaused = true;
+    timerStatus.textContent = "Timer reset";
+    pauseResumeBtn.textContent = "Start";
+  }
+
+  // Set up a new timer
+  function setupNewTimer() {
+    clearInterval(timerInterval);
+    timerSetup.classList.remove("hidden");
+    timerDisplay.classList.add("hidden");
+    timerComplete.classList.add("hidden");
+    document.title =
+      "Brainstorming Session Timer - Free Product Management Tool";
+
+    // Reset preset button styling
+    presetButtons.forEach((btn) => {
+      btn.classList.remove("bg-green-200", "border-green-400");
+      btn.classList.add("bg-green-50", "border-green-200");
+    });
+
+    // If current value matches a preset, highlight that preset
+    const currentMinutes = parseInt(minutesInput.value) || 0;
+    const currentSeconds = parseInt(secondsInput.value) || 0;
+
+    presetButtons.forEach((btn) => {
+      if (
+        parseInt(btn.dataset.minutes) === currentMinutes &&
+        parseInt(btn.dataset.seconds || 0) === currentSeconds
+      ) {
+        btn.classList.add("bg-green-200", "border-green-400");
+        btn.classList.remove("bg-green-50", "border-green-200");
+      }
+    });
+  }
+
+  // Event listeners
+  startTimerBtn.addEventListener("click", startTimer);
+  pauseResumeBtn.addEventListener("click", togglePauseResume);
+  resetTimerBtn.addEventListener("click", resetTimer);
+  newTimerBtn.addEventListener("click", setupNewTimer);
+
+  // Add event listeners to preset buttons
+  presetButtons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const minutes = parseInt(this.dataset.minutes);
+      const seconds = parseInt(this.dataset.seconds || 0);
+      setPresetTime(minutes, seconds);
+    });
+  });
+
+  // Input validation
+  minutesInput.addEventListener("input", function () {
+    if (this.value > 60) this.value = 60;
+    if (this.value < 0) this.value = 0;
+
+    // Reset preset button styling when manual input changes
+    presetButtons.forEach((btn) => {
+      btn.classList.remove("bg-green-200", "border-green-400");
+      btn.classList.add("bg-green-50", "border-green-200");
+    });
+
+    // If current value matches a preset, highlight that preset
+    const currentMinutes = parseInt(this.value) || 0;
+    const currentSeconds = parseInt(secondsInput.value) || 0;
+
+    presetButtons.forEach((btn) => {
+      if (
+        parseInt(btn.dataset.minutes) === currentMinutes &&
+        parseInt(btn.dataset.seconds || 0) === currentSeconds
+      ) {
+        btn.classList.add("bg-green-200", "border-green-400");
+        btn.classList.remove("bg-green-50", "border-green-200");
+      }
+    });
+  });
+
+  secondsInput.addEventListener("input", function () {
+    if (this.value > 59) this.value = 59;
+    if (this.value < 0) this.value = 0;
+
+    // Reset preset button styling when manual input changes
+    presetButtons.forEach((btn) => {
+      btn.classList.remove("bg-green-200", "border-green-400");
+      btn.classList.add("bg-green-50", "border-green-200");
+    });
+
+    // If current value matches a preset, highlight that preset
+    const currentMinutes = parseInt(minutesInput.value) || 0;
+    const currentSeconds = parseInt(this.value) || 0;
+
+    presetButtons.forEach((btn) => {
+      if (
+        parseInt(btn.dataset.minutes) === currentMinutes &&
+        parseInt(btn.dataset.seconds || 0) === currentSeconds
+      ) {
+        btn.classList.add("bg-green-200", "border-green-400");
+        btn.classList.remove("bg-green-50", "border-green-200");
+      }
+    });
+  });
+
+  // Highlight the default 5-minute preset on page load
+  window.addEventListener("load", function () {
+    presetButtons.forEach((btn) => {
+      if (
+        parseInt(btn.dataset.minutes) === 5 &&
+        parseInt(btn.dataset.seconds || 0) === 0
+      ) {
+        btn.classList.add("bg-green-200", "border-green-400");
+        btn.classList.remove("bg-green-50", "border-green-200");
+      }
+    });
+  });
+</script>
+{% endblock %}

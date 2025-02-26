@@ -92,6 +92,13 @@ TOOLS = [
         'description': 'Create comprehensive interview guides for stakeholder interviews with focus on product discovery',
         'url': '/stakeholder-interview',
         'category': 'Research'
+    },
+    {
+        'id': 'brainstorming_timer',
+        'name': 'Brainstorming Session Timer',
+        'description': 'Set a countdown timer for your brainstorming sessions with pause and restart functionality',
+        'url': '/brainstorming-timer',
+        'category': 'Productivity'
     }
 ]
 
