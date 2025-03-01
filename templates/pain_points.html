@@ -11,10 +11,14 @@ content %}
 <div class="max-w-4xl mx-auto">
   <!-- Hero Section -->
   <div class="text-center py-4 px-6 mb-8 rounded-2xl">
-    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+    <h1
+      class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4 leading-tight"
+    >
       Customer Pain Point Identifier
     </h1>
-    <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
+    <div
+      class="prose prose-base mx-auto text-gray-600 dark:text-gray-300 max-w-2xl"
+    >
       <p class="text-base md:text-lg leading-relaxed">
         Uncover the most significant pain points your target customers are
         experiencing. Simply describe your target segment and product space to
@@ -25,14 +29,14 @@ content %}
 
   <!-- Main Form Card -->
   <div
-    class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
+    class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
   >
     <form id="painPointsForm" class="space-y-8">
       <div class="space-y-6">
         <div class="relative">
           <label
             for="targetSegment"
-            class="block text-sm font-semibold text-gray-700 mb-2"
+            class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
           >
             Target Customer Segment
           </label>
@@ -41,7 +45,7 @@ content %}
             name="targetSegment"
             required
             rows="3"
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-600 dark:text-gray-100"
             placeholder="Describe your target customer segment (e.g., 'Small business owners in the retail industry' or 'Urban millennials interested in fitness')"
           ></textarea>
         </div>
@@ -49,7 +53,7 @@ content %}
         <div class="relative">
           <label
             for="productInfo"
-            class="block text-sm font-semibold text-gray-700 mb-2"
+            class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
           >
             Product/Space Information
           </label>
@@ -58,7 +62,7 @@ content %}
             name="productInfo"
             required
             rows="3"
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-600 dark:text-gray-100"
             placeholder="Describe your product or business space (e.g., 'Mobile app for inventory management' or 'Online fitness coaching platform')"
           ></textarea>
         </div>
@@ -66,7 +70,7 @@ content %}
 
       <button
         type="submit"
-        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
       >
         Generate Pain Points
       </button>
@@ -77,30 +81,32 @@ content %}
       <div
         class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent"
       ></div>
-      <p class="mt-2 text-gray-600">Analyzing customer segment...</p>
+      <p class="mt-2 text-gray-600 dark:text-gray-300">
+        Analyzing customer segment...
+      </p>
     </div>
 
     <!-- Result Section -->
     <div id="result" class="hidden mt-8 transform transition-all duration-300">
-      <h2 class="text-xl font-bold text-gray-800 mb-4">
+      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
         Identified Pain Points:
       </h2>
       <div
         id="resultContent"
-        class="p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg text-gray-700 text-lg leading-relaxed border border-green-100 shadow-sm"
+        class="p-6 bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-lg text-gray-700 dark:text-gray-200 text-lg leading-relaxed border border-green-100 dark:border-gray-500 shadow-sm"
         contenteditable="false"
       ></div>
       <div class="mt-4 flex space-x-2">
         <button
           onclick="copyToClipboard()"
-          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
           Copy to Clipboard
         </button>
         <button
           onclick="toggleEdit()"
           id="editButton"
-          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -120,9 +126,9 @@ content %}
     <!-- Error Message -->
     <div
       id="error"
-      class="hidden mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
+      class="hidden mt-6 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800"
     >
-      <p class="text-red-600 text-center"></p>
+      <p class="text-red-600 dark:text-red-400 text-center"></p>
     </div>
   </div>
 
@@ -130,13 +136,15 @@ content %}
 
   <!-- FAQ Section -->
   <section class="mb-12">
-    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+    <h2
+      class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8 text-center"
+    >
       Frequently Asked Questions
     </h2>
     <div class="space-y-4">
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           How specific should I be about my target segment?
           <span
@@ -157,7 +165,7 @@ content %}
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>
             The more specific you are about your target segment, the more
             focused and actionable the pain points will be. Include details
@@ -167,9 +175,9 @@ content %}
         </div>
       </details>
 
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           What kind of product information should I provide?
           <span
@@ -190,7 +198,7 @@ content %}
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>
             Include a brief description of your product or service, its main
             purpose, and the general space you're operating in. This helps in
@@ -199,9 +207,9 @@ content %}
         </div>
       </details>
 
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           How can I use these pain points?
           <span
@@ -222,7 +230,7 @@ content %}
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>
             Use these pain points to inform product development, marketing
             messaging, sales strategies, and customer research. They can help
@@ -290,13 +298,27 @@ content %}
   function copyToClipboard() {
     const content = document.getElementById("resultContent").innerText;
     navigator.clipboard.writeText(content).then(() => {
-      const button = document.querySelector(
-        'button[onclick="copyToClipboard()"]'
-      );
-      const originalText = button.textContent;
-      button.textContent = "Copied!";
+      // Use a more subtle notification in dark mode
+      const isDarkMode = document.documentElement.classList.contains("dark");
+      const alertBg = isDarkMode ? "#374151" : "white";
+      const alertText = isDarkMode ? "#e5e7eb" : "#374151";
+      const alertEl = document.createElement("div");
+      alertEl.style.position = "fixed";
+      alertEl.style.bottom = "20px";
+      alertEl.style.right = "20px";
+      alertEl.style.padding = "10px 20px";
+      alertEl.style.background = alertBg;
+      alertEl.style.color = alertText;
+      alertEl.style.borderRadius = "4px";
+      alertEl.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.15)";
+      alertEl.style.zIndex = "9999";
+      alertEl.textContent = "Copied to clipboard!";
+      document.body.appendChild(alertEl);
+
       setTimeout(() => {
-        button.textContent = originalText;
+        alertEl.style.opacity = "0";
+        alertEl.style.transition = "opacity 0.5s ease";
+        setTimeout(() => document.body.removeChild(alertEl), 500);
       }, 2000);
     });
   }

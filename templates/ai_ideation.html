@@ -11,10 +11,14 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 <div class="max-w-4xl mx-auto">
   <!-- Hero Section -->
   <div class="text-center py-4 px-6 mb-8 rounded-2xl">
-    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+    <h1
+      class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4 leading-tight"
+    >
       AI Ideation Prompts
     </h1>
-    <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
+    <div
+      class="prose prose-base mx-auto text-gray-600 dark:text-gray-300 max-w-2xl"
+    >
       <p class="text-base md:text-lg leading-relaxed">
         Generate innovative AI-driven solutions with thought-provoking prompts.
         Perfect for team brainstorming sessions, design sprints, and creative
@@ -25,7 +29,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 
   <!-- Main Card -->
   <div
-    class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
+    class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
   >
     <!-- Prompt Display -->
     <div
@@ -33,7 +37,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
       class="mb-8 min-h-[100px] flex items-center justify-center"
     >
       <p
-        class="text-2xl md:text-3xl text-center font-medium text-gray-800 italic"
+        class="text-2xl md:text-3xl text-center font-medium text-gray-800 dark:text-gray-100 italic"
       >
         Click the button below to get a random AI ideation prompt
       </p>
@@ -42,7 +46,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
     <!-- Get Another Button -->
     <button
       id="getPromptBtn"
-      class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+      class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
     >
       Get Another Prompt
     </button>
@@ -57,9 +61,9 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
     <!-- Error Message -->
     <div
       id="error"
-      class="hidden mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
+      class="hidden mt-6 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800"
     >
-      <p class="text-red-600 text-center"></p>
+      <p class="text-red-600 dark:text-red-400 text-center"></p>
     </div>
   </div>
 
@@ -68,13 +72,15 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 
   <!-- FAQ Section -->
   <section class="mb-12">
-    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+    <h2
+      class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8 text-center"
+    >
       Frequently Asked Questions
     </h2>
     <div class="space-y-4">
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           What are AI Ideation Prompts?
           <span
@@ -95,7 +101,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>
             AI Ideation Prompts are thought-provoking questions designed to
             spark innovative thinking about AI integration in your projects.
@@ -105,9 +111,9 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         </div>
       </details>
 
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           When should I use these prompts?
           <span
@@ -128,7 +134,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>Use these prompts during:</p>
           <ul class="list-disc pl-5 mt-2 space-y-1">
             <li>Design thinking workshops</li>
@@ -141,9 +147,9 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         </div>
       </details>
 
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           How do I use these prompts effectively?
           <span
@@ -164,7 +170,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>For best results:</p>
           <ul class="list-disc pl-5 mt-2 space-y-1">
             <li>Share the prompt with your team</li>
@@ -177,9 +183,9 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         </div>
       </details>
 
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           How do I facilitate a session using these prompts?
           <span
@@ -200,7 +206,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>Follow these steps for a productive session:</p>
           <ul class="list-disc pl-5 mt-2 space-y-1">
             <li>Start with a clear problem statement</li>
@@ -239,7 +245,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         // Update display with fade effect
         promptDisplay.style.opacity = "0";
         setTimeout(() => {
-          promptDisplay.innerHTML = `<p class="text-2xl md:text-3xl text-center font-medium text-gray-800 italic">${data.prompt}</p>`;
+          promptDisplay.innerHTML = `<p class="text-2xl md:text-3xl text-center font-medium text-gray-800 dark:text-gray-100 italic">${data.prompt}</p>`;
           promptDisplay.style.opacity = "1";
         }, 200);
       } else {

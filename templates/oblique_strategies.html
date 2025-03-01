@@ -11,10 +11,14 @@ self.meta_description() }}{% endblock %} {% block content %}
 <div class="max-w-4xl mx-auto">
   <!-- Hero Section -->
   <div class="text-center py-4 px-6 mb-8 rounded-2xl">
-    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+    <h1
+      class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4 leading-tight"
+    >
       Oblique Strategies
     </h1>
-    <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
+    <div
+      class="prose prose-base mx-auto text-gray-600 dark:text-gray-300 max-w-2xl"
+    >
       <p class="text-base md:text-lg leading-relaxed">
         Break through creative blocks with Brian Eno's Oblique Strategies - a
         collection of provocative prompts designed to help you think laterally
@@ -25,7 +29,7 @@ self.meta_description() }}{% endblock %} {% block content %}
 
   <!-- Main Card -->
   <div
-    class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
+    class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
   >
     <!-- Strategy Display -->
     <div
@@ -33,7 +37,7 @@ self.meta_description() }}{% endblock %} {% block content %}
       class="mb-8 min-h-[100px] flex items-center justify-center"
     >
       <p
-        class="text-2xl md:text-3xl text-center font-medium text-gray-800 italic"
+        class="text-2xl md:text-3xl text-center font-medium text-gray-800 dark:text-gray-100 italic"
       >
         Click the button below to get a random strategy
       </p>
@@ -42,7 +46,7 @@ self.meta_description() }}{% endblock %} {% block content %}
     <!-- Get Another Button -->
     <button
       id="getStrategyBtn"
-      class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+      class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
     >
       Get Another Strategy
     </button>
@@ -57,9 +61,9 @@ self.meta_description() }}{% endblock %} {% block content %}
     <!-- Error Message -->
     <div
       id="error"
-      class="hidden mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
+      class="hidden mt-6 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800"
     >
-      <p class="text-red-600 text-center"></p>
+      <p class="text-red-600 dark:text-red-400 text-center"></p>
     </div>
   </div>
 
@@ -68,13 +72,15 @@ self.meta_description() }}{% endblock %} {% block content %}
 
   <!-- FAQ Section -->
   <section class="mb-12">
-    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+    <h2
+      class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8 text-center"
+    >
       Frequently Asked Questions
     </h2>
     <div class="space-y-4">
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           What are Oblique Strategies?
           <span
@@ -95,7 +101,7 @@ self.meta_description() }}{% endblock %} {% block content %}
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>
             Oblique Strategies is a deck of cards created by Brian Eno and Peter
             Schmidt in 1975. Each card contains a challenging constraint or
@@ -107,9 +113,9 @@ self.meta_description() }}{% endblock %} {% block content %}
         </div>
       </details>
 
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           How do I use this tool effectively?
           <span
@@ -130,7 +136,7 @@ self.meta_description() }}{% endblock %} {% block content %}
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>When you're stuck on a creative problem or decision:</p>
           <ul class="list-disc pl-5 mt-2 space-y-1">
             <li>Click "Get Another Strategy" to receive a random prompt</li>
@@ -150,9 +156,9 @@ self.meta_description() }}{% endblock %} {% block content %}
         </div>
       </details>
 
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           When should I use Oblique Strategies?
           <span
@@ -173,7 +179,7 @@ self.meta_description() }}{% endblock %} {% block content %}
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>Use this tool when:</p>
           <ul class="list-disc pl-5 mt-2 space-y-1">
             <li>You're feeling creatively blocked</li>
@@ -185,9 +191,9 @@ self.meta_description() }}{% endblock %} {% block content %}
         </div>
       </details>
 
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           What makes Oblique Strategies effective?
           <span
@@ -208,7 +214,7 @@ self.meta_description() }}{% endblock %} {% block content %}
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>
             The effectiveness of Oblique Strategies comes from their ability to:
           </p>
@@ -248,7 +254,7 @@ self.meta_description() }}{% endblock %} {% block content %}
         // Update display with fade effect
         strategyDisplay.style.opacity = "0";
         setTimeout(() => {
-          strategyDisplay.innerHTML = `<p class="text-2xl md:text-3xl text-center font-medium text-gray-800 italic">${data.strategy}</p>`;
+          strategyDisplay.innerHTML = `<p class="text-2xl md:text-3xl text-center font-medium text-gray-800 dark:text-gray-100 italic">${data.strategy}</p>`;
           strategyDisplay.style.opacity = "1";
         }, 200);
       } else {

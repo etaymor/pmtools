@@ -1,9 +1,10 @@
 {% extends "base.html" %} {% from "components/tool_links.html" import tool_links
 with context %} {% from "components/share_buttons.html" import share_buttons
-with context %} {% block title %}Market Gap Identifier - Free Product Management
-Tool{% endblock %} {% block meta_description %}Identify potential market gaps
-and opportunities based on industry analysis. Free tool for product managers and
-entrepreneurs.{% endblock %} {% block og_title %}Market Gap Identifier - Free
+with context %} {% block title %}TAM/SAM/SOM Estimator - Free Product Management
+Tool{% endblock %} {% block meta_description %}Calculate your Total Addressable
+Market (TAM), Serviceable Addressable Market (SAM), and Serviceable Obtainable
+Market (SOM) with this free estimation tool for product managers and
+entrepreneurs.{% endblock %} {% block og_title %}TAM/SAM/SOM Estimator - Free
 Tool for Teams{% endblock %} {% block og_description %}{{
 self.meta_description() }}{% endblock %} {% block twitter_title %}{{
 self.og_title() }}{% endblock %} {% block twitter_description %}{{
@@ -14,15 +15,15 @@ self.meta_description() }}{% endblock %} {% block content %}
     <h1
       class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4 leading-tight"
     >
-      Market Gap Identifier
+      TAM/SAM/SOM Estimator
     </h1>
     <div
       class="prose prose-base mx-auto text-gray-600 dark:text-gray-300 max-w-2xl"
     >
       <p class="text-base md:text-lg leading-relaxed">
-        Identify potential market gaps and opportunities by analyzing industry
-        data, target customers, and existing pain points. Get actionable
-        insights for your product strategy.
+        Calculate your Total Addressable Market (TAM), Serviceable Addressable
+        Market (SAM), and Serviceable Obtainable Market (SOM) to understand your
+        market opportunity and set realistic business goals.
       </p>
     </div>
   </div>
@@ -31,7 +32,7 @@ self.meta_description() }}{% endblock %} {% block content %}
   <div
     class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
   >
-    <form id="marketGapForm" class="space-y-8">
+    <form id="tamSamSomForm" class="space-y-8">
       <!-- Industry Input -->
       <div>
         <label
@@ -50,63 +51,67 @@ self.meta_description() }}{% endblock %} {% block content %}
         />
       </div>
 
-      <!-- Customer Type Input -->
+      <!-- Product Description -->
       <div>
         <label
-          for="customerType"
+          for="productDescription"
           class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
         >
-          Target Customer Type *
-        </label>
-        <input
-          type="text"
-          id="customerType"
-          name="customerType"
-          required
-          placeholder="e.g., Enterprise Finance Teams, Freelancers in Tech, SMB Retailers"
-          class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-600 dark:text-gray-100"
-        />
-      </div>
-
-      <!-- Competitor Input -->
-      <div>
-        <label
-          for="competitor"
-          class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-        >
-          Main Competitor or Reference Product (Optional)
-        </label>
-        <input
-          type="text"
-          id="competitor"
-          name="competitor"
-          placeholder="e.g., Peloton, Asana, Patagonia"
-          class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-600 dark:text-gray-100"
-        />
-      </div>
-
-      <!-- Pain Point Input -->
-      <div>
-        <label
-          for="painPoint"
-          class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-        >
-          Biggest Pain Point in the Market (Optional)
+          Product/Service Description *
         </label>
         <textarea
-          id="painPoint"
-          name="painPoint"
+          id="productDescription"
+          name="productDescription"
           rows="3"
-          placeholder="e.g., Hard to retain customers long-term in subscription models"
+          required
+          placeholder="Describe your product or service and its key features"
           class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-600 dark:text-gray-100"
         ></textarea>
       </div>
+
+      <!-- Target Customers -->
+      <div>
+        <label
+          for="targetCustomers"
+          class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
+          Target Customer Segments *
+        </label>
+        <textarea
+          id="targetCustomers"
+          name="targetCustomers"
+          rows="2"
+          required
+          placeholder="e.g., Small businesses with 10-50 employees, Fitness enthusiasts aged 25-40"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-600 dark:text-gray-100"
+        ></textarea>
+      </div>
+
+      <!-- Additional Information (Optional) -->
+      <div>
+        <label
+          for="additionalInfo"
+          class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
+          Additional Information (Optional)
+        </label>
+        <textarea
+          id="additionalInfo"
+          name="additionalInfo"
+          rows="3"
+          placeholder="Any other relevant details: pricing, geography, competitors, market trends, etc."
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-600 dark:text-gray-100"
+        ></textarea>
+      </div>
+
+      <!-- Hidden input for approach -->
+      <input type="hidden" id="approach" name="approach" value="bottom-up" />
 
       <button
         type="submit"
         class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
       >
-        Analyze Market Gaps
+        Generate TAM/SAM/SOM Estimate
       </button>
     </form>
 
@@ -123,18 +128,119 @@ self.meta_description() }}{% endblock %} {% block content %}
     <!-- Result Section -->
     <div id="result" class="hidden mt-8 transform transition-all duration-300">
       <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-        Market Analysis Results:
+        Market Size Analysis:
       </h2>
       <div
         id="resultContent"
-        class="p-6 bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-lg text-gray-700 dark:text-gray-200 text-lg leading-relaxed border border-green-100 dark:border-gray-500 shadow-sm prose prose-lg max-w-none"
+        class="p-6 bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-lg text-gray-700 dark:text-gray-200 text-lg leading-relaxed border border-green-100 dark:border-gray-500 shadow-sm"
         contenteditable="false"
       ></div>
+
+      <!-- Funnel Visualization Placeholder -->
+      <div
+        id="funnelVisualization"
+        class="mt-6 p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
+      >
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
+          TAM/SAM/SOM Funnel
+        </h3>
+        <div class="relative mx-auto w-full max-w-md h-64">
+          <!-- TAM -->
+          <div
+            class="absolute top-0 left-0 right-0 h-32 bg-green-100 dark:bg-green-900/30 rounded-t-lg flex items-center justify-center"
+          >
+            <div class="text-center">
+              <div
+                class="font-bold text-green-800 dark:text-green-300"
+                id="tamValue"
+              >
+                $XX-XX Million
+              </div>
+              <div class="text-sm text-green-700 dark:text-green-400">TAM</div>
+            </div>
+          </div>
+          <!-- SAM -->
+          <div
+            class="absolute top-16 left-[10%] right-[10%] h-24 bg-blue-100 dark:bg-blue-900/30 rounded-t-lg flex items-center justify-center"
+          >
+            <div class="text-center">
+              <div
+                class="font-bold text-blue-800 dark:text-blue-300"
+                id="samValue"
+              >
+                $XX-XX Million
+              </div>
+              <div class="text-sm text-blue-700 dark:text-blue-400">SAM</div>
+            </div>
+          </div>
+          <!-- SOM -->
+          <div
+            class="absolute top-28 left-[25%] right-[25%] h-20 bg-purple-100 dark:bg-purple-900/30 rounded-t-lg flex items-center justify-center"
+          >
+            <div class="text-center">
+              <div
+                class="font-bold text-purple-800 dark:text-purple-300"
+                id="somValue"
+              >
+                $XX-XX Million
+              </div>
+              <div class="text-sm text-purple-700 dark:text-purple-400">
+                SOM
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Breakdown (Collapsible) -->
+      <div class="mt-6">
+        <button
+          id="toggleDetailedBreakdown"
+          class="flex items-center justify-between w-full p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 text-left font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200"
+        >
+          <span>View Detailed Breakdown & Assumptions</span>
+          <svg
+            id="detailsChevron"
+            class="w-5 h-5 transform transition-transform duration-200"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            ></path>
+          </svg>
+        </button>
+        <div
+          id="detailedBreakdown"
+          class="hidden mt-4 p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700"
+        >
+          <div
+            id="detailedBreakdownContent"
+            class="prose prose-sm max-w-none text-gray-600 dark:text-gray-300"
+          ></div>
+        </div>
+      </div>
+
       <div class="mt-4 flex space-x-2">
         <button
           onclick="copyToClipboard()"
           class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mr-1"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+            <path
+              d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
+            />
+          </svg>
           Copy to Clipboard
         </button>
         <button
@@ -181,7 +287,7 @@ self.meta_description() }}{% endblock %} {% block content %}
         <summary
           class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
-          How does the Market Gap Identifier work?
+          What is TAM/SAM/SOM?
           <span
             class="transform group-open:rotate-180 transition-transform duration-200"
           >
@@ -202,10 +308,19 @@ self.meta_description() }}{% endblock %} {% block content %}
         </summary>
         <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>
-            Our tool uses advanced AI to analyze your industry, target
-            customers, and market pain points to identify potential
-            opportunities and gaps in the market that your product could
-            address.
+            <strong>TAM (Total Addressable Market)</strong> represents the total
+            market demand for a product or service - the maximum potential
+            market size.
+          </p>
+          <p class="mt-2">
+            <strong>SAM (Serviceable Addressable Market)</strong> is the portion
+            of TAM that is actually targeted by your products and services and
+            aligns with your business model.
+          </p>
+          <p class="mt-2">
+            <strong>SOM (Serviceable Obtainable Market)</strong> is the portion
+            of SAM that you can realistically capture, considering competition,
+            resources, and go-to-market strategy.
           </p>
         </div>
       </details>
@@ -214,7 +329,7 @@ self.meta_description() }}{% endblock %} {% block content %}
         <summary
           class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
-          What kind of insights will I receive?
+          Why is market sizing important?
           <span
             class="transform group-open:rotate-180 transition-transform duration-200"
           >
@@ -234,11 +349,24 @@ self.meta_description() }}{% endblock %} {% block content %}
           </span>
         </summary>
         <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
-          <p>
-            You'll get a structured analysis including identified market gaps,
-            potential opportunities, key differentiators to consider, risk
-            factors, and recommended next steps for validation.
-          </p>
+          <ul class="list-disc ml-6">
+            <li>
+              <strong>Investor pitches</strong>: Demonstrate market opportunity
+              and realistic growth potential
+            </li>
+            <li>
+              <strong>Resource allocation</strong>: Determine appropriate
+              investment levels based on potential returns
+            </li>
+            <li>
+              <strong>Go-to-market strategy</strong>: Identify which segments to
+              target first and how to expand
+            </li>
+            <li>
+              <strong>Financial projections</strong>: Create realistic revenue
+              forecasts based on market capture
+            </li>
+          </ul>
         </div>
       </details>
 
@@ -246,7 +374,7 @@ self.meta_description() }}{% endblock %} {% block content %}
         <summary
           class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
-          How should I use these insights?
+          How accurate are these estimates?
           <span
             class="transform group-open:rotate-180 transition-transform duration-200"
           >
@@ -267,60 +395,24 @@ self.meta_description() }}{% endblock %} {% block content %}
         </summary>
         <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>
-            Use the insights as a starting point for deeper market research,
-            product strategy development, and validation of your business ideas.
-            The tool helps identify promising directions, but always validate
-            findings with real market research.
+            The estimates provided are based on available market data and
+            reasonable assumptions. They should be considered starting points
+            rather than definitive figures. For more accurate estimates,
+            consider validating with multiple data sources, conducting primary
+            research, and consulting industry experts.
           </p>
         </div>
       </details>
     </div>
   </section>
 
-  <!-- Related Tools -->
-  {{ tool_links('market_gap') }}
+  <!-- IMPORTANT: Include the tool_links component with your tool's ID -->
+  {{ tool_links('tam_sam_som') }}
 </div>
 
 <script>
-  function renderMarkdown(text) {
-    // Handle headers (h1-h4)
-    text = text.replace(
-      /^# (.*?)$/gm,
-      "<h1 class='text-2xl font-bold mb-4 mt-6'>$1</h1>"
-    );
-    text = text.replace(
-      /^## (.*?)$/gm,
-      "<h2 class='text-xl font-bold mb-3 mt-5'>$1</h2>"
-    );
-    text = text.replace(
-      /^### (.*?)$/gm,
-      "<h3 class='text-lg font-bold mb-2 mt-4'>$1</h3>"
-    );
-    text = text.replace(
-      /^#### (.*?)$/gm,
-      "<h4 class='text-base font-bold mb-2 mt-3'>$1</h4>"
-    );
-
-    // Handle bold text with double asterisks
-    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-
-    // Handle italic text with single asterisks
-    text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
-
-    // Handle bullet points
-    text = text.replace(/^- (.*?)$/gm, "<li class='ml-4'>$1</li>");
-
-    // Handle numbered lists
-    text = text.replace(/^\d+\. (.*?)$/gm, "<li class='ml-4'>$1</li>");
-
-    // Handle line breaks
-    text = text.replace(/\n/g, "<br>");
-
-    return text;
-  }
-
   document
-    .getElementById("marketGapForm")
+    .getElementById("tamSamSomForm")
     .addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -330,6 +422,17 @@ self.meta_description() }}{% endblock %} {% block content %}
       const resultDiv = document.getElementById("result");
       const errorDiv = document.getElementById("error");
       const resultContentDiv = document.getElementById("resultContent");
+      const detailedBreakdownContentDiv = document.getElementById(
+        "detailedBreakdownContent"
+      );
+
+      // Get form values
+      const industry = document.getElementById("industry").value;
+      const productDescription =
+        document.getElementById("productDescription").value;
+      const targetCustomers = document.getElementById("targetCustomers").value;
+      const additionalInfo = document.getElementById("additionalInfo").value;
+      const approach = document.getElementById("approach").value;
 
       // Show loading state
       submitButton.disabled = true;
@@ -338,23 +441,46 @@ self.meta_description() }}{% endblock %} {% block content %}
       errorDiv.classList.add("hidden");
 
       try {
-        const response = await fetch("/api/market-gap", {
+        const response = await fetch("/api/tam-sam-som", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            industry: document.getElementById("industry").value,
-            customerType: document.getElementById("customerType").value,
-            competitor: document.getElementById("competitor").value,
-            painPoint: document.getElementById("painPoint").value,
+            industry,
+            productDescription,
+            targetCustomers,
+            additionalInfo,
+            approach,
           }),
         });
 
         const data = await response.json();
 
         if (data.success) {
-          resultContentDiv.innerHTML = renderMarkdown(data.analysis);
+          // Extract detailed breakdown before formatting
+          const detailedBreakdown = extractDetailedBreakdown(data.analysis);
+
+          // Remove detailed breakdown from main content to avoid duplication
+          let mainContent = data.analysis.replace(detailedBreakdown, "");
+
+          // Format the content with markdown-like styling
+          const formattedContent = mainContent
+            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+            .replace(/\n\n/g, "<br><br>")
+            .replace(/\n/g, "<br>");
+
+          const formattedDetailedBreakdown = detailedBreakdown
+            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+            .replace(/\n\n/g, "<br><br>")
+            .replace(/\n/g, "<br>");
+
+          resultContentDiv.innerHTML = formattedContent;
+          detailedBreakdownContentDiv.innerHTML = formattedDetailedBreakdown;
+
+          // Update the funnel visualization
+          updateFunnelVisualization(data.analysis);
+
           resultDiv.classList.remove("hidden");
           resultDiv.classList.add("animate-fade-in");
         } else {
@@ -414,7 +540,7 @@ self.meta_description() }}{% endblock %} {% block content %}
       resultContentDiv.classList.remove("ring-2", "ring-green-500");
       editButton.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
         </svg>
         Edit
       `;
@@ -424,12 +550,75 @@ self.meta_description() }}{% endblock %} {% block content %}
       resultContentDiv.classList.add("ring-2", "ring-green-500");
       editButton.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
         </svg>
         Save
       `;
       resultContentDiv.focus();
     }
+  }
+
+  // Add toggle functionality for detailed breakdown
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggleButton = document.getElementById("toggleDetailedBreakdown");
+    const detailedBreakdown = document.getElementById("detailedBreakdown");
+    const chevron = document.getElementById("detailsChevron");
+
+    if (toggleButton) {
+      toggleButton.addEventListener("click", function () {
+        detailedBreakdown.classList.toggle("hidden");
+        chevron.classList.toggle("rotate-180");
+      });
+    }
+  });
+
+  // Function to extract and update the funnel values
+  function updateFunnelVisualization(content) {
+    // Try to extract TAM, SAM, and SOM values using regex
+    const tamMatch = content.match(
+      /TAM.*?(\$[\d\.,]+-[\d\.,]+\s+[Mm]illion|\$[\d\.,]+\s+[Mm]illion|\$[\d\.,]+-[\d\.,]+\s+[Bb]illion|\$[\d\.,]+\s+[Bb]illion)/
+    );
+    const samMatch = content.match(
+      /SAM.*?(\$[\d\.,]+-[\d\.,]+\s+[Mm]illion|\$[\d\.,]+\s+[Mm]illion|\$[\d\.,]+-[\d\.,]+\s+[Bb]illion|\$[\d\.,]+\s+[Bb]illion)/
+    );
+    const somMatch = content.match(
+      /SOM.*?(\$[\d\.,]+-[\d\.,]+\s+[Mm]illion|\$[\d\.,]+\s+[Mm]illion|\$[\d\.,]+-[\d\.,]+\s+[Bb]illion|\$[\d\.,]+\s+[Bb]illion)/
+    );
+
+    if (tamMatch && tamMatch[1]) {
+      document.getElementById("tamValue").textContent = tamMatch[1];
+    }
+
+    if (samMatch && samMatch[1]) {
+      document.getElementById("samValue").textContent = samMatch[1];
+    }
+
+    if (somMatch && somMatch[1]) {
+      document.getElementById("somValue").textContent = somMatch[1];
+    }
+  }
+
+  // Function to extract detailed breakdown section
+  function extractDetailedBreakdown(content) {
+    // Look for a section that might contain detailed breakdown
+    const detailedSection = content.match(
+      /Detailed Breakdown[\s\S]*?(?=Recommendations|$)/i
+    );
+
+    if (detailedSection) {
+      return detailedSection[0];
+    }
+
+    // Fallback: look for any section with "assumptions" or "calculations"
+    const assumptionsSection = content.match(
+      /(?:Assumptions|Calculations)[\s\S]*?(?=Recommendations|Visualization|Growth|$)/i
+    );
+
+    if (assumptionsSection) {
+      return assumptionsSection[0];
+    }
+
+    return "Detailed calculations and assumptions not available.";
   }
 </script>
 

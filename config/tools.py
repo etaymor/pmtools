@@ -99,6 +99,13 @@ TOOLS = [
         'description': 'Set a countdown timer for your brainstorming sessions with pause and restart functionality',
         'url': '/brainstorming-timer',
         'category': 'Productivity'
+    },
+    {
+        'id': 'tam_sam_som',
+        'name': 'TAM/SAM/SOM Estimator',
+        'description': 'Calculate your Total Addressable Market, Serviceable Addressable Market, and Serviceable Obtainable Market',
+        'url': '/tam-sam-som',
+        'category': 'Analysis'
     }
 ]
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
   <head>
     <!-- Google tag (gtag.js) -->
     <script
@@ -47,15 +47,38 @@
     />
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              // Custom colors can be defined here if needed
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwind">
+      @layer utilities {
+        .dark .dark-transition {
+          transition: background-color 0.3s ease, color 0.3s ease,
+            border-color 0.3s ease;
+        }
+      }
+    </style>
   </head>
-  <body class="bg-gray-100 min-h-screen">
-    <nav class="bg-white shadow-lg">
+  <body
+    class="bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-300"
+  >
+    <nav class="bg-white dark:bg-gray-800 shadow-lg">
       <div class="max-w-6xl mx-auto px-4">
         <div class="flex justify-between">
           <div class="flex space-x-7">
             <div>
               <a href="/" class="flex items-center py-4">
-                <span class="font-semibold text-gray-500 text-lg"
+                <span
+                  class="font-semibold text-gray-500 dark:text-gray-300 text-lg"
                   >Free Product Management Tools</span
                 >
               </a>
@@ -63,10 +86,48 @@
             <div class="hidden md:flex items-center space-x-1">
               <a
                 href="/"
-                class="py-4 px-2 text-gray-500 hover:text-green-500 transition duration-300"
+                class="py-4 px-2 text-gray-500 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400 transition duration-300"
                 >All Tools</a
               >
             </div>
+          </div>
+          <!-- Dark mode toggle -->
+          <div class="flex items-center">
+            <button
+              id="darkModeToggle"
+              class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
+            >
+              <!-- Sun icon for dark mode -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 text-gray-500 dark:text-gray-300 hidden dark:block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                />
+              </svg>
+              <!-- Moon icon for light mode -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 text-gray-500 dark:text-gray-300 block dark:hidden"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
@@ -78,5 +139,37 @@
 
     <!-- AddToAny Share Script -->
     <script defer src="https://static.addtoany.com/menu/page.js"></script>
+
+    <!-- Dark Mode Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const darkModeToggle = document.getElementById("darkModeToggle");
+        const html = document.documentElement;
+
+        // Check for saved theme preference or use the system preference
+        const savedTheme = localStorage.getItem("theme");
+
+        if (
+          savedTheme === "dark" ||
+          (!savedTheme &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          html.classList.add("dark");
+        } else {
+          html.classList.remove("dark");
+        }
+
+        // Toggle dark mode on button click
+        darkModeToggle.addEventListener("click", function () {
+          if (html.classList.contains("dark")) {
+            html.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+          } else {
+            html.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+          }
+        });
+      });
+    </script>
   </body>
 </html>

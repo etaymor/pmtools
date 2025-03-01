@@ -36,6 +36,7 @@ def create_app():
     from app.routes.tools.empathy_map import empathy_map_bp
     from app.routes.tools.stakeholder_interview import stakeholder_interview_bp
     from app.routes.tools.brainstorming_timer import brainstorming_timer_bp
+    from app.routes.tools.tam_sam_som import tam_sam_som_bp
     
     app.register_blueprint(main_bp)
     app.register_blueprint(value_prop_bp)
@@ -50,6 +51,7 @@ def create_app():
     app.register_blueprint(empathy_map_bp)
     app.register_blueprint(stakeholder_interview_bp)
     app.register_blueprint(brainstorming_timer_bp)
+    app.register_blueprint(tam_sam_som_bp)
     
     # Debug template loading
     app.config['EXPLAIN_TEMPLATE_LOADING'] = True

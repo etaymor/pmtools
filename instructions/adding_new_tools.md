@@ -124,10 +124,14 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 <div class="max-w-4xl mx-auto">
   <!-- Hero Section -->
   <div class="text-center py-4 px-6 mb-8 rounded-2xl">
-    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+    <h1
+      class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4 leading-tight"
+    >
       Your Tool Name
     </h1>
-    <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
+    <div
+      class="prose prose-base mx-auto text-gray-600 dark:text-gray-300 max-w-2xl"
+    >
       <p class="text-base md:text-lg leading-relaxed">
         Your tool's description here.
       </p>
@@ -136,13 +140,30 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 
   <!-- Main Form Card -->
   <div
-    class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
+    class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
   >
     <form id="yourToolForm" class="space-y-8">
-      <!-- Your form fields here -->
+      <!-- Example form field with dark mode support -->
+      <div class="relative">
+        <label
+          for="exampleField"
+          class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+        >
+          Example Field
+        </label>
+        <input
+          type="text"
+          id="exampleField"
+          name="exampleField"
+          required
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-600 dark:text-gray-100"
+          placeholder="Enter some text here"
+        />
+      </div>
+
       <button
         type="submit"
-        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
       >
         Generate Result
       </button>
@@ -153,28 +174,43 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
       <div
         class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent"
       ></div>
-      <p class="mt-2 text-gray-600">Processing your request...</p>
+      <p class="mt-2 text-gray-600 dark:text-gray-300">
+        Processing your request...
+      </p>
     </div>
 
     <!-- Result Section -->
     <div id="result" class="hidden mt-8 transform transition-all duration-300">
-      <h2 class="text-xl font-bold text-gray-800 mb-4">Your Result:</h2>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+        Your Result:
+      </h2>
       <div
         id="resultContent"
-        class="p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg text-gray-700 text-lg leading-relaxed border border-green-100 shadow-sm"
+        class="p-6 bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-lg text-gray-700 dark:text-gray-200 text-lg leading-relaxed border border-green-100 dark:border-gray-500 shadow-sm"
         contenteditable="false"
       ></div>
       <div class="mt-4 flex space-x-2">
         <button
           onclick="copyToClipboard()"
-          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mr-1"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+            <path
+              d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
+            />
+          </svg>
           Copy to Clipboard
         </button>
         <button
           onclick="toggleEdit()"
           id="editButton"
-          class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -194,21 +230,26 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
     <!-- Error Message -->
     <div
       id="error"
-      class="hidden mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
+      class="hidden mt-6 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800"
     >
-      <p class="text-red-600 text-center"></p>
+      <p class="text-red-600 dark:text-red-400 text-center"></p>
     </div>
   </div>
 
+  <!-- Share Buttons -->
+  {{ share_buttons() }}
+
   <!-- FAQ Section -->
   <section class="mb-12">
-    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+    <h2
+      class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8 text-center"
+    >
       Frequently Asked Questions
     </h2>
     <div class="space-y-4">
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           Your Question Here
           <span
@@ -229,7 +270,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>Your answer here.</p>
         </div>
       </details>
@@ -294,7 +335,28 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
     navigator.clipboard
       .writeText(content)
       .then(() => {
-        alert("Copied to clipboard!");
+        // Use a more subtle notification in dark mode
+        const isDarkMode = document.documentElement.classList.contains("dark");
+        const alertBg = isDarkMode ? "#374151" : "white";
+        const alertText = isDarkMode ? "#e5e7eb" : "#374151";
+        const alertEl = document.createElement("div");
+        alertEl.style.position = "fixed";
+        alertEl.style.bottom = "20px";
+        alertEl.style.right = "20px";
+        alertEl.style.padding = "10px 20px";
+        alertEl.style.background = alertBg;
+        alertEl.style.color = alertText;
+        alertEl.style.borderRadius = "4px";
+        alertEl.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.15)";
+        alertEl.style.zIndex = "9999";
+        alertEl.textContent = "Copied to clipboard!";
+        document.body.appendChild(alertEl);
+
+        setTimeout(() => {
+          alertEl.style.opacity = "0";
+          alertEl.style.transition = "opacity 0.5s ease";
+          setTimeout(() => document.body.removeChild(alertEl), 500);
+        }, 2000);
       })
       .catch(() => {
         alert("Failed to copy to clipboard");
@@ -411,6 +473,87 @@ Remember to follow the existing patterns and maintain consistency with other too
 6. **Logging**: Use the logger for important events and errors
 7. **User Interaction**: Include edit and copy functionality for generated content
 8. **Accessibility**: Ensure all interactive elements are keyboard-accessible
+9. **Dark Mode Support**: Implement dark mode styling for all UI elements
+
+## Dark Mode Implementation
+
+All tools must support dark mode. Follow these guidelines to ensure consistent dark mode styling:
+
+### 1. Text Colors
+
+- Headings: `text-gray-800 dark:text-gray-100`
+- Regular text: `text-gray-600 dark:text-gray-300`
+- Secondary text: `text-gray-500 dark:text-gray-400`
+- Input labels: `text-gray-700 dark:text-gray-300`
+- Input text: `dark:text-gray-100`
+- Error messages: `text-red-600 dark:text-red-400`
+
+### 2. Background Colors
+
+- Main card backgrounds: `bg-white dark:bg-gray-800`
+- Input fields: `bg-gray-50 dark:bg-gray-700` with `hover:bg-white dark:hover:bg-gray-600`
+- Button hover states: `hover:bg-gray-50 dark:hover:bg-gray-600`
+- Error message backgrounds: `bg-red-50 dark:bg-red-900/20`
+- Result content backgrounds: `from-green-50 to-blue-50 dark:from-gray-700 dark:to-gray-600`
+
+### 3. Border Colors
+
+- Input fields: `border-gray-300 dark:border-gray-600`
+- Buttons: `border-gray-300 dark:border-gray-600`
+- Error messages: `border-red-200 dark:border-red-800`
+
+### 4. Focus and Hover States
+
+- Focus rings: `focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800`
+- Text hover: `hover:text-green-600 dark:hover:text-green-400`
+
+### 5. Clipboard Notification
+
+Replace basic alerts with custom notifications that adapt to dark mode:
+
+```javascript
+function copyToClipboard() {
+  const content = document.getElementById("resultContent").textContent;
+  navigator.clipboard
+    .writeText(content)
+    .then(() => {
+      // Use a more subtle notification in dark mode
+      const isDarkMode = document.documentElement.classList.contains("dark");
+      const alertBg = isDarkMode ? "#374151" : "white";
+      const alertText = isDarkMode ? "#e5e7eb" : "#374151";
+      const alertEl = document.createElement("div");
+      alertEl.style.position = "fixed";
+      alertEl.style.bottom = "20px";
+      alertEl.style.right = "20px";
+      alertEl.style.padding = "10px 20px";
+      alertEl.style.background = alertBg;
+      alertEl.style.color = alertText;
+      alertEl.style.borderRadius = "4px";
+      alertEl.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.15)";
+      alertEl.style.zIndex = "9999";
+      alertEl.textContent = "Copied to clipboard!";
+      document.body.appendChild(alertEl);
+
+      setTimeout(() => {
+        alertEl.style.opacity = "0";
+        alertEl.style.transition = "opacity 0.5s ease";
+        setTimeout(() => document.body.removeChild(alertEl), 500);
+      }, 2000);
+    })
+    .catch(() => {
+      alert("Failed to copy to clipboard");
+    });
+}
+```
+
+### 6. Testing Dark Mode
+
+Always test your tool in both light and dark modes:
+
+1. Toggle dark mode in your browser using the theme switcher in the application
+2. Verify all text is readable and has sufficient contrast
+3. Check that all interactive elements are clearly visible
+4. Ensure transitions between states work correctly in both modes
 
 ## Common Features to Include
 

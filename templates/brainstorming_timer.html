@@ -11,10 +11,14 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 <div class="max-w-4xl mx-auto">
   <!-- Hero Section -->
   <div class="text-center py-4 px-6 mb-8 rounded-2xl">
-    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
+    <h1
+      class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4 leading-tight"
+    >
       Brainstorming Session Timer
     </h1>
-    <div class="prose prose-base mx-auto text-gray-600 max-w-2xl">
+    <div
+      class="prose prose-base mx-auto text-gray-600 dark:text-gray-300 max-w-2xl"
+    >
       <p class="text-base md:text-lg leading-relaxed">
         Keep your brainstorming sessions focused and productive with this
         customizable timer. Set your desired duration, and use the pause and
@@ -25,39 +29,43 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 
   <!-- Main Card -->
   <div
-    class="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
+    class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl"
   >
     <!-- Timer Setup Form -->
     <div id="timerSetup" class="mb-8">
-      <h2 class="text-xl font-bold text-gray-800 mb-4">Set Timer Duration</h2>
+      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+        Set Timer Duration
+      </h2>
 
       <!-- Preset Time Buttons -->
       <div class="mb-6">
-        <p class="text-sm font-medium text-gray-700 mb-2">Quick Select:</p>
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Quick Select:
+        </p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
           <button
-            class="preset-time-btn bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2 px-4 rounded-md border border-green-200 transition-colors duration-200"
+            class="preset-time-btn bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-800/30 text-green-700 dark:text-green-400 font-medium py-2 px-4 rounded-md border border-green-200 dark:border-green-800 transition-colors duration-200"
             data-minutes="1"
             data-seconds="0"
           >
             1 Minute
           </button>
           <button
-            class="preset-time-btn bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2 px-4 rounded-md border border-green-200 transition-colors duration-200"
+            class="preset-time-btn bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-800/30 text-green-700 dark:text-green-400 font-medium py-2 px-4 rounded-md border border-green-200 dark:border-green-800 transition-colors duration-200"
             data-minutes="3"
             data-seconds="0"
           >
             3 Minutes
           </button>
           <button
-            class="preset-time-btn bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2 px-4 rounded-md border border-green-200 transition-colors duration-200"
+            class="preset-time-btn bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-800/30 text-green-700 dark:text-green-400 font-medium py-2 px-4 rounded-md border border-green-200 dark:border-green-800 transition-colors duration-200"
             data-minutes="5"
             data-seconds="0"
           >
             5 Minutes
           </button>
           <button
-            class="preset-time-btn bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2 px-4 rounded-md border border-green-200 transition-colors duration-200"
+            class="preset-time-btn bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-800/30 text-green-700 dark:text-green-400 font-medium py-2 px-4 rounded-md border border-green-200 dark:border-green-800 transition-colors duration-200"
             data-minutes="10"
             data-seconds="0"
           >
@@ -67,12 +75,14 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
       </div>
 
       <!-- Custom Time Input -->
-      <p class="text-sm font-medium text-gray-700 mb-2">Custom Duration:</p>
+      <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        Custom Duration:
+      </p>
       <div class="flex flex-col md:flex-row gap-4 mb-6">
         <div class="flex-1">
           <label
             for="minutes"
-            class="block text-sm font-medium text-gray-700 mb-1"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
             >Minutes</label
           >
           <input
@@ -81,13 +91,13 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             min="0"
             max="60"
             value="5"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:text-gray-100"
           />
         </div>
         <div class="flex-1">
           <label
             for="seconds"
-            class="block text-sm font-medium text-gray-700 mb-1"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
             >Seconds</label
           >
           <input
@@ -96,13 +106,13 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             min="0"
             max="59"
             value="0"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:text-gray-100"
           />
         </div>
       </div>
       <button
         id="startTimerBtn"
-        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
       >
         Start Timer
       </button>
@@ -112,12 +122,12 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
     <div id="timerDisplay" class="hidden">
       <div class="text-center mb-8">
         <div
-          class="text-6xl md:text-8xl font-bold text-gray-800 mb-4 font-mono"
+          class="text-6xl md:text-8xl font-bold text-gray-800 dark:text-gray-100 mb-4 font-mono"
           id="timeRemaining"
         >
           05:00
         </div>
-        <div class="text-sm text-gray-500" id="timerStatus">
+        <div class="text-sm text-gray-500 dark:text-gray-400" id="timerStatus">
           Timer running...
         </div>
       </div>
@@ -125,13 +135,13 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
       <div class="flex gap-4">
         <button
           id="pauseResumeBtn"
-          class="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-yellow-600 hover:to-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+          class="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-yellow-600 hover:to-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
         >
           Pause
         </button>
         <button
           id="resetTimerBtn"
-          class="flex-1 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+          class="flex-1 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
         >
           Reset
         </button>
@@ -155,14 +165,16 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
           ></path>
         </svg>
-        <h2 class="text-2xl font-bold text-gray-800 mt-4">Time's Up!</h2>
-        <p class="text-gray-600 mt-2">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-4">
+          Time's Up!
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300 mt-2">
           Your brainstorming session is complete.
         </p>
       </div>
       <button
         id="newTimerBtn"
-        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
       >
         Set New Timer
       </button>
@@ -174,13 +186,15 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 
   <!-- FAQ Section -->
   <section class="mb-12">
-    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+    <h2
+      class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8 text-center"
+    >
       Frequently Asked Questions
     </h2>
     <div class="space-y-4">
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           Why use a timer for brainstorming sessions?
           <span
@@ -201,7 +215,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>Using a timer for brainstorming sessions helps in several ways:</p>
           <ul class="list-disc pl-5 mt-2 space-y-1">
             <li>Creates a sense of urgency that can boost creativity</li>
@@ -216,9 +230,9 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         </div>
       </details>
 
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           What's the ideal duration for a brainstorming session?
           <span
@@ -239,7 +253,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>
             The ideal duration depends on your specific goals, but research
             suggests:
@@ -265,9 +279,9 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         </div>
       </details>
 
-      <details class="group bg-white rounded-xl shadow-sm">
+      <details class="group bg-white dark:bg-gray-800 rounded-xl shadow-sm">
         <summary
-          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 cursor-pointer hover:text-green-600 transition-colors duration-200"
+          class="flex items-center justify-between p-6 text-lg font-medium text-gray-800 dark:text-gray-200 cursor-pointer hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
         >
           How can I make the most of timed brainstorming?
           <span
@@ -288,7 +302,7 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
             </svg>
           </span>
         </summary>
-        <div class="px-6 pb-6 text-gray-600">
+        <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>To maximize the effectiveness of timed brainstorming:</p>
           <ul class="list-disc pl-5 mt-2 space-y-1">
             <li>
@@ -370,11 +384,31 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         parseInt(btn.dataset.minutes) === minutes &&
         parseInt(btn.dataset.seconds || 0) === seconds
       ) {
-        btn.classList.add("bg-green-200", "border-green-400");
-        btn.classList.remove("bg-green-50", "border-green-200");
+        btn.classList.add(
+          "bg-green-200",
+          "border-green-400",
+          "dark:bg-green-800/40",
+          "dark:border-green-700"
+        );
+        btn.classList.remove(
+          "bg-green-50",
+          "border-green-200",
+          "dark:bg-green-900/20",
+          "dark:border-green-800"
+        );
       } else {
-        btn.classList.remove("bg-green-200", "border-green-400");
-        btn.classList.add("bg-green-50", "border-green-200");
+        btn.classList.remove(
+          "bg-green-200",
+          "border-green-400",
+          "dark:bg-green-800/40",
+          "dark:border-green-700"
+        );
+        btn.classList.add(
+          "bg-green-50",
+          "border-green-200",
+          "dark:bg-green-900/20",
+          "dark:border-green-800"
+        );
       }
     });
   }
@@ -480,8 +514,18 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 
     // Reset preset button styling
     presetButtons.forEach((btn) => {
-      btn.classList.remove("bg-green-200", "border-green-400");
-      btn.classList.add("bg-green-50", "border-green-200");
+      btn.classList.remove(
+        "bg-green-200",
+        "border-green-400",
+        "dark:bg-green-800/40",
+        "dark:border-green-700"
+      );
+      btn.classList.add(
+        "bg-green-50",
+        "border-green-200",
+        "dark:bg-green-900/20",
+        "dark:border-green-800"
+      );
     });
 
     // If current value matches a preset, highlight that preset
@@ -493,8 +537,18 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         parseInt(btn.dataset.minutes) === currentMinutes &&
         parseInt(btn.dataset.seconds || 0) === currentSeconds
       ) {
-        btn.classList.add("bg-green-200", "border-green-400");
-        btn.classList.remove("bg-green-50", "border-green-200");
+        btn.classList.add(
+          "bg-green-200",
+          "border-green-400",
+          "dark:bg-green-800/40",
+          "dark:border-green-700"
+        );
+        btn.classList.remove(
+          "bg-green-50",
+          "border-green-200",
+          "dark:bg-green-900/20",
+          "dark:border-green-800"
+        );
       }
     });
   }
@@ -521,8 +575,18 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 
     // Reset preset button styling when manual input changes
     presetButtons.forEach((btn) => {
-      btn.classList.remove("bg-green-200", "border-green-400");
-      btn.classList.add("bg-green-50", "border-green-200");
+      btn.classList.remove(
+        "bg-green-200",
+        "border-green-400",
+        "dark:bg-green-800/40",
+        "dark:border-green-700"
+      );
+      btn.classList.add(
+        "bg-green-50",
+        "border-green-200",
+        "dark:bg-green-900/20",
+        "dark:border-green-800"
+      );
     });
 
     // If current value matches a preset, highlight that preset
@@ -534,8 +598,18 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         parseInt(btn.dataset.minutes) === currentMinutes &&
         parseInt(btn.dataset.seconds || 0) === currentSeconds
       ) {
-        btn.classList.add("bg-green-200", "border-green-400");
-        btn.classList.remove("bg-green-50", "border-green-200");
+        btn.classList.add(
+          "bg-green-200",
+          "border-green-400",
+          "dark:bg-green-800/40",
+          "dark:border-green-700"
+        );
+        btn.classList.remove(
+          "bg-green-50",
+          "border-green-200",
+          "dark:bg-green-900/20",
+          "dark:border-green-800"
+        );
       }
     });
   });
@@ -546,8 +620,18 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
 
     // Reset preset button styling when manual input changes
     presetButtons.forEach((btn) => {
-      btn.classList.remove("bg-green-200", "border-green-400");
-      btn.classList.add("bg-green-50", "border-green-200");
+      btn.classList.remove(
+        "bg-green-200",
+        "border-green-400",
+        "dark:bg-green-800/40",
+        "dark:border-green-700"
+      );
+      btn.classList.add(
+        "bg-green-50",
+        "border-green-200",
+        "dark:bg-green-900/20",
+        "dark:border-green-800"
+      );
     });
 
     // If current value matches a preset, highlight that preset
@@ -559,8 +643,18 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         parseInt(btn.dataset.minutes) === currentMinutes &&
         parseInt(btn.dataset.seconds || 0) === currentSeconds
       ) {
-        btn.classList.add("bg-green-200", "border-green-400");
-        btn.classList.remove("bg-green-50", "border-green-200");
+        btn.classList.add(
+          "bg-green-200",
+          "border-green-400",
+          "dark:bg-green-800/40",
+          "dark:border-green-700"
+        );
+        btn.classList.remove(
+          "bg-green-50",
+          "border-green-200",
+          "dark:bg-green-900/20",
+          "dark:border-green-800"
+        );
       }
     });
   });
@@ -572,8 +666,18 @@ twitter_title %}{{ self.og_title() }}{% endblock %} {% block twitter_description
         parseInt(btn.dataset.minutes) === 5 &&
         parseInt(btn.dataset.seconds || 0) === 0
       ) {
-        btn.classList.add("bg-green-200", "border-green-400");
-        btn.classList.remove("bg-green-50", "border-green-200");
+        btn.classList.add(
+          "bg-green-200",
+          "border-green-400",
+          "dark:bg-green-800/40",
+          "dark:border-green-700"
+        );
+        btn.classList.remove(
+          "bg-green-50",
+          "border-green-200",
+          "dark:bg-green-900/20",
+          "dark:border-green-800"
+        );
       }
     });
   });
