@@ -192,39 +192,6 @@ self.meta_description() }}{% endblock %} {% block content %}
         </div>
       </div>
 
-      <!-- Detailed Breakdown (Collapsible) -->
-      <div class="mt-6">
-        <button
-          id="toggleDetailedBreakdown"
-          class="flex items-center justify-between w-full p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 text-left font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200"
-        >
-          <span>View Detailed Breakdown & Assumptions</span>
-          <svg
-            id="detailsChevron"
-            class="w-5 h-5 transform transition-transform duration-200"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
-            ></path>
-          </svg>
-        </button>
-        <div
-          id="detailedBreakdown"
-          class="hidden mt-4 p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700"
-        >
-          <div
-            id="detailedBreakdownContent"
-            class="prose prose-sm max-w-none text-gray-600 dark:text-gray-300"
-          ></div>
-        </div>
-      </div>
-
       <div class="mt-4 flex space-x-2">
         <button
           onclick="copyToClipboard()"
@@ -359,8 +326,12 @@ self.meta_description() }}{% endblock %} {% block content %}
               investment levels based on potential returns
             </li>
             <li>
-              <strong>Go-to-market strategy</strong>: Identify which segments to
-              target first and how to expand
+              <strong
+                ><a
+                  href="https://www.productdevprocess.com/marketing-strategy-document-2/"
+                  >Go-to-market strategy</a
+                ></strong
+              >: Identify which segments to target first and how to expand
             </li>
             <li>
               <strong>Financial projections</strong>: Create realistic revenue
@@ -395,11 +366,13 @@ self.meta_description() }}{% endblock %} {% block content %}
         </summary>
         <div class="px-6 pb-6 text-gray-600 dark:text-gray-300">
           <p>
-            The estimates provided are based on available market data and
-            reasonable assumptions. They should be considered starting points
-            rather than definitive figures. For more accurate estimates,
-            consider validating with multiple data sources, conducting primary
-            research, and consulting industry experts.
+            The estimates provided are based on
+            <a href="https://www.productdevprocess.com/market-research-report/"
+              >available market data and reasonable assumptions</a
+            >. They should be considered starting points rather than definitive
+            figures. For more accurate estimates, consider validating with
+            multiple data sources, conducting primary research, and consulting
+            industry experts.
           </p>
         </div>
       </details>
@@ -411,6 +384,41 @@ self.meta_description() }}{% endblock %} {% block content %}
 </div>
 
 <script>
+  function renderMarkdown(text) {
+    // Handle headers (h1-h4)
+    text = text.replace(
+      /^# (.*?)$/gm,
+      "<h1 class='text-2xl font-bold mb-4 mt-6'>$1</h1>"
+    );
+    text = text.replace(
+      /^## (.*?)$/gm,
+      "<h2 class='text-xl font-bold mb-3 mt-5'>$1</h2>"
+    );
+    text = text.replace(
+      /^### (.*?)$/gm,
+      "<h3 class='text-lg font-bold mb-2 mt-4'>$1</h3>"
+    );
+    text = text.replace(
+      /^#### (.*?)$/gm,
+      "<h4 class='text-base font-bold mb-2 mt-3'>$1</h4>"
+    );
+
+    // Handle bold text with double asterisks
+    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+    // Handle bullet points
+    text = text.replace(/^- (.*?)$/gm, "<li class='ml-4'>$1</li>");
+
+    // Handle numbered lists
+    text = text.replace(/^\d+\. (.*?)$/gm, "<li class='ml-4'>$1</li>");
+
+    // Handle line breaks
+    text = text.replace(/\n\n/g, "<br><br>");
+    text = text.replace(/\n/g, "<br>");
+
+    return text;
+  }
+
   document
     .getElementById("tamSamSomForm")
     .addEventListener("submit", async (e) => {
@@ -422,17 +430,6 @@ self.meta_description() }}{% endblock %} {% block content %}
       const resultDiv = document.getElementById("result");
       const errorDiv = document.getElementById("error");
       const resultContentDiv = document.getElementById("resultContent");
-      const detailedBreakdownContentDiv = document.getElementById(
-        "detailedBreakdownContent"
-      );
-
-      // Get form values
-      const industry = document.getElementById("industry").value;
-      const productDescription =
-        document.getElementById("productDescription").value;
-      const targetCustomers = document.getElementById("targetCustomers").value;
-      const additionalInfo = document.getElementById("additionalInfo").value;
-      const approach = document.getElementById("approach").value;
 
       // Show loading state
       submitButton.disabled = true;
@@ -447,36 +444,20 @@ self.meta_description() }}{% endblock %} {% block content %}
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            industry,
-            productDescription,
-            targetCustomers,
-            additionalInfo,
-            approach,
+            industry: document.getElementById("industry").value,
+            productDescription:
+              document.getElementById("productDescription").value,
+            targetCustomers: document.getElementById("targetCustomers").value,
+            additionalInfo: document.getElementById("additionalInfo").value,
+            approach: document.getElementById("approach").value,
           }),
         });
 
         const data = await response.json();
 
         if (data.success) {
-          // Extract detailed breakdown before formatting
-          const detailedBreakdown = extractDetailedBreakdown(data.analysis);
-
-          // Remove detailed breakdown from main content to avoid duplication
-          let mainContent = data.analysis.replace(detailedBreakdown, "");
-
-          // Format the content with markdown-like styling
-          const formattedContent = mainContent
-            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-            .replace(/\n\n/g, "<br><br>")
-            .replace(/\n/g, "<br>");
-
-          const formattedDetailedBreakdown = detailedBreakdown
-            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-            .replace(/\n\n/g, "<br><br>")
-            .replace(/\n/g, "<br>");
-
-          resultContentDiv.innerHTML = formattedContent;
-          detailedBreakdownContentDiv.innerHTML = formattedDetailedBreakdown;
+          // Format the content with markdown styling
+          resultContentDiv.innerHTML = renderMarkdown(data.analysis);
 
           // Update the funnel visualization
           updateFunnelVisualization(data.analysis);
@@ -558,20 +539,6 @@ self.meta_description() }}{% endblock %} {% block content %}
     }
   }
 
-  // Add toggle functionality for detailed breakdown
-  document.addEventListener("DOMContentLoaded", function () {
-    const toggleButton = document.getElementById("toggleDetailedBreakdown");
-    const detailedBreakdown = document.getElementById("detailedBreakdown");
-    const chevron = document.getElementById("detailsChevron");
-
-    if (toggleButton) {
-      toggleButton.addEventListener("click", function () {
-        detailedBreakdown.classList.toggle("hidden");
-        chevron.classList.toggle("rotate-180");
-      });
-    }
-  });
-
   // Function to extract and update the funnel values
   function updateFunnelVisualization(content) {
     // Try to extract TAM, SAM, and SOM values using regex
@@ -596,29 +563,6 @@ self.meta_description() }}{% endblock %} {% block content %}
     if (somMatch && somMatch[1]) {
       document.getElementById("somValue").textContent = somMatch[1];
     }
-  }
-
-  // Function to extract detailed breakdown section
-  function extractDetailedBreakdown(content) {
-    // Look for a section that might contain detailed breakdown
-    const detailedSection = content.match(
-      /Detailed Breakdown[\s\S]*?(?=Recommendations|$)/i
-    );
-
-    if (detailedSection) {
-      return detailedSection[0];
-    }
-
-    // Fallback: look for any section with "assumptions" or "calculations"
-    const assumptionsSection = content.match(
-      /(?:Assumptions|Calculations)[\s\S]*?(?=Recommendations|Visualization|Growth|$)/i
-    );
-
-    if (assumptionsSection) {
-      return assumptionsSection[0];
-    }
-
-    return "Detailed calculations and assumptions not available.";
   }
 </script>
 

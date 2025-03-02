@@ -24,7 +24,7 @@ A collection of free SEO tools built with Flask and Tailwind CSS.
    ```
 5. Run the application:
    ```bash
-   python app.py
+   python run.py
    ```
 6. Visit `http://localhost:5001` in your browser
 

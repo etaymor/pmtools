@@ -10,7 +10,9 @@ FLASK_PORT = int(os.getenv('FLASK_PORT', 5001))
 # CORS Configuration
 CORS_ORIGINS = [
     "http://127.0.0.1:5001",
-    "http://localhost:5001"
+    "http://localhost:5001",
+    "http://freepmtools.com",
+    "https://freepmtools.com"
 ]
 CORS_METHODS = ["GET", "POST", "OPTIONS"]
 CORS_HEADERS = ["Content-Type"]
