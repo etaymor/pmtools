@@ -19,7 +19,7 @@ CORS_METHODS = ["GET", "POST", "OPTIONS"]
 CORS_HEADERS = ["Content-Type"]
 
 # OpenAI Configuration
-OPENAI_MODEL = "gpt-4"  # Updated to correct model name
+OPENAI_MODEL = "gpt-4o-mini"  # Updated to the new model name as per instructions
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 if not OPENAI_API_KEY:
