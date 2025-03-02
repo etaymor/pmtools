@@ -12,14 +12,18 @@ CORS_ORIGINS = [
     "http://127.0.0.1:5001",
     "http://localhost:5001",
     "http://freepmtools.com",
-    "https://freepmtools.com"
+    "https://freepmtools.com",
+    "https://*.railway.app"  # Add Railway domain
 ]
 CORS_METHODS = ["GET", "POST", "OPTIONS"]
 CORS_HEADERS = ["Content-Type"]
 
 # OpenAI Configuration
-OPENAI_MODEL = "gpt-4o-mini"  # Updated to the new model name as per instructions
+OPENAI_MODEL = "gpt-4"  # Updated to correct model name
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
+if not OPENAI_API_KEY:
+    raise ValueError("OPENAI_API_KEY environment variable is not set. Please set it in Railway's Variables tab.")
 
 # Logging Configuration
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'DEBUG') 
