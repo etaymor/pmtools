@@ -74,7 +74,7 @@ content %}
           <label
             class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
           >
-            Growth Stage Focus (Select at least one)
+            Growth Stage Focus (Optional)
           </label>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
             <div class="flex items-center">
@@ -186,19 +186,19 @@ content %}
         Your Growth Hacking Ideas:
       </h2>
       <div
-        id="growthHackingIdeas"
+        id="growthHackingContent"
         class="p-6 bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-lg text-gray-700 dark:text-gray-200 text-lg leading-relaxed border border-green-100 dark:border-gray-500 shadow-sm whitespace-pre-line"
         contenteditable="false"
       ></div>
       <div class="mt-4 flex space-x-2">
         <button
-          onclick="copyToClipboard()"
+          onclick="copyToClipboard(document.getElementById('growthHackingContent').innerText)"
           class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
           Copy to Clipboard
         </button>
         <button
-          onclick="toggleEdit()"
+          onclick="toggleEdit('growthHackingContent', 'editButton')"
           id="editButton"
           class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
@@ -382,83 +382,34 @@ content %}
   {{ tool_links('growth_hacking') }}
 </div>
 
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
 <script>
   document
     .getElementById("growthHackingForm")
     .addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Validate that at least one growth stage is selected
-      const growthStages = Array.from(
+      // Get all checked growth stages
+      const checkedStages = Array.from(
         document.querySelectorAll('input[name="growthStages"]:checked')
       ).map((checkbox) => checkbox.value);
 
-      if (growthStages.length === 0) {
-        document.getElementById("growthStageError").classList.remove("hidden");
-        return;
-      } else {
-        document.getElementById("growthStageError").classList.add("hidden");
-      }
+      const formData = {
+        productDescription: document.getElementById("productDescription").value,
+        targetAudience: document.getElementById("targetAudience").value,
+        growthStage: checkedStages.join(", "),
+      };
 
-      const form = e.target;
-      const submitButton = form.querySelector('button[type="submit"]');
-      const loadingDiv = document.getElementById("loading");
-      const resultDiv = document.getElementById("result");
-      const errorDiv = document.getElementById("error");
-      const resultContentDiv = document.getElementById("growthHackingIdeas");
-
-      // Show loading state
-      submitButton.disabled = true;
-      loadingDiv.classList.remove("hidden");
-      resultDiv.classList.add("hidden");
-      errorDiv.classList.add("hidden");
-
-      try {
-        const formData = {
-          productName: "Product", // Default placeholder name
-          productDescription:
-            document.getElementById("productDescription").value,
-          targetAudience: document.getElementById("targetAudience").value,
-          growthStage: growthStages.join(", "), // Join selected stages with comma
-        };
-
-        const response = await fetch("/api/generate-growth-hacking", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          // Convert line breaks to <br> tags for better formatting
-          const formattedContent = data.growth_hacking_ideas
-            .replace(/\n/g, "<br>")
-            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"); // Convert markdown bold to HTML
-
-          resultContentDiv.innerHTML = formattedContent;
-          resultDiv.classList.remove("hidden");
-          resultDiv.classList.add("animate-fade-in");
-
-          // Scroll to results
-          resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        } else {
-          throw new Error(data.error || "Failed to process request");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        errorDiv.querySelector("p").textContent = error.message;
-        errorDiv.classList.remove("hidden");
-      } finally {
-        submitButton.disabled = false;
-        loadingDiv.classList.add("hidden");
-      }
+      await handleFormSubmit(
+        "growthHackingForm",
+        "/api/generate-growth-hacking",
+        formData,
+        "result",
+        "growthHackingContent"
+      );
     });
 
-  function copyToClipboard() {
-    const content = document.getElementById("growthHackingIdeas").innerText;
+  function copyToClipboard(content) {
     navigator.clipboard
       .writeText(content)
       .then(() => {
@@ -490,9 +441,9 @@ content %}
       });
   }
 
-  function toggleEdit() {
-    const resultContentDiv = document.getElementById("growthHackingIdeas");
-    const editButton = document.getElementById("editButton");
+  function toggleEdit(contentId, buttonId) {
+    const resultContentDiv = document.getElementById(contentId);
+    const editButton = document.getElementById(buttonId);
     const isEditing = resultContentDiv.contentEditable === "true";
 
     if (isEditing) {

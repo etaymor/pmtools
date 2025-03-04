@@ -24,14 +24,18 @@ def generate_value_prop():
             logger.error('Missing required fields')
             return jsonify({"success": False, "error": "Missing required fields"}), 400
         
-        prompt = f"""1.	Craft a single-sentence value proposition that clearly communicates the product’s name, target customer segment, and primary benefits.
-	2.	Avoid jargon and keep the language straightforward and compelling.
-	3.	Provide no additional explanation—only the single-sentence value proposition as your output.
+        prompt = f"""INSTRUCTIONS:
+1. Craft a **single-sentence value proposition** that clearly communicates:
+   - The product’s name
+   - The target customer segment
+   - The primary benefits
+2. **Avoid jargon** and keep the language straightforward and compelling.
+3. **No additional explanation**—only provide the single-sentence value proposition.
 
-    Product Details
-	Product Name: {product_name}
-	Target Customer Segment: {target_audience}
-	Main Benefits: {main_value}
+PRODUCT DETAILS:
+- Product Name: {product_name}
+- Target Customer Segment: {target_audience}
+- Main Benefits: {main_value}
     """
 
         system_prompt = "You are an experienced marketing strategist and copywriter specializing in concise, impactful value propositions."

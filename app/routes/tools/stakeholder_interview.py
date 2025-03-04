@@ -34,25 +34,29 @@ def generate_stakeholder_interview():
         # Construct the prompt
         system_prompt = "You are a product management expert specialized in creating effective stakeholder interview guides for product discovery."
         
-        user_prompt = f"""Create a comprehensive stakeholder interview guide for:
-        Stakeholder Role: {stakeholder_role}
-        Interview Objectives: {interview_objectives}
-        Interview Duration: {interview_duration}
-        Specific Focus Areas: {focus_areas}
-        
-        The interview guide should include:
-        1. A brief introduction explaining the purpose of the interview
-        2. Background questions to understand the stakeholder's role and perspective
-        3. Product-specific questions related to the objectives
-        4. North star goal questions to align on vision and direction
-        5. Follow-up probing questions to dig deeper
-        6. Closing questions and next steps
-        
-        Format the guide with clear sections using markdown formatting (## for section headers, * for bullet points, etc.).
-        Include numbered questions and interviewer instructions in [brackets].
-        
-        For a {interview_duration} interview, include an appropriate number of questions.
-        """
+        user_prompt = f"""Your mission is to create a comprehensive stakeholder interview guide for the stakeholder listed at the end. 
+
+Your guide should include:
+
+1. **Introduction**  - Provide a brief explanation of the interview's purpose and how it ties back to the product goals.
+2. **Background Questions**  - Aim to understand the stakeholder’s role, responsibilities, and overall perspective.
+3. **Product-Specific Questions**  - Address the key objectives. - Include questions about cost, budget constraints, or pricing concerns—especially opportunities to decrease price or lower costs without compromising value.
+4. **North Star Goal Questions** - Explore the stakeholder’s vision, success metrics, and long-term objectives.
+5. **Follow-Up Probing Questions** - Encourage deeper discussion on any points raised, including clarifying potential cost-reduction strategies or trade-offs.
+6. **Closing Questions & Next Steps** - Summarize findings, confirm alignment, and outline any immediate follow-up actions.
+
+**FORMAT REQUIREMENTS**:
+- Use clear section headers in Markdown format (e.g., `## Section Title`).
+- Number your questions.
+- Place interviewer instructions or prompts in `[brackets]`.
+- Provide an appropriate number of questions for a {interview_duration} interview.
+
+**STAKEHOLDER INFORMATION**:
+- **Stakeholder Role**: {stakeholder_role}
+- **Interview Objectives**: {interview_objectives}
+- **Interview Duration**: {interview_duration}
+- **Specific Focus Areas**: {focus_areas}
+"""
         
         guide_content, success = openai_service.generate_completion(system_prompt, user_prompt)
         

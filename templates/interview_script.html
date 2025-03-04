@@ -150,30 +150,19 @@ self.meta_description() }}{% endblock %} {% block content %}
         Your Interview Script:
       </h2>
       <div
-        id="resultContent"
+        id="interviewScriptContent"
         class="p-6 bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-lg text-gray-700 dark:text-gray-200 text-lg leading-relaxed border border-green-100 dark:border-gray-500 shadow-sm whitespace-pre-wrap"
         contenteditable="false"
       ></div>
       <div class="mt-4 flex space-x-2">
         <button
-          onclick="copyToClipboard()"
+          onclick="copyToClipboard(document.getElementById('interviewScriptContent').innerText)"
           class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 mr-1"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-            <path
-              d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
-            />
-          </svg>
           Copy to Clipboard
         </button>
         <button
-          onclick="toggleEdit()"
+          onclick="toggleEdit('interviewScriptContent', 'editButton')"
           id="editButton"
           class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
@@ -397,67 +386,32 @@ self.meta_description() }}{% endblock %} {% block content %}
   {{ tool_links('interview_script') }}
 </div>
 
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
 <script>
   document
     .getElementById("interviewScriptForm")
     .addEventListener("submit", async (e) => {
       e.preventDefault();
+      const formData = {
+        productName: document.getElementById("productName").value,
+        targetAudience: document.getElementById("targetAudience").value,
+        researchGoals: document.getElementById("researchGoals").value,
+        scriptLength: document.getElementById("scriptLength").value,
+        scriptFormat: document.getElementById("scriptFormat").value,
+      };
 
-      const form = e.target;
-      const submitButton = form.querySelector('button[type="submit"]');
-      const loadingDiv = document.getElementById("loading");
-      const resultDiv = document.getElementById("result");
-      const errorDiv = document.getElementById("error");
-      const resultContentDiv = document.getElementById("resultContent");
-
-      // Show loading state
-      submitButton.disabled = true;
-      loadingDiv.classList.remove("hidden");
-      resultDiv.classList.add("hidden");
-      errorDiv.classList.add("hidden");
-
-      try {
-        const formData = {
-          productName: document.getElementById("productName").value,
-          targetAudience: document.getElementById("targetAudience").value,
-          researchGoals: document.getElementById("researchGoals").value,
-          scriptLength: document.getElementById("scriptLength").value,
-          scriptFormat: document.getElementById("scriptFormat").value,
-        };
-
-        const response = await fetch("/api/generate-interview-script", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          resultContentDiv.textContent = data.interview_script;
-          resultDiv.classList.remove("hidden");
-          resultDiv.classList.add("animate-fade-in");
-          // Scroll to result
-          resultDiv.scrollIntoView({ behavior: "smooth", block: "start" });
-        } else {
-          throw new Error(data.error || "Failed to generate interview script");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        errorDiv.querySelector("p").textContent = error.message;
-        errorDiv.classList.remove("hidden");
-      } finally {
-        submitButton.disabled = false;
-        loadingDiv.classList.add("hidden");
-      }
+      await handleFormSubmit(
+        "interviewScriptForm",
+        "/api/generate-interview-script",
+        formData,
+        "result",
+        "interviewScriptContent"
+      );
     });
 
-  function copyToClipboard() {
-    const content = document.getElementById("resultContent").textContent;
+  function copyToClipboard(text) {
     navigator.clipboard
-      .writeText(content)
+      .writeText(text)
       .then(() => {
         // Use a more subtle notification in dark mode
         const isDarkMode = document.documentElement.classList.contains("dark");
@@ -487,9 +441,9 @@ self.meta_description() }}{% endblock %} {% block content %}
       });
   }
 
-  function toggleEdit() {
-    const resultContentDiv = document.getElementById("resultContent");
-    const editButton = document.getElementById("editButton");
+  function toggleEdit(elementId, buttonId) {
+    const resultContentDiv = document.getElementById(elementId);
+    const editButton = document.getElementById(buttonId);
     const isEditing = resultContentDiv.contentEditable === "true";
 
     if (isEditing) {

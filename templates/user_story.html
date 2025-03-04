@@ -138,13 +138,13 @@ content %}
       ></div>
       <div class="mt-4 flex space-x-2">
         <button
-          onclick="copyToClipboard()"
+          onclick="copyToClipboard(document.getElementById('userStoryContent').innerText)"
           class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
           Copy to Clipboard
         </button>
         <button
-          onclick="toggleEdit()"
+          onclick="toggleEdit('userStoryContent', 'editButton')"
           id="editButton"
           class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
@@ -344,119 +344,27 @@ content %}
   {{ tool_links('user_story') }}
 </div>
 
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
 <script>
   document
     .getElementById("userStoryForm")
     .addEventListener("submit", async (e) => {
       e.preventDefault();
+      const formData = {
+        userType: document.getElementById("userType").value,
+        functionality: document.getElementById("functionality").value,
+        businessValue: document.getElementById("businessValue").value,
+        outputFormat: document.getElementById("outputFormat").value,
+      };
 
-      const form = e.target;
-      const submitButton = form.querySelector('button[type="submit"]');
-      const loadingDiv = document.getElementById("loading");
-      const resultDiv = document.getElementById("result");
-      const errorDiv = document.getElementById("error");
-      const userStoryDiv = document.getElementById("userStoryContent");
-
-      // Show loading state
-      submitButton.disabled = true;
-      loadingDiv.classList.remove("hidden");
-      resultDiv.classList.add("hidden");
-      errorDiv.classList.add("hidden");
-
-      try {
-        const response = await fetch("/api/generate-user-story", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userType: form.userType.value,
-            functionality: form.functionality.value,
-            businessValue: form.businessValue.value,
-            outputFormat: form.outputFormat.value,
-          }),
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          userStoryDiv.textContent = data.user_story;
-          resultDiv.classList.remove("hidden");
-          resultDiv.classList.add("animate-fade-in");
-        } else {
-          throw new Error(data.error || "Failed to generate user story");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        errorDiv.querySelector("p").textContent = error.message;
-        errorDiv.classList.remove("hidden");
-      } finally {
-        submitButton.disabled = false;
-        loadingDiv.classList.add("hidden");
-      }
+      await handleFormSubmit(
+        "userStoryForm",
+        "/api/generate-user-story",
+        formData,
+        "result",
+        "userStoryContent"
+      );
     });
-
-  function copyToClipboard() {
-    const content = document.getElementById("userStoryContent").textContent;
-    navigator.clipboard
-      .writeText(content)
-      .then(() => {
-        // Use a more subtle notification in dark mode
-        const isDarkMode = document.documentElement.classList.contains("dark");
-        const alertBg = isDarkMode ? "#374151" : "white";
-        const alertText = isDarkMode ? "#e5e7eb" : "#374151";
-        const alertEl = document.createElement("div");
-        alertEl.style.position = "fixed";
-        alertEl.style.bottom = "20px";
-        alertEl.style.right = "20px";
-        alertEl.style.padding = "10px 20px";
-        alertEl.style.background = alertBg;
-        alertEl.style.color = alertText;
-        alertEl.style.borderRadius = "4px";
-        alertEl.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.15)";
-        alertEl.style.zIndex = "9999";
-        alertEl.textContent = "Copied to clipboard!";
-        document.body.appendChild(alertEl);
-
-        setTimeout(() => {
-          alertEl.style.opacity = "0";
-          alertEl.style.transition = "opacity 0.5s ease";
-          setTimeout(() => document.body.removeChild(alertEl), 500);
-        }, 2000);
-      })
-      .catch(() => {
-        alert("Failed to copy to clipboard");
-      });
-  }
-
-  function toggleEdit() {
-    const userStoryDiv = document.getElementById("userStoryContent");
-    const editButton = document.getElementById("editButton");
-    const isEditing = userStoryDiv.contentEditable === "true";
-
-    if (isEditing) {
-      // Save mode
-      userStoryDiv.contentEditable = "false";
-      userStoryDiv.classList.remove("ring-2", "ring-green-500");
-      editButton.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-        </svg>
-        Edit
-      `;
-    } else {
-      // Edit mode
-      userStoryDiv.contentEditable = "true";
-      userStoryDiv.classList.add("ring-2", "ring-green-500");
-      editButton.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-        </svg>
-        Save
-      `;
-      userStoryDiv.focus();
-    }
-  }
 </script>
 
 <style>

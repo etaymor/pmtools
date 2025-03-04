@@ -164,24 +164,13 @@ content %}
       ></div>
       <div class="mt-4 flex space-x-2">
         <button
-          onclick="copyToClipboard()"
+          onclick="copyToClipboard(document.getElementById('releaseNotesContent').innerText)"
           class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 mr-1"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-            <path
-              d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
-            />
-          </svg>
           Copy to Clipboard
         </button>
         <button
-          onclick="toggleEdit()"
+          onclick="toggleEdit('releaseNotesContent', 'editButton')"
           id="editButton"
           class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
@@ -432,216 +421,31 @@ content %}
   {{ tool_links('release_notes') }}
 </div>
 
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
 <script>
-  function renderMarkdown(text) {
-    // Handle headers (h1-h4)
-    text = text.replace(
-      /^# (.*?)$/gm,
-      "<h1 class='text-2xl font-bold mb-4 mt-6'>$1</h1>"
-    );
-    text = text.replace(
-      /^## (.*?)$/gm,
-      "<h2 class='text-xl font-bold mb-3 mt-5'>$1</h2>"
-    );
-    text = text.replace(
-      /^### (.*?)$/gm,
-      "<h3 class='text-lg font-bold mb-2 mt-4'>$1</h3>"
-    );
-    text = text.replace(
-      /^#### (.*?)$/gm,
-      "<h4 class='text-base font-bold mb-2 mt-3'>$1</h4>"
-    );
-
-    // Handle bold text with double asterisks or double underscores
-    text = text.replace(/(\*\*|__)(.*?)\1/g, "<strong>$2</strong>");
-
-    // Handle italic text with single asterisks or single underscores
-    text = text.replace(/(\*|_)(.*?)\1/g, "<em>$2</em>");
-
-    // Handle links
-    text = text.replace(
-      /\[(.*?)\]\((.*?)\)/g,
-      "<a href='$2' class='text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300 underline' target='_blank'>$1</a>"
-    );
-
-    // Handle horizontal rules
-    text = text.replace(
-      /^\s*---+\s*$/gm,
-      "<hr class='my-4 border-t border-gray-300 dark:border-gray-600'>"
-    );
-
-    // Handle code blocks
-    text = text.replace(
-      /```([\s\S]*?)```/g,
-      "<pre class='bg-gray-100 dark:bg-gray-700 p-3 rounded-md overflow-x-auto my-4'><code class='dark:text-gray-200'>$1</code></pre>"
-    );
-
-    // Handle inline code
-    text = text.replace(
-      /`([^`]+)`/g,
-      "<code class='bg-gray-100 dark:bg-gray-700 px-1 py-0.5 rounded text-sm dark:text-gray-200'>$1</code>"
-    );
-
-    // Handle unordered lists - wrap in ul
-    text = text.replace(
-      /((?:^- .*?$\n?)+)/gm,
-      "<ul class='list-disc pl-5 my-3'>$1</ul>"
-    );
-
-    // Handle ordered lists - wrap in ol
-    text = text.replace(
-      /((?:^\d+\. .*?$\n?)+)/gm,
-      "<ol class='list-decimal pl-5 my-3'>$1</ol>"
-    );
-
-    // Handle bullet points
-    text = text.replace(/^- (.*?)$/gm, "<li>$1</li>");
-
-    // Handle numbered lists
-    text = text.replace(/^\d+\. (.*?)$/gm, "<li>$1</li>");
-
-    // Handle paragraphs
-    text = text.replace(/^([^<].*?)$/gm, "<p class='mb-3'>$1</p>");
-
-    // Clean up empty paragraphs
-    text = text.replace(/<p class='mb-3'><\/p>/g, "");
-
-    // Handle line breaks (only needed for text not in paragraphs)
-    text = text.replace(/<br><br>/g, "<br>");
-
-    return text;
-  }
-
   document
     .getElementById("releaseNotesForm")
     .addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const form = e.target;
-      const submitButton = form.querySelector('button[type="submit"]');
-      const loadingDiv = document.getElementById("loading");
-      const resultDiv = document.getElementById("result");
-      const errorDiv = document.getElementById("error");
-      const resultContentDiv = document.getElementById("resultContent");
+      // Get today's date in YYYY-MM-DD format for the default value
+      const today = new Date().toISOString().split("T")[0];
 
-      // Get form values
-      const changesList = document.getElementById("changesList").value;
-      const style = document.getElementById("style").value;
-      const versionNumber = document.getElementById("versionNumber").value;
+      const formData = {
+        changesList: document.getElementById("changesList").value,
+        style: document.getElementById("style").value,
+        versionNumber: document.getElementById("versionNumber").value,
+        releaseDate: document.getElementById("releaseDate").value || today, // Use today if no date selected
+      };
 
-      // Get release date or use today's date if not specified
-      let releaseDate = document.getElementById("releaseDate").value;
-      if (!releaseDate) {
-        const today = new Date();
-        releaseDate = today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
-      }
-
-      // Show loading state
-      submitButton.disabled = true;
-      loadingDiv.classList.remove("hidden");
-      resultDiv.classList.add("hidden");
-      errorDiv.classList.add("hidden");
-
-      try {
-        const response = await fetch("/api/generate-release-notes", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            changesList: changesList,
-            style: style,
-            versionNumber: versionNumber,
-            releaseDate: releaseDate,
-          }),
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          resultContentDiv.innerHTML = renderMarkdown(data.release_notes);
-          resultDiv.classList.remove("hidden");
-          resultDiv.classList.add("animate-fade-in");
-        } else {
-          throw new Error(data.error || "Failed to generate release notes");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        errorDiv.querySelector("p").textContent = error.message;
-        errorDiv.classList.remove("hidden");
-      } finally {
-        submitButton.disabled = false;
-        loadingDiv.classList.add("hidden");
-      }
+      await handleFormSubmit(
+        "releaseNotesForm",
+        "/api/generate-release-notes",
+        formData,
+        "result",
+        "resultContent"
+      );
     });
-
-  function copyToClipboard() {
-    const content = document.getElementById("resultContent").textContent;
-    navigator.clipboard
-      .writeText(content)
-      .then(() => {
-        // Use a more subtle notification in dark mode
-        const isDarkMode = document.documentElement.classList.contains("dark");
-        const alertBg = isDarkMode ? "#374151" : "white";
-        const alertText = isDarkMode ? "#e5e7eb" : "#374151";
-        const alertEl = document.createElement("div");
-        alertEl.style.position = "fixed";
-        alertEl.style.bottom = "20px";
-        alertEl.style.right = "20px";
-        alertEl.style.padding = "10px 20px";
-        alertEl.style.background = alertBg;
-        alertEl.style.color = alertText;
-        alertEl.style.borderRadius = "4px";
-        alertEl.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.15)";
-        alertEl.style.zIndex = "9999";
-        alertEl.textContent = "Copied to clipboard!";
-        document.body.appendChild(alertEl);
-
-        setTimeout(() => {
-          alertEl.style.opacity = "0";
-          alertEl.style.transition = "opacity 0.5s ease";
-          setTimeout(() => document.body.removeChild(alertEl), 500);
-        }, 2000);
-      })
-      .catch(() => {
-        alert("Failed to copy to clipboard");
-      });
-  }
-
-  function toggleEdit() {
-    const resultContentDiv = document.getElementById("resultContent");
-    const editButton = document.getElementById("editButton");
-    const isEditing = resultContentDiv.contentEditable === "true";
-
-    if (isEditing) {
-      // Save mode
-      resultContentDiv.contentEditable = "false";
-      resultContentDiv.classList.remove("ring-2", "ring-green-500");
-      // Re-render markdown when saving to ensure proper formatting
-      resultContentDiv.innerHTML = renderMarkdown(resultContentDiv.textContent);
-      editButton.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-        </svg>
-        Edit
-      `;
-    } else {
-      // Edit mode
-      // Convert to plain text for editing
-      const plainText = resultContentDiv.innerText;
-      resultContentDiv.contentEditable = "true";
-      resultContentDiv.classList.add("ring-2", "ring-green-500");
-      // Set as plain text for easier editing
-      resultContentDiv.textContent = plainText;
-      editButton.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-        </svg>
-        Save
-      `;
-      resultContentDiv.focus();
-    }
-  }
 </script>
 
 <style>

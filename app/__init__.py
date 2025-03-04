@@ -69,7 +69,14 @@ def create_app():
     def after_request(response):
         """Log response and add CORS headers explicitly."""
         logger.debug('Response Headers: %s', dict(response.headers))
-        logger.debug('Response Body: %s', response.get_data(as_text=True))
+        
+        # Only try to log response body for non-static file responses
+        if not response.headers.get('Content-Type', '').startswith('application/javascript'):
+            try:
+                logger.debug('Response Body: %s', response.get_data(as_text=True))
+            except RuntimeError:
+                # Skip logging for direct passthrough responses
+                pass
         
         # Add CORS headers explicitly
         response.headers.add('Access-Control-Allow-Origin', '*')

@@ -27,10 +27,10 @@ def generate_growth_hacking():
         # Extract fields from the request
         product_description = data.get('productDescription')
         target_audience = data.get('targetAudience')
-        growth_stage = data.get('growthStage')
+        growth_stage = data.get('growthStage', '')  # Make it optional with empty string default
         
         # Validate required fields
-        if not all([product_description, target_audience, growth_stage]):
+        if not all([product_description, target_audience]):  # Remove growth_stage from required fields
             logger.error('Missing required fields')
             return jsonify({"success": False, "error": "Required fields missing"}), 400
 
@@ -38,28 +38,33 @@ def generate_growth_hacking():
         system_prompt = """You are an experienced growth hacker who specializes in finding creative, scrappy, and budget-friendly ways to grow products and businesses. 
 You focus on data-driven strategies that can be implemented quickly with minimal resources."""
 
-        user_prompt = f"""Generate 5 creative, scrappy, and budget-friendly growth hacking ideas for the following product:
+        user_prompt = f"""Your mission is to generate 5 amazing, scrappy growth hacking ideas for the product below.
 
-Product Description: {product_description}
-Target Audience: {target_audience}
-Growth Stage Focus: {growth_stage}
 
-For each idea:
-1. Give it a catchy, descriptive name
-2. Explain how to implement it in 2-3 sentences
-3. Explain why it would be effective for this specific product and audience
-4. Include a rough estimate of implementation time (hours/days)
-5. Mention any free or low-cost tools that could help
+        FOR EACH IDEA, INCLUDE:
+        1. A catchy, descriptive name
+        2. A 2–3 sentence explanation of how to implement it
+        3. Why it would be effective for this product and audience
+        4. A rough estimate of implementation time (hours or days)
+        5. Any free or low-cost tools that could help
 
-IMPORTANT CONSTRAINTS:
-- All ideas must be implementable with minimal budget
-- Focus on quick wins that can show results within 1-4 weeks
-- Ideas should be specific to the product and audience, not generic
-- Prioritize ideas that are data-driven and measurable
-- Include ideas that address the selected growth stages: {growth_stage}
-- Be creative but practical - these should be actionable ideas, not theoretical concepts
+        IMPORTANT CONSTRAINTS:
+        - All ideas must be implementable with minimal budget
+        - Focus on quick wins that can show results within 1–4 weeks
+        - Ideas should be specific to the product and audience, not generic
+        - Prioritize data-driven and measurable tactics
+        - Address the selected growth stage(s): {growth_stage}
+        - Be creative but practical: these should be actionable ideas, not purely theoretical
 
-Format each idea with clear headings and bullet points for readability."""
+        FORMAT:
+        - Use clear headings and bullet points for each idea
+        - Keep each idea concise yet detailed enough to be actionable
+
+        PRODUCT DETAILS:
+        Product Description: {product_description}
+        Target Audience: {target_audience}
+        Growth Stage Focus: {growth_stage}
+"""
 
         content, success = openai_service.generate_completion(system_prompt, user_prompt)
 

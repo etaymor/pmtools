@@ -115,13 +115,13 @@ self.meta_description() }}{% endblock %} {% block content %}
       ></div>
       <div class="mt-4 flex space-x-2">
         <button
-          onclick="copyToClipboard()"
+          onclick="copyToClipboard(document.getElementById('empathyMapContent').innerText)"
           class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
           Copy to Clipboard
         </button>
         <button
-          onclick="toggleEdit()"
+          onclick="toggleEdit('empathyMapContent', 'editButton')"
           id="editButton"
           class="inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
@@ -329,98 +329,30 @@ self.meta_description() }}{% endblock %} {% block content %}
   {{ tool_links('empathy_map') }}
 </div>
 
+<script src="{{ url_for('static', filename='js/tools.js') }}"></script>
 <script>
-  function renderMarkdown(text) {
-    // Handle headers (h1-h4)
-    text = text.replace(
-      /^# (.*?)$/gm,
-      "<h1 class='text-2xl font-bold mb-4 mt-6'>$1</h1>"
-    );
-    text = text.replace(
-      /^## (.*?)$/gm,
-      "<h2 class='text-xl font-bold mb-3 mt-5'>$1</h2>"
-    );
-    text = text.replace(
-      /^### (.*?)$/gm,
-      "<h3 class='text-lg font-bold mb-2 mt-4'>$1</h3>"
-    );
-    text = text.replace(
-      /^#### (.*?)$/gm,
-      "<h4 class='text-base font-bold mb-2 mt-3'>$1</h4>"
-    );
-
-    // Handle bold text with double asterisks
-    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-
-    // Handle italic text with single asterisks
-    text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
-
-    // Handle bullet points
-    text = text.replace(/^- (.*?)$/gm, "<li class='ml-4'>$1</li>");
-
-    // Handle numbered lists
-    text = text.replace(/^\d+\. (.*?)$/gm, "<li class='ml-4'>$1</li>");
-
-    // Handle line breaks
-    text = text.replace(/\n/g, "<br>");
-
-    return text;
-  }
-
   document
     .getElementById("empathyMapForm")
     .addEventListener("submit", async (e) => {
       e.preventDefault();
+      const formData = {
+        userPersona: document.getElementById("userPersona").value,
+        context: document.getElementById("context").value,
+        goals: document.getElementById("goals").value,
+      };
 
-      const form = e.target;
-      const submitButton = form.querySelector('button[type="submit"]');
-      const loadingDiv = document.getElementById("loading");
-      const resultDiv = document.getElementById("result");
-      const errorDiv = document.getElementById("error");
-      const resultContentDiv = document.getElementById("empathyMapContent");
-
-      // Show loading state
-      submitButton.disabled = true;
-      loadingDiv.classList.remove("hidden");
-      resultDiv.classList.add("hidden");
-      errorDiv.classList.add("hidden");
-
-      try {
-        const response = await fetch("/api/generate-empathy-map", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userPersona: document.getElementById("userPersona").value,
-            context: document.getElementById("context").value,
-            goals: document.getElementById("goals").value,
-          }),
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          resultContentDiv.innerHTML = renderMarkdown(data.empathy_map);
-          resultDiv.classList.remove("hidden");
-          resultDiv.classList.add("animate-fade-in");
-        } else {
-          throw new Error(data.error || "Failed to process request");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        errorDiv.querySelector("p").textContent = error.message;
-        errorDiv.classList.remove("hidden");
-      } finally {
-        submitButton.disabled = false;
-        loadingDiv.classList.add("hidden");
-      }
+      await handleFormSubmit(
+        "empathyMapForm",
+        "/api/generate-empathy-map",
+        formData,
+        "result",
+        "empathyMapContent"
+      );
     });
 
-  function copyToClipboard() {
-    const content = document.getElementById("empathyMapContent").innerText;
+  function copyToClipboard(text) {
     navigator.clipboard
-      .writeText(content)
+      .writeText(text)
       .then(() => {
         // Use a more subtle notification in dark mode
         const isDarkMode = document.documentElement.classList.contains("dark");
@@ -450,9 +382,9 @@ self.meta_description() }}{% endblock %} {% block content %}
       });
   }
 
-  function toggleEdit() {
-    const resultContentDiv = document.getElementById("empathyMapContent");
-    const editButton = document.getElementById("editButton");
+  function toggleEdit(contentId, buttonId) {
+    const resultContentDiv = document.getElementById(contentId);
+    const editButton = document.getElementById(buttonId);
     const isEditing = resultContentDiv.contentEditable === "true";
 
     if (isEditing) {

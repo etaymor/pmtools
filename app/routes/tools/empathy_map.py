@@ -31,24 +31,29 @@ def generate_empathy_map():
             return jsonify({"success": False, "error": "User persona is required"}), 400
         
         # Construct the prompt
-        system_prompt = "You are a UX research expert specialized in creating detailed empathy maps to help teams understand their users better."
+        system_prompt = "You are a seasoned UX research expert with a deep understanding of how to create insightful empathy maps that inform product teams and drive user-centered design."
         
-        user_prompt = f"""Create a comprehensive empathy map for the following user:
-        
+        user_prompt = f"""Create a comprehensive empathy map for the following user.
+
+        INSTRUCTIONS:
+1. **SAYS** – Provide 4–6 realistic statements or questions the user might openly express.
+2. **THINKS** – Provide 4–6 internal thoughts, motivations, or concerns the user keeps to themselves.
+3. **DOES** – Provide 4–6 observable actions or behaviors the user exhibits in this scenario.
+4. **FEELS** – Provide 4–6 emotions or emotional states the user experiences related to this scenario.
+5. **PAIN POINTS** – Provide 4–6 challenges, frustrations, or obstacles the user faces.
+6. **GAINS** – Provide 4–6 benefits, positive outcomes, or success metrics from the user’s perspective.
+
+USER DETAILS:
         User Persona: {user_persona}
         Context/Scenario: {context if context else 'General usage of the product'}
         User Goals: {goals if goals else 'Please infer appropriate goals based on the persona'}
         
-        Format your response as a structured empathy map with these sections:
-        1. SAYS - What the user might say out loud in this scenario
-        2. THINKS - What the user might be thinking but not saying
-        3. DOES - Actions and behaviors the user exhibits
-        4. FEELS - Emotions the user might be experiencing
-        5. PAIN POINTS - Frustrations, obstacles, or challenges
-        6. GAINS - Benefits, wants, needs, and measures of success
-        
-        For each section, provide 4-6 specific, realistic points that reflect the user's perspective.
-        Make the empathy map detailed, insightful, and actionable for product teams.
+       REQUIREMENTS:
+- Make each section specific, realistic, and actionable.
+- Reflect genuine user behaviors, statements, and emotions.
+- Avoid repeating the same idea in multiple sections.
+
+Please format your response as a structured empathy map, addressing each section in order.
         """
         
         content, success = openai_service.generate_completion(system_prompt, user_prompt)

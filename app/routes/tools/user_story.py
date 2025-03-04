@@ -6,34 +6,44 @@ user_story_bp = Blueprint('user_story', __name__)
 
 def format_output(story_content: str, output_format: str = 'plain') -> str:
     """Format the story content based on the specified output format."""
-    lines = story_content.strip().split('\n')
+    # Split content into user story and acceptance criteria
+    content_parts = story_content.strip().split('\n')
+    user_story = ""
+    acceptance_criteria = []
+    
+    # Process the content
+    for line in content_parts:
+        line = line.strip()
+        if not line:
+            continue
+        if line.lower().startswith('as a '):
+            user_story = line
+        elif not line.startswith(('###', '##', '#', 'Acceptance Criteria:', 'User Story:')):
+            acceptance_criteria.append(line)
     
     if output_format.lower() == 'jira':
         formatted = "{panel:title=User Story}\n"
-        formatted += "{color:#172B4D}" + lines[0] + "{color}\n\n"
+        formatted += "{color:#172B4D}" + user_story + "{color}\n\n"
         formatted += "h3.Acceptance Criteria\n"
-        for line in lines[1:]:
-            if line.strip():
-                formatted += "* " + line.strip() + "\n"
+        for criterion in acceptance_criteria:
+            formatted += "* " + criterion + "\n"
         formatted += "{panel}"
         return formatted
         
     elif output_format.lower() == 'azure':
         formatted = "# User Story\n"
-        formatted += "> " + lines[0] + "\n\n"
+        formatted += "> " + user_story + "\n\n"
         formatted += "## Acceptance Criteria\n"
-        for line in lines[1:]:
-            if line.strip():
-                formatted += "- " + line.strip() + "\n"
+        for criterion in acceptance_criteria:
+            formatted += "- " + criterion + "\n"
         return formatted
         
     else:  # plain format
         formatted = "### User Story\n"
-        formatted += lines[0] + "\n\n"
+        formatted += user_story + "\n\n"
         formatted += "### Acceptance Criteria\n"
-        for line in lines[1:]:
-            if line.strip():
-                formatted += "- " + line.strip() + "\n"
+        for criterion in acceptance_criteria:
+            formatted += "- " + criterion + "\n"
         return formatted
 
 @user_story_bp.route('/api/generate-user-story', methods=['POST', 'OPTIONS'])
@@ -58,18 +68,19 @@ def generate_user_story():
             return jsonify({"success": False, "error": "User type and functionality are required"}), 400
         
         # Construct the prompt
-        prompt = f"""Create a user story with acceptance criteria for:
-        User Type: {user_type}
-        Desired Functionality: {functionality}
-        Business Value: {business_value if business_value else 'Please generate an appropriate business value'}
-        
-        Format your response exactly as follows:
-        1. First line: Write the user story in 'As a [type of user], I want [goal] so that [benefit]' format
-        2. Following lines: List 3-5 specific, testable acceptance criteria
-        
-        Keep the response concise and focused."""
+        prompt = f"""Write a user story and acceptance criteria based on the following input. Do not include any headers or section titles in your response.
 
-        system_prompt = "You are a product management expert specialized in writing clear, actionable user stories with acceptance criteria."
+First line should be the user story in this exact format:
+As a [type of user], I want [goal] so that [benefit].
+
+Then skip a line and list 3-5 specific, testable acceptance criteria. Each criterion should be on its own line.
+
+**INPUT DETAILS**:
+- **User Type**: {user_type}
+- **Desired Functionality**: {functionality}
+- **Business Value**: {business_value if business_value else "Please generate an appropriate business value"}"""
+
+        system_prompt = "You are a product management expert specialized in writing clear, actionable user stories with acceptance criteria. Write only the content without any headers or formatting."
         
         story_content, success = openai_service.generate_completion(system_prompt, prompt)
         

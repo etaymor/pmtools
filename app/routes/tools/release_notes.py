@@ -45,24 +45,33 @@ def generate_release_notes():
         version_info = f"Version: {version_number}\n" if version_number else ""
         date_info = f"Release Date: {release_date}\n" if release_date else ""
         
-        user_prompt = f"""Transform the following list of changes into well-structured release notes:
+        user_prompt = f"""Your mission is to transform the following list of changes into well-structured release notes:
 
+INSTRUCTIONS:
+1. **Headline/Title** - Create a catchy title for this release{'' if version_number else ' (include the version number if you can infer it from the changes)'}.
+2. **Introduction** - Provide a brief summary of the key themes or goals for this release.
+3. **Organized Sections**  - Break down the changes into logical sections (e.g., Features, Improvements, Bug Fixes).- Use bullet points to list items clearly.
+4. **Conclusion**  - Thank users or highlight upcoming features/next steps.
+
+IMPORTANT DETAILS:
+- **Emphasize Value**: Explain how each change benefits or impacts the user.
+- **Tone**: Keep it {style}.
+- **Version & Date**: Include the version number and release date in the header if provided.
+- **Markdown Formatting**: 
+  - Use proper headers (`#` for title, `##` for sections).
+  - Use bullet points for lists.
+  - Use emphasis (italics or bold) where relevant.
+
+OUTPUT REQUIREMENTS:
+- Group similar items together.
+- Maintain consistent formatting and tense.
+- Keep the release notes concise yet informative.
+
+Now, craft the release notes following these guidelines.
 {changes_list}
 
 {version_info}{date_info}
-Format the release notes with:
-1. A catchy headline/title for this release{'' if version_number else ' (include the version number if you can infer it from the changes)'}
-2. A brief introduction summarizing the key themes of this release
-3. Organized sections with bullet points for different types of changes (features, improvements, bug fixes)
-4. A brief conclusion thanking users or highlighting what's coming next
 
-Make sure to:
-- Group similar items together
-- Highlight the value of each change to the user
-- Use consistent formatting and tense
-- Keep the tone {style}
-- Include the version number and release date in the header if provided
-- Format your response using Markdown with proper headers (# for title, ## for sections), bullet points, and emphasis where appropriate
 """
 
         notes_content, success = openai_service.generate_completion(system_prompt, user_prompt)

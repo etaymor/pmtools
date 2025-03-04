@@ -31,20 +31,24 @@ def generate_pain_points():
             return jsonify({"success": False, "error": "Both target segment and product information are required"}), 400
 
         # Construct the prompt for OpenAI
-        system_prompt = """You are an expert business analyst specializing in identifying customer pain points. 
-        Your task is to analyze the given target customer segment and product/space information to identify 
-        specific, actionable pain points that these customers experience. Focus on real, practical challenges 
-        that affect their daily operations or lives."""
+        system_prompt = """You are an expert business analyst specializing in identifying customer pain points. Focus on real, practical challenges that 
+affect their daily operations or lives."""
 
-        user_prompt = f"""Please identify 7 specific pain points for the following scenario:
+        user_prompt = f"""Your mission is to analyze the given target customer segment and product/space information to pinpoint 
+specific, actionable pain points these customers experience.
+
+INSTRUCTIONS:
+- Identify exactly 7 specific pain points
+- Provide a clear, concise description of each challenge or frustration
+- Present each pain point as a separate bullet point
+- Focus only on the problems/challenges, without suggesting solutions
+- Be specific and actionable in describing each pain point
+
+        Please identify 7 specific pain points for the following scenario.
 
         Target Customer Segment: {target_segment}
         Product/Space Information: {product_info}
-
-        For each pain point, provide a clear, concise description of the challenge or frustration the customer faces.
-        Format each pain point as a separate bullet point.
-        Focus only on the problems/challenges, without suggesting solutions.
-        Be specific and actionable in describing each pain point."""
+"""
 
         content, success = openai_service.generate_completion(system_prompt, user_prompt)
 

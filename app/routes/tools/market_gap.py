@@ -33,14 +33,16 @@ def market_gap_handler():
             return jsonify({"success": False, "error": "Industry and Customer Type are required"}), 400
 
         # Construct the prompt for OpenAI
-        system_prompt = """You are a market research expert identifying gaps in different industries. Given the following information, analyze the market and suggest **a unique, underserved opportunity**. Focus on actionable insights and specific niches that could be exploited."""
+        system_prompt = """You are a market research expert identifying gaps in different industries. 
+Focus on actionable insights and specific niches that could be exploited."""
 
-        user_prompt = f"""Your response should be structured into:
+        user_prompt = f"""Your mission is to analyze the market and suggest a unique, underserved opportunity. 
 
-1. **Identified Market Gap**: A concise statement of the gap.
-2. **Why This Gap Exists**: Explain the root causes.
-3. **Potential Solutions or Product Ideas**: 2-3 innovative solutions that address the gap.
-4. **Example Differentiators**: How a business can stand out from competitors.
+        INSTRUCTIONS:
+1. **Identified Market Gap** - Provide a concise statement of the gap.   
+2. **Why This Gap Exists** - Explain the root causes behind this market gap.
+3. **Potential Solutions or Product Ideas** - Offer 2–3 innovative solutions that address the gap.
+4. **Example Differentiators** - Describe how a business can stand out from competitors.
 
 Here is the provided user input:
 Industry/Market: {industry}
@@ -48,7 +50,8 @@ Target Customer: {customer_type}
 {"Main Competitor: " + competitor if competitor else ""}
 {"Known Pain Point: " + pain_point if pain_point else ""}
 
-Now, analyze the market and identify a gap that has potential for innovation."""
+Please present your analysis in this four-part structure, keeping each section focused and actionable.
+"""
 
         content, success = openai_service.generate_completion(system_prompt, user_prompt)
 

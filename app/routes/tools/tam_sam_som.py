@@ -34,48 +34,57 @@ def tam_sam_som_handler():
             return jsonify({"success": False, "error": "Industry, Product Description, and Target Customers are required"}), 400
 
         # Construct the prompt for OpenAI
-        system_prompt = """You are a market research and business strategy expert specializing in market sizing and opportunity assessment. 
-Your task is to provide a detailed TAM (Total Addressable Market), SAM (Serviceable Addressable Market), and SOM (Serviceable Obtainable Market) analysis based on the information provided.
-Use a conservative bottom-up approach that starts with specific customer segments and builds up to the total market size."""
+        system_prompt = """You are a market research and business strategy expert specializing in market sizing and opportunity assessment."""
 
-        user_prompt = f"""Please provide a comprehensive TAM/SAM/SOM analysis for the following:
+        user_prompt = f"""Your mission is to provide a detailed TAM (Total Addressable Market), SAM (Serviceable Addressable Market), 
+and SOM (Serviceable Obtainable Market) analysis using a conservative bottom-up approach that starts with 
+specific customer segments and builds up to the total market size.
 
-Industry/Market: {industry}
-Product/Service Description: {product_description}
-Target Customer Segments: {target_customers}
-{"Additional Information: " + additional_info if additional_info else ""}
-Calculation Approach: {approach} (conservative estimates)
+---
 
-Your analysis should include:
+**ANALYSIS REQUIREMENTS**:
+1. **TAM (Total Addressable Market)**  
+   - Estimated total market size (in dollars and potential customers)  
+   - Key assumptions made in the calculation  
+   - Sources or methodologies used for estimation  
 
-1. **TAM (Total Addressable Market)**:
-   - Estimated total market size (in dollars and potential customers)
-   - Key assumptions made in the calculation
-   - Sources or methodologies used for estimation
+2. **SAM (Serviceable Addressable Market)**  
+   - Subset of the TAM that the product/service can serve  
+   - Segmentation criteria used  
+   - Percentage of TAM and dollar value  
 
-2. **SAM (Serviceable Addressable Market)**:
-   - Portion of TAM that can be served by the product/service
-   - Segmentation criteria used
-   - Percentage of TAM and dollar value
+3. **SOM (Serviceable Obtainable Market)**  
+   - Realistic share of the SAM the business can capture  
+   - Factors influencing market capture (competition, go-to-market strategy, etc.)  
+   - Percentage of SAM and dollar value  
+   - Timeline considerations for achieving the estimated SOM  
 
-3. **SOM (Serviceable Obtainable Market)**:
-   - Realistic market share that can be captured
-   - Factors influencing market capture (competition, go-to-market strategy, etc.)
-   - Percentage of SAM and dollar value
-   - Timeline considerations for achieving the estimated SOM
+4. **Visualization Description**  
+   - Text-based description of a funnel with TAM at the top, SAM in the middle, and SOM at the bottom  
+   - Approximate percentages and dollar values for each layer  
 
-4. **Visualization Description**:
-   - A text description of how a funnel visualization would look with the TAM at the top, SAM in the middle, and SOM at the bottom, with approximate percentages and dollar values
+5. **Detailed Breakdown**  
+   - Calculations and assumptions in a separate section  
+   - Clearly separated so it can be shown/hidden in the UI  
 
-5. **Detailed Breakdown**:
-   - Include a section with detailed calculations and assumptions that could be expanded if the user wants to see more details
-   - Keep this section clearly separated so it can be shown/hidden in the UI
+6. **Recommendations**  
+   - Strategic implications of this market sizing  
+   - Suggested next steps for further validation or refinement  
 
-6. **Recommendations**:
-   - Strategic implications of this market sizing
-   - Suggested next steps for validation or refinement
-
-Please provide realistic ranges rather than single figures, and be conservative in your estimates. Explain your reasoning throughout the analysis."""
+**OUTPUT FORMAT**:
+- Provide realistic **ranges** rather than single figures.  
+- Maintain **conservative estimates**.  
+- Explain your **reasoning** and any assumptions clearly.  
+- Use a clear Markdown structure (e.g., headers, bullet points) for readability.
+        
+        Please provide a comprehensive TAM/SAM/SOM analysis for the following:
+**INPUT DETAILS**:
+- **Industry/Market**: {industry}
+- **Product/Service Description**: {product_description}
+- **Target Customer Segments**: {target_customers}
+{"- **Additional Information**: " + additional_info if additional_info else ""}
+- **Calculation Approach**: {approach} (conservative estimates)
+"""
 
         content, success = openai_service.generate_completion(system_prompt, user_prompt)
 
