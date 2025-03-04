@@ -123,13 +123,26 @@ async function handleFormSubmit(
   errorDiv.classList.add("hidden");
 
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
+      signal: controller.signal,
+      credentials: "same-origin",
     });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      throw new Error(
+        `Server error: ${response.status} ${response.statusText}`
+      );
+    }
 
     const data = await response.json();
 
@@ -144,7 +157,16 @@ async function handleFormSubmit(
     }
   } catch (error) {
     console.error("Error:", error);
-    errorDiv.querySelector("p").textContent = error.message;
+    let errorMessage = "An error occurred while processing your request. ";
+    if (error.name === "AbortError") {
+      errorMessage += "The request timed out. Please try again.";
+    } else if (error.message.includes("Failed to fetch")) {
+      errorMessage +=
+        "Could not connect to the server. Please check your connection and try again.";
+    } else {
+      errorMessage += error.message;
+    }
+    errorDiv.querySelector("p").textContent = errorMessage;
     errorDiv.classList.remove("hidden");
   } finally {
     submitButton.disabled = false;
